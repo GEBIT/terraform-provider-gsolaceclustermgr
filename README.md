@@ -62,3 +62,14 @@ In order to run the full suite of Acceptance tests, run `make testacc`.
 ```shell
 make testacc
 ```
+
+for testing with terraform put this into your `%APPDATA%\terraform.rc` file:
+~~~
+provider_installation {
+
+  dev_overrides {
+	  "gebit.de/tf/clustermanager" = "C:/Users/<you>/go/bin"
+  }
+  direct {}
+}
+~~~

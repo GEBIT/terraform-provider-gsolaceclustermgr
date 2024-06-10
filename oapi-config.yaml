@@ -1,0 +1,5 @@
+package: missioncontrol
+generate:
+  client: true
+  models: true
+output: internal\missioncontrol\client.go

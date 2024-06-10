@@ -2,10 +2,14 @@
 // SPDX-License-Identifier: MPL-2.0
 
 //go:build tools
+// +build tools
 
-package tools
+package main
 
 import (
 	// Documentation generation
 	_ "github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs"
+
+	// api cleint generation
+	_ "github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen"
 )
