@@ -245,7 +245,11 @@ func (r *brokerResource) Read(ctx context.Context, req resource.ReadRequest, res
 	}
 
 	// Overwrite items with refreshed state
-	currentState.LastUpdated = types.StringValue(getResp.JSON200.Data.UpdatedTime.Format(time.RFC850))
+	tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", getResp.Body))
+	if getResp.JSON200.Data.UpdatedTime != nil {
+		currentState.LastUpdated = types.StringValue(getResp.JSON200.Data.UpdatedTime.Format(time.RFC850))
+	}
+	// TODO we'll need to update attributes when update is actually supported
 	currentState.Status = types.StringValue(string(*(getResp.JSON200.Data.CreationState)))
 
 	// Set refreshed state
@@ -258,21 +262,42 @@ func (r *brokerResource) Read(ctx context.Context, req resource.ReadRequest, res
 
 // Update updates the resource and sets the updated Terraform state on success.
 func (r *brokerResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	// TODO
+	tflog.Warn(ctx, "Update unsupported yet!!!")
+	// actually we'll never allow much here, as the update only supports: name, ownedBy, locked
 }
 
 // Delete deletes the resource and removes the Terraform state on success.
 func (r *brokerResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 	// Retrieve values from state
-	var state brokerResourceModel
-	diags := req.State.Get(ctx, &state)
+	var currentState brokerResourceModel
+	diags := req.State.Get(ctx, &currentState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	// Delete broker
+	// then delete
+	brokerId := currentState.ID.ValueString()
+	delResp, err := r.clientHolder.Client.DeleteServiceWithResponse(ctx, brokerId, r.BearerReqEditorFn)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error getting broker service info",
+			"Could not get broker service, unexpected error: "+err.Error(),
+		)
+		return
+	}
+	if delResp.StatusCode() != 202 {
+		resp.Diagnostics.AddError(
+			"Error Checking broker status",
+			fmt.Sprintf("Unexpected response code: %v", delResp.StatusCode()),
+		)
+		tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", delResp.Body))
+		return
+	}
+	operationId := *(delResp.JSON202.Data.Id)
+	tflog.Debug(ctx, fmt.Sprintf("Delete-Operation %s on broker %s has been started.", operationId, brokerId))
 
+	// TODO we might want to wait for the operation to finish?
 }
 
 func (r *brokerResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {

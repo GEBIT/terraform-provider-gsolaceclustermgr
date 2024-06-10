@@ -14,6 +14,7 @@ provider "clustermanager" {
 }
 
 resource "clustermanager_broker" "ocs-test" {
+  count  = 0
   serviceclass_id = "ENTERPRISE_250_STANDALONE"
   name            = "ocs-prov-test"
   datacenter_id   = "aks-germanywestcentral"
