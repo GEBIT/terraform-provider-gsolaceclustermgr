@@ -13,17 +13,21 @@ func TestAccBrokerResource(t *testing.T) {
 			// Create and Read testing
 			{
 				Config: providerConfig + `
-resource "clustermanager_broker" "test" {
+resource "gsolaceclustermgr_broker" "test" {
 	serviceclass_id = "ENTERPRISE_250_STANDALONE"
 	name            = "ocs-prov-test"
 	datacenter_id   = "aks-germanywestcentral"
+	msg_vpn_name    = "ocs-msgvpn-1"
+	cluster_name    = "gwc-aks-cluster1"
 }
 `,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify attributes
-					resource.TestCheckResourceAttr("clustermanager_broker.test", "name", "ocs-prov-test"),
-					resource.TestCheckResourceAttr("clustermanager_broker.test", "serviceclass_id", "ENTERPRISE_250_STANDALONE"),
-					resource.TestCheckResourceAttr("clustermanager_broker.test", "datacenter_id", "aks-germanywestcentralE"),
+					resource.TestCheckResourceAttr("gsolaceclustermgr_broker.test", "name", "ocs-prov-test"),
+					resource.TestCheckResourceAttr("gsolaceclustermgr_broker.test", "serviceclass_id", "ENTERPRISE_250_STANDALONE"),
+					resource.TestCheckResourceAttr("gsolaceclustermgr_broker.test", "datacenter_id", "aks-germanywestcentral"),
+					resource.TestCheckResourceAttr("gsolaceclustermgr_broker.test", "msg_vpn_name", "ocs-msgvpn-1"),
+					resource.TestCheckResourceAttr("gsolaceclustermgr_broker.test", "cluster_name", "gwc-aks-cluster1"),
 
 					// Verify Computed attributes
 					resource.TestCheckResourceAttr("hashicups_order.test", "status", "pending"),

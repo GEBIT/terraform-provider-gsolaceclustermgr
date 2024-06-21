@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"terraform-provider-clustermanager/internal/missioncontrol"
+	"terraform-provider-gsolaceclustermgr/internal/missioncontrol"
 
 	// "missioncontrol"
 
@@ -54,7 +54,7 @@ type MCClientHolder struct {
 
 // Metadata returns the provider type name.
 func (p *clusterManagerProvider) Metadata(_ context.Context, _ provider.MetadataRequest, resp *provider.MetadataResponse) {
-	resp.TypeName = "clustermanager"
+	resp.TypeName = "gsolaceclustermgr"
 	resp.Version = p.version
 }
 

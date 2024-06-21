@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httputil"
-	"terraform-provider-clustermanager/internal/missioncontrol"
+	"terraform-provider-gsolaceclustermgr/internal/missioncontrol"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -20,11 +20,17 @@ import (
 // brokerResourceModel maps the resource schema data.
 type brokerResourceModel struct {
 	ID             types.String `tfsdk:"id"`
+	DataCenterId   types.String `tfsdk:"datacenter_id"`
+	Name           types.String `tfsdk:"name"`
+	ClusterName    types.String `tfsdk:"cluster_name"`
+	MsgVpnName     types.String `tfsdk:"msg_vpn_name"`
+	Created        types.String `tfsdk:"created"`
 	LastUpdated    types.String `tfsdk:"last_updated"`
 	Status         types.String `tfsdk:"status"`
 	ServiceClassId types.String `tfsdk:"serviceclass_id"`
-	Name           types.String `tfsdk:"name"`
-	DataCenterId   types.String `tfsdk:"datacenter_id"`
+	/** figure out how to handle int32
+	MaxSpoolUsage  types.Int64  `tfsdk:"max_spool_usage"`
+	*/
 }
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -88,15 +94,41 @@ func (r *brokerResource) Schema(ctx context.Context, _ resource.SchemaRequest, r
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			// creation params
-			"serviceclass_id": schema.StringAttribute{
-				Required: true,
-			},
 			"name": schema.StringAttribute{
 				Required: true,
 			},
+			"serviceclass_id": schema.StringAttribute{
+				Required: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
 			"datacenter_id": schema.StringAttribute{
 				Optional: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 			},
+			"msg_vpn_name": schema.StringAttribute{
+				Optional: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
+			"cluster_name": schema.StringAttribute{
+				Optional: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
+			/* figure out how to handle int32
+			"max_spool_usage": schema.NumberAttribute{
+				Optional: true,
+				PlanModifiers: []planmodifier.Int64{
+					int64planmodifier.RequiresReplace(),
+				},
+			},
+			*/
 			// computed attributes
 			"id": schema.StringAttribute{
 				Computed: true,
@@ -104,17 +136,17 @@ func (r *brokerResource) Schema(ctx context.Context, _ resource.SchemaRequest, r
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
-			"last_updated": schema.StringAttribute{
+			"created": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
+			"last_updated": schema.StringAttribute{
+				Computed: true,
+			},
 			"status": schema.StringAttribute{
 				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
 			},
 		},
 	}
@@ -136,6 +168,9 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 		Name:           plannedState.Name.ValueString(),
 		ServiceClassId: missioncontrol.ServiceClassId(plannedState.ServiceClassId.ValueString()),
 		DatacenterId:   plannedState.DataCenterId.ValueString(),
+		MsgVpnName:     plannedState.MsgVpnName.ValueStringPointer(),
+		ClusterName:    plannedState.ClusterName.ValueStringPointer(),
+		// MaxSpoolUsage:  plannedState.MaxSpoolUsage.ValueInt64Pointer(),   *int64/*int32 clash
 	}
 	tflog.Info(ctx, fmt.Sprintf("Request: %s %s %v %s using %s", "Foo", body.Name, body.ServiceClassId, body.DatacenterId, plannedState.ServiceClassId.ValueString()))
 
@@ -197,9 +232,13 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 			created = true
 			// Map response body to schema and populate Computed attribute values
 			plannedState.ID = types.StringValue(resourceId)
-			// fake...
-			plannedState.Status = types.StringValue("COMPLETED")
-			plannedState.LastUpdated = types.StringValue(time.Now().Format(time.RFC850))
+			plannedState.Status = types.StringValue(string(*(getResp.JSON200.Data.CreationState)))
+			if getResp.JSON200.Data.CreatedTime != nil {
+				plannedState.Created = types.StringValue(getResp.JSON200.Data.CreatedTime.Format(time.RFC850))
+			}
+			if getResp.JSON200.Data.UpdatedTime != nil {
+				plannedState.LastUpdated = types.StringValue(getResp.JSON200.Data.UpdatedTime.Format(time.RFC850))
+			}
 		}
 
 	}
@@ -246,12 +285,16 @@ func (r *brokerResource) Read(ctx context.Context, req resource.ReadRequest, res
 
 	// Overwrite items with refreshed state
 	tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", getResp.Body))
+	if getResp.JSON200.Data.CreatedTime != nil {
+		currentState.Created = types.StringValue(getResp.JSON200.Data.CreatedTime.Format(time.RFC850))
+	}
 	if getResp.JSON200.Data.UpdatedTime != nil {
 		currentState.LastUpdated = types.StringValue(getResp.JSON200.Data.UpdatedTime.Format(time.RFC850))
 	}
-	// TODO we'll need to update attributes when update is actually supported
 	currentState.Status = types.StringValue(string(*(getResp.JSON200.Data.CreationState)))
+	currentState.Name = types.StringValue(string(*(getResp.JSON200.Data.Name)))
 
+	tflog.Debug(ctx, fmt.Sprintf("Read Broker state %s %s %v", currentState.Name, currentState.Status.ValueString(), currentState.LastUpdated))
 	// Set refreshed state
 	diags = resp.State.Set(ctx, &currentState)
 	resp.Diagnostics.Append(diags...)
@@ -262,8 +305,58 @@ func (r *brokerResource) Read(ctx context.Context, req resource.ReadRequest, res
 
 // Update updates the resource and sets the updated Terraform state on success.
 func (r *brokerResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	tflog.Warn(ctx, "Update unsupported yet!!!")
-	// actually we'll never allow much here, as the update only supports: name, ownedBy, locked
+	tflog.Info(ctx, "Retrieving planned state")
+	// Retrieve values from plannedState
+	var plannedState brokerResourceModel
+	diags := req.Plan.Get(ctx, &plannedState)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// Generate API request body from plan
+	var body = missioncontrol.UpdateServiceJSONRequestBody{
+		Name: plannedState.Name.ValueStringPointer(),
+	}
+	brokerId := plannedState.ID.ValueString()
+
+	// Use client to update broker
+	tflog.Info(ctx, fmt.Sprintf("Updating broker service using %v", body))
+
+	updateResp, err := r.clientHolder.Client.UpdateServiceWithResponse(ctx, brokerId, body, r.BearerReqEditorFn)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Error updating broker service",
+			"Could not update broker service, unexpected error: "+err.Error(),
+		)
+		return
+	}
+	if updateResp.StatusCode() != 200 {
+		resp.Diagnostics.AddError(
+			"Error creating broker service",
+			fmt.Sprintf("Unexpected response code: %v", updateResp.StatusCode()),
+		)
+		tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", updateResp.Body))
+		return
+	}
+
+	if updateResp.JSON200.Data.UpdatedTime != nil {
+		plannedState.LastUpdated = types.StringValue(updateResp.JSON200.Data.UpdatedTime.Format(time.RFC850))
+	} else {
+		plannedState.LastUpdated = types.StringValue(time.Now().Format(time.RFC850))
+	}
+	plannedState.Status = types.StringValue(string(*(updateResp.JSON200.Data.CreationState)))
+
+	// we don't have to check actual attributes (nothing new is computed)
+	tflog.Info(ctx, fmt.Sprintf("Updated broker to %s %v %v", plannedState.Name.ValueString(), plannedState.Status.ValueString(), plannedState.LastUpdated.ValueString()))
+
+	// Save updated data into Terraform state
+	diags = resp.State.Set(ctx, &plannedState)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 }
 
 // Delete deletes the resource and removes the Terraform state on success.

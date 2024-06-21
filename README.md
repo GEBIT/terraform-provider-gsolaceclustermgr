@@ -68,7 +68,7 @@ for testing with terraform put this into your `%APPDATA%\terraform.rc` file:
 provider_installation {
 
   dev_overrides {
-	  "gebit.de/tf/clustermanager" = "C:/Users/<you>/go/bin"
+	  "gebit.de/tf/gsolaceclustermgr" = "C:/Users/<you>/go/bin"
   }
   direct {}
 }

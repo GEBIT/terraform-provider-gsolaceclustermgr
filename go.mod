@@ -1,4 +1,4 @@
-module terraform-provider-clustermanager
+module terraform-provider-gsolaceclustermgr
 
 go 1.21
 

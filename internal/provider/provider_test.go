@@ -8,9 +8,9 @@ import (
 const (
 	// shared test providerConfig
 	providerConfig = `
-	provider "clustermanager" {
+	provider "gsolaceclustermgr" {
 		bearer_token = "bt42"	
-		host = "https://api.solace.cloud"
+		host = "https://solace-cloud-api-mock.gebit.de"
 	 }
 `
 )
@@ -21,6 +21,6 @@ var (
 	// CLI command executed to create a provider server to which the CLI can
 	// reattach.
 	testAccProtoV6ProviderFactories = map[string]func() (tfprotov6.ProviderServer, error){
-		"clustermanager": providerserver.NewProtocol6WithError(New("test")()),
+		"gsolaceclustermgr": providerserver.NewProtocol6WithError(New("test")()),
 	}
 )
