@@ -6,13 +6,13 @@ import (
 )
 
 const (
-	// shared test providerConfig
+	// shared test providerConfig using fakeserver
 	providerConfig = `
 	provider "gsolaceclustermgr" {
 		bearer_token = "bt42"	
-		host = "https://solace-cloud-api-mock.gebit.de"
-	 }
-`
+		host = "http://localhost:8080"
+		}
+		`
 )
 
 var (

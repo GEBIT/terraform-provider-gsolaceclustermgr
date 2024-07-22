@@ -30,10 +30,10 @@ resource "gsolaceclustermgr_broker" "test" {
 					resource.TestCheckResourceAttr("gsolaceclustermgr_broker.test", "cluster_name", "gwc-aks-cluster1"),
 
 					// Verify Computed attributes
-					resource.TestCheckResourceAttr("hashicups_order.test", "status", "pending"),
+					resource.TestCheckResourceAttr("gsolaceclustermgr_broker.test", "status", "COMPLETED"),
 					// Verify dynamic values have any value set in the state.
-					resource.TestCheckResourceAttrSet("hashicups_order.test", "id"),
-					resource.TestCheckResourceAttrSet("hashicups_order.test", "last_updated"),
+					resource.TestCheckResourceAttrSet("gsolaceclustermgr_broker.test", "id"),
+					resource.TestCheckResourceAttrSet("gsolaceclustermgr_broker.test", "last_updated"),
 				),
 			},
 

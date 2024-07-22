@@ -185,20 +185,20 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 		)
 		return
 	}
+	tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", createResp.Body))
+
 	if createResp.StatusCode() != 202 {
 		resp.Diagnostics.AddError(
 			"Error creating broker service",
 			fmt.Sprintf("Unexpected response code: %v", createResp.StatusCode()),
 		)
-		tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", createResp.Body))
 		return
 	}
 
 	resourceId := *(createResp.JSON202.Data.ResourceId)
+
 	tflog.Info(ctx, fmt.Sprintf("Waiting for broker service using %s to finish creation", resourceId))
-
 	getParams := missioncontrol.GetServiceParams{}
-
 	timeout := time.Now().Add(30 * time.Minute)
 	for created := false; !created; {
 		// sleep, timeout
@@ -209,7 +209,7 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 			)
 			return
 		}
-		time.Sleep(30 * time.Second)
+		time.Sleep(20 * time.Second)
 		tflog.Info(ctx, fmt.Sprintf("Checking broker status for %s", resourceId))
 		getResp, err := r.clientHolder.Client.GetServiceWithResponse(ctx, resourceId, &getParams, r.BearerReqEditorFn)
 		if err != nil {
