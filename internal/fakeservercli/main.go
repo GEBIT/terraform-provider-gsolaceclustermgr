@@ -1,4 +1,4 @@
-// starter for fakeserver, needed to test the provider without accessing the actual solace api (e.g. CI).
+// manual starter for fakeserver (test the provider without accessing the actual solace api).
 
 package main
 
@@ -13,7 +13,7 @@ import (
 func main() {
 	apiServerObjects := make(map[string]fakeserver.ServiceInfo)
 
-	port := flag.Int("port", 8080, "The port fakeserver will listen on")
+	port := flag.Int("port", 8091, "The port fakeserver will listen on")
 	debug := flag.Bool("debug", false, "Enable debug output of the server")
 
 	flag.Parse()

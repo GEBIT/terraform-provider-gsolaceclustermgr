@@ -1,12 +1,32 @@
 package provider
 
 import (
+	"fmt"
+	"terraform-provider-gsolaceclustermgr/internal/fakeserver"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+var svr *fakeserver.Fakeserver
+
+func startFakeServer() {
+	apiServerObjects := make(map[string]fakeserver.ServiceInfo)
+	port := 8091
+	fmt.Printf("Starting fake server on port %d...\n", port)
+	svr = fakeserver.NewFakeServer(port, apiServerObjects, true, true)
+}
+
+func stopFakeServer() {
+	if svr != nil {
+		fmt.Printf("Shutting down fake server ...\n")
+		svr.Shutdown()
+	}
+}
+
 func TestAccBrokerResource(t *testing.T) {
+	startFakeServer()
+	defer stopFakeServer()
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{

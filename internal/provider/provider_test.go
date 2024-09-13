@@ -10,7 +10,7 @@ const (
 	providerConfig = `
 	provider "gsolaceclustermgr" {
 		bearer_token = "bt42"	
-		host = "http://localhost:8080"
+		host = "http://localhost:8091"
 		}
 		`
 )
