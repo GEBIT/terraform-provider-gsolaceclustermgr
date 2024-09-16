@@ -20,19 +20,40 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5.0.0
         with:
           go-version-file: 'go.mod'
           cache: true
+      - run: go get ./...     
       - run: go mod download
+      - run: go mod tidy
       - run: go build -v .
+         
       - name: Run linters
-        uses: golangci/golangci-lint-action@v6     # was 3cfe3a4abbb849e10058ce4af15d205b6da42804 # v4.0.0
-        with:
-          version: v1.61.0   # the version of golangci-lint, maybe not latests
+        #uses: golangci/golangci-lint-action@v6     # was 3cfe3a4abbb849e10058ce4af15d205b6da42804 # v4.0.0
+        #with:
+        #  version: v1.61.0   # the version of golangci-lint, maybe not latests
+        uses: super-linter/super-linter@v7.1.0 # x-release-please-version
+        env:
+          GO111MODULE: on
+          # only GO
+          #VALIDATE_GO: true
+          VALIDATE_GO_MODULES: true
+          # To report GitHub Actions status checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # use local lint config
+          LINTER_RULES_PATH: .
+          # exclude tools dir
+          FILTER_REGEX_EXCLUDE: (^|/)tools/
+
 
   generate:
     runs-on: ubuntu-latest

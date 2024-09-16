@@ -13,8 +13,9 @@ description: |-
 ## Example Usage
 
 ```terraform
-provider "scaffolding" {
-  # example configuration here
+provider "gsolaceclustermgr" {
+  bearer_token = "<someBearerToken>"
+  host         = "https://api.solace.cloud"
 }
 ```
 

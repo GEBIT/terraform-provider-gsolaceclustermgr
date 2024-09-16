@@ -292,7 +292,7 @@ func (r *brokerResource) Read(ctx context.Context, req resource.ReadRequest, res
 		currentState.LastUpdated = types.StringValue(getResp.JSON200.Data.UpdatedTime.Format(time.RFC850))
 	}
 	currentState.Status = types.StringValue(string(*(getResp.JSON200.Data.CreationState)))
-	currentState.Name = types.StringValue(string(*(getResp.JSON200.Data.Name)))
+	currentState.Name = types.StringValue(*(getResp.JSON200.Data.Name))
 
 	tflog.Debug(ctx, fmt.Sprintf("Read Broker state %s %s %v", currentState.Name, currentState.Status.ValueString(), currentState.LastUpdated))
 	// Set refreshed state

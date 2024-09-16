@@ -2,12 +2,11 @@
 
 # Terraform Provider for Solace MissionControl ClusterManager
 
-THis provider is based on the [HashiCorp Developer Tutorial](https://developer.hashicorp.com/terraform/tutorials/providers-plugin-framework)
+This provider supports a small part of the missioncontrol API v2, namely those that are needed to  create and delete solace brokers in the solace cloud.
 
+It is  based on the [HashiCorp Developer Tutorial] (https://developer.hashicorp.com/terraform/tutorials/providers-plugin-framework). 
 
-Please see the [GitHub template repository documentation](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template) for how to create a new repository from this template on GitHub.
-
-TODO o [publish it on the Terraform Registry](https://developer.hashicorp.com/terraform/registry/providers/publishing) so that others can use it.
+TODO  [publish it on the Terraform Registry](https://developer.hashicorp.com/terraform/registry/providers/publishing) so that others can use it.
 
 ## Requirements
 
@@ -38,7 +37,7 @@ Then commit the changes to `go.mod` and `go.sum`.
 
 ## Using the provider
 
-The provider allos you to create/update/delate Solace cloud API broker instances.
+The provider allows you to create/update/delate Solace cloud API broker instances.
 
 Define the provider with the solace API URL and a valid bearerToken:
 ~~~
@@ -60,14 +59,13 @@ resource "gsolaceclustermgr_broker" "ocs-test" {
 ~~~
 Updating the broker is supported - but only the name attribute may be changed.
 
-The offical solace terraform provider should cover further manipulation like messageVPN setup.
+The official [solace terraform provider](https://github.com/SolaceProducts/terraform-provider-solacebroker) should cover further manipulation like messageVPN setup.
 
 ## Provider Implementation
 
-This provider only supports a small part of the missoncontrol API v2, namely those that are needed to  create and delete solace brokers in the solace cloud.
+This provider only supports a small part of the missioncontrol API v2. It is curretnly not planned to implement the complete API. 
 
-
-The REST client to access the API is generated using github.com/deepmap/oapi-codegen. 
+The REST client to access the API is generated using [oapi-codegen] (https://github.com/deepmap/oapi-codegen) . 
 For CI testing the provider without actually calling the productive solace API, a fakeserver is included.
 
 This is the first project I've done in go - improvements and feedback are welcome.
@@ -82,13 +80,11 @@ To generate or update documentation, run `go generate`.
 
 In order to run the full suite of Acceptance tests, run `make testacc`.
 
-*Note:* Acceptance tests create real resources, and often cost money to run.
-
 ```shell
 make testacc
 ```
 
-for testing with terraform put this into your `%APPDATA%\terraform.rc` file:
+For local manual tests with terraform put this into your `%APPDATA%\terraform.rc` file:
 ~~~
 provider_installation {
 
