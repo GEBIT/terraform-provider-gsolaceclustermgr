@@ -2,6 +2,7 @@ package provider
 
 import (
 	"fmt"
+	"os"
 	"terraform-provider-gsolaceclustermgr/internal/fakeserver"
 	"testing"
 
@@ -14,7 +15,7 @@ func startFakeServer() {
 	apiServerObjects := make(map[string]fakeserver.ServiceInfo)
 	port := 8091
 	fmt.Printf("Starting fake server on port %d...\n", port)
-	svr = fakeserver.NewFakeServer(port, apiServerObjects, true, true)
+	svr = fakeserver.NewFakeServer(port, apiServerObjects, true, os.Getenv("DEBUG") != "")
 }
 
 func stopFakeServer() {

@@ -1,7 +1,19 @@
 on: 
   workflow_dispatch:
+    inputs:
+      snapshot:  # note: snapshot builds are not actually published
+        required: false
+        type: boolean
+        default: false
+      verbose:
+        required: false
+        type: boolean
+        default: false  
 
 jobs:
   test:
-    name: "Parse Configs"
-    uses: ./.github/workflows/test.yml
+    name: "Manual Release"
+    uses: ./.github/workflows/release.yml
+    with: 
+      snapshot: ${{ inputs.snapshot }}
+      verbose: ${{ inputs.verbose }}
