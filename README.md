@@ -1,39 +1,8 @@
-# TODO rewrite this!
-
 # Terraform Provider for Solace MissionControl ClusterManager
 
-This provider supports a small part of the missioncontrol API v2, namely those that are needed to  create and delete solace brokers in the solace cloud.
+This provider, maintained by GEBIT Solutions GmbH, supports a small part of the Solace missioncontrol API (https://api.solace.cloud/api/v2/missionControl), namely the operations to create and delete PubSub+ Software Event Brokers in the Solace cloud (while the  official [solace terraform provider](https://github.com/SolaceProducts/terraform-provider-solacebroker) allows you to configure them further).
 
-It is  based on the [HashiCorp Developer Tutorial] (https://developer.hashicorp.com/terraform/tutorials/providers-plugin-framework). 
-
-TODO  [publish it on the Terraform Registry](https://developer.hashicorp.com/terraform/registry/providers/publishing) so that others can use it.
-
-## Requirements
-
-- [Terraform](https://developer.hashicorp.com/terraform/downloads) >= 1.0
-- [Go](https://golang.org/doc/install) >= 1.21
-
-## Building The Provider
-
-1. Clone the repository
-1. Enter the repository directory
-1. Build the provider using the Go `install` command:
-
-```shell
-go install
-```
-
-## Adding Dependencies
-
-This provider uses [Go modules](https://github.com/golang/go/wiki/Modules).
-Please see the Go documentation for the most up to date information about using Go modules.
-
-```shell
-go get github.com/author/dependency
-go mod tidy
-```
-
-Then commit the changes to `go.mod` and `go.sum`.
+It is available on the [Terraform Registry](https://developer.hashicorp.com/terraform/registry/providers/publishing) 
 
 ## Using the provider
 
@@ -59,18 +28,50 @@ resource "gsolaceclustermgr_broker" "ocs-test" {
 ~~~
 Updating the broker is supported - but only the name attribute may be changed.
 
-The official [solace terraform provider](https://github.com/SolaceProducts/terraform-provider-solacebroker) should cover further manipulation like messageVPN setup.
+The official [solace terraform provider](https://github.com/SolaceProducts/terraform-provider-solacebroker) covers further manipulation like messageVPN setup.
 
-## Provider Implementation
+## Development
+
+This provider is  based on the [HashiCorp Developer Tutorial](https://developer.hashicorp.com/terraform/tutorials/providers-plugin-framework). 
+
+
+### Requirements
+
+- [Terraform](https://developer.hashicorp.com/terraform/downloads) >= 1.0
+- [Go](https://golang.org/doc/install) 1.22
+
+### Building The Provider
+
+1. Clone the repository
+1. Enter the repository directory
+1. Build the provider using the Go `install` command:
+
+```shell
+go install
+```
+
+### Adding Dependencies
+
+This provider uses [Go modules](https://github.com/golang/go/wiki/Modules).
+Please see the Go documentation for the most up to date information about using Go modules.
+
+```shell
+go get github.com/author/dependency
+go mod tidy
+```
+
+Then commit the changes to `go.mod` and `go.sum`.
+
+
+
+### Provider Implementation
 
 This provider only supports a small part of the missioncontrol API v2. It is curretnly not planned to implement the complete API. 
 
 The REST client to access the API is generated using [oapi-codegen] (https://github.com/deepmap/oapi-codegen) . 
 For CI testing the provider without actually calling the productive solace API, a fakeserver is included.
 
-This is the first project I've done in go - improvements and feedback are welcome.
-
-## Developing the Provider
+### Developing the Provider
 
 If you wish to work on the provider, you'll first need [Go](http://www.golang.org) installed on your machine (see [Requirements](#requirements) above).
 
@@ -94,3 +95,10 @@ provider_installation {
   direct {}
 }
 ~~~
+
+
+## Contributing
+
+Feedback and / or contributions are welcome. Contact hartmut.franz@gebit.de for details.
+
+## TODO License

@@ -14,10 +14,9 @@ on:
         required: false
         type: boolean
         default: false  
-  
-#  push:
-#    tags:
-#      - 'v*'
+  push:
+    tags:
+      - 'v*'
 
 # Releases need permissions to read and write the repository contents.
 # GitHub considers creating releases and uploading assets as writing contents.
