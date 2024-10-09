@@ -34,11 +34,11 @@ jobs:
       - uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5.0.0
         with:
           go-version-file: 'go.mod'
-          cache: true
-      - name: check existing gpg keys
-        run: gpg -K
+          cache: true   
       - name: import key      
-        run: /bin/bash -c "'${{ secrets.GPG_PRIVATE_KEY }}' | gpg --import"
+        env: 
+          PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}    
+        run: "echo \"$PRIVATE_KEY\" | gpg --batch --trust-mode always --import"
       - name: validate gpg keys
         run: gpg -K  
 
@@ -49,6 +49,7 @@ jobs:
       #  with:
       #    gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
       #    passphrase: ${{ secrets.PASSPHRASE }}
+
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@7ec5c2b0c6cdda6e8bbb49444bc797dd33d74dd8 # v5.0.0
         with:
@@ -56,5 +57,5 @@ jobs:
         env:
           # GitHub sets the GITHUB_TOKEN secret automatically.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # draft: skip signing
+          PASSPHRASE:  ${{ secrets.PASSPHRASE }}
           # GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
