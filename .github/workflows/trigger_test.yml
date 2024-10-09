@@ -1,7 +1,0 @@
-on: 
-  workflow_dispatch:
-
-jobs:
-  test:
-    name: "Parse Configs"
-    uses: ./.github/workflows/test.yml
