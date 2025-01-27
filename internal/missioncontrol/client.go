@@ -27,6 +27,12 @@ const (
 	BASIC    BrokerMonitoringMode = "BASIC"
 )
 
+// Defines values for CertificateType.
+const (
+	CUSTOM        CertificateType = "CUSTOM"
+	SOLACEMANAGED CertificateType = "SOLACE_MANAGED"
+)
+
 // Defines values for ConnectionEndpointAccessType.
 const (
 	PRIVATE ConnectionEndpointAccessType = "PRIVATE"
@@ -46,6 +52,11 @@ const (
 	DatacenterK8sServiceTypeNODEPORT     DatacenterK8sServiceType = "NODEPORT"
 )
 
+// Defines values for EventBrokerServiceVersionDetailsReleaseStatus.
+const (
+	REVOKED EventBrokerServiceVersionDetailsReleaseStatus = "REVOKED"
+)
+
 // Defines values for MsgVpnAuthenticationBasicType.
 const (
 	INTERNAL MsgVpnAuthenticationBasicType = "INTERNAL"
@@ -56,14 +67,18 @@ const (
 
 // Defines values for OperationOperationType.
 const (
-	CloneService          OperationOperationType = "cloneService"
-	CreateClientProfile   OperationOperationType = "createClientProfile"
-	CreateService         OperationOperationType = "createService"
-	DeleteClientProfile   OperationOperationType = "deleteClientProfile"
-	DeleteService         OperationOperationType = "deleteService"
-	InfrastructureRequest OperationOperationType = "infrastructureRequest"
-	ServiceRequest        OperationOperationType = "serviceRequest"
-	UpdateClientProfile   OperationOperationType = "updateClientProfile"
+	OperationOperationTypeCloneService          OperationOperationType = "cloneService"
+	OperationOperationTypeCreateClientProfile   OperationOperationType = "createClientProfile"
+	OperationOperationTypeCreateService         OperationOperationType = "createService"
+	OperationOperationTypeDatacenterRequest     OperationOperationType = "datacenterRequest"
+	OperationOperationTypeDeleteCertificate     OperationOperationType = "deleteCertificate"
+	OperationOperationTypeDeleteClientProfile   OperationOperationType = "deleteClientProfile"
+	OperationOperationTypeDeleteService         OperationOperationType = "deleteService"
+	OperationOperationTypeInfrastructureRequest OperationOperationType = "infrastructureRequest"
+	OperationOperationTypeInstallCertificate    OperationOperationType = "installCertificate"
+	OperationOperationTypeServiceRequest        OperationOperationType = "serviceRequest"
+	OperationOperationTypeUpdateClientProfile   OperationOperationType = "updateClientProfile"
+	OperationOperationTypeUploadCertificate     OperationOperationType = "uploadCertificate"
 )
 
 // Defines values for OperationStatus.
@@ -88,14 +103,6 @@ const (
 	INITIAL ServiceAdminState = "INITIAL"
 	START   ServiceAdminState = "START"
 	STOP    ServiceAdminState = "STOP"
-)
-
-// Defines values for ServiceCreationState.
-const (
-	ServiceCreationStateCOMPLETED  ServiceCreationState = "COMPLETED"
-	ServiceCreationStateFAILED     ServiceCreationState = "FAILED"
-	ServiceCreationStateINPROGRESS ServiceCreationState = "INPROGRESS"
-	ServiceCreationStatePENDING    ServiceCreationState = "PENDING"
 )
 
 // Defines values for ServiceClassId.
@@ -139,6 +146,14 @@ const (
 	ServiceSmfTlsListenPort                ServiceConnectionEndpointPortProtocol = "serviceSmfTlsListenPort"
 	ServiceWebPlainTextListenPort          ServiceConnectionEndpointPortProtocol = "serviceWebPlainTextListenPort"
 	ServiceWebTlsListenPort                ServiceConnectionEndpointPortProtocol = "serviceWebTlsListenPort"
+)
+
+// Defines values for ServiceCreationState.
+const (
+	ServiceCreationStateCOMPLETED  ServiceCreationState = "COMPLETED"
+	ServiceCreationStateFAILED     ServiceCreationState = "FAILED"
+	ServiceCreationStateINPROGRESS ServiceCreationState = "INPROGRESS"
+	ServiceCreationStatePENDING    ServiceCreationState = "PENDING"
 )
 
 // Defines values for GetDatacentersParamsDatacenterType.
@@ -221,7 +236,7 @@ type Broker struct {
 	// LdapProfiles The LDAP profiles configured for the event broker service.
 	LdapProfiles *[]LdapProfile `json:"ldapProfiles,omitempty"`
 
-	// ManagementReadOnlyLoginCredential The management admin login credentials
+	// ManagementReadOnlyLoginCredential The mission control manager login credentials
 	ManagementReadOnlyLoginCredential *ManagementLoginCredential `json:"managementReadOnlyLoginCredential,omitempty"`
 
 	// MaxSpoolUsage The maximum message spool usage allowed on the event broker service, in gigabytes (GB).
@@ -267,6 +282,9 @@ type CertificateAuthority struct {
 	// Name Name
 	Name *string `json:"name,omitempty"`
 }
+
+// CertificateType The certificate type.
+type CertificateType string
 
 // ClientProfile The client profile configured on the event broker service.
 type ClientProfile struct {
@@ -653,6 +671,13 @@ type CloneServiceRequest struct {
 	// DatacenterId The identifier of the datacenter.
 	DatacenterId string `json:"datacenterId"`
 
+	// EnvironmentId The unique identifier of the environment where you want to create the service.
+	//
+	// You can only specify an environment identifier when creating services in a Public Region. You cannot specify an environment identifier when creating a service in a Dedicated Region.
+	//
+	// Creating a service in a Public Region without specifying an environment identifier places it in the default environment.
+	EnvironmentId *string `json:"environmentId,omitempty"`
+
 	// Id The unique identifier of the clone service request.
 	Id *string `json:"id,omitempty"`
 
@@ -761,6 +786,7 @@ type ConnectionEndpoint struct {
 	// <li><b>Management</b></li>
 	// <ul>
 	// <li>'serviceManagementTlsListenPort'-Use the secured management connection, which uses SEMP to manage the event broker. This port must be enabled on at least one of the service connection endpoints on the event broker service.</li>
+	// <li>'managementSshTlsListenPort'-Use a secure port to connect to the event broker service to issue Solace Command Line Interface (CLI). This port provides you with scope-restricted access to the event broker service.</li>
 	// </ul>
 	// <ul>
 	Ports []ServiceConnectionEndpointPort `json:"ports"`
@@ -785,6 +811,13 @@ type CreateServiceRequest struct {
 
 	// DatacenterId The identifier of the datacenter.
 	DatacenterId string `json:"datacenterId"`
+
+	// EnvironmentId The unique identifier of the environment where you want to create the service.
+	//
+	// You can only specify an environment identifier when creating services in a Public Region. You cannot specify an environment identifier when creating a service in a Dedicated Region.
+	//
+	// Creating a service in a Public Region without specifying an environment identifier places it in the default environment.
+	EnvironmentId *string `json:"environmentId,omitempty"`
 
 	// EventBrokerVersion The event broker version. A default version is provided when this is not specified.
 	EventBrokerVersion *string `json:"eventBrokerVersion,omitempty"`
@@ -834,6 +867,9 @@ type Datacenter struct {
 	// DatacenterType The type of the datacenter, in terms of ownership. The valus can be a Public Region( 'SolacePublic'), a Dedicated Region('SolaceDedicated'), or a Customer-Controlled Region ('CustomerCloud' or 'CustomerOnPrem').
 	DatacenterType string `json:"datacenterType"`
 
+	// EnvironmentId The unique identifier of the datacenter's environment.
+	EnvironmentId *string `json:"environmentId,omitempty"`
+
 	// Id The identifier of the datacenter.
 	Id *string `json:"id,omitempty"`
 
@@ -859,12 +895,9 @@ type Datacenter struct {
 	// Provider The name of the cloud provider for the datacenter.
 	Provider string `json:"provider"`
 
-	// RegionId The identifier for the datacenter region.
+	// RegionId The unique identifier for the datacenter region.
 	RegionId                   *string                     `json:"regionId,omitempty"`
 	SpoolScaleUpCapabilityInfo *SpoolScaleUpCapabilityInfo `json:"spoolScaleUpCapabilityInfo,omitempty"`
-
-	// SpoolScalingFactor The disk scaling factor is a multiplier used to calculate the cost of message spool usage beyond the default spool size for an event broker service class. Disk scaling factor only applies to Public and Dedicated Region datacenters.
-	SpoolScalingFactor *int32 `json:"spoolScalingFactor,omitempty"`
 
 	// SupportedServiceClasses The list of supported service classes in the datacenter.
 	SupportedServiceClasses *[]ServiceClassId `json:"supportedServiceClasses,omitempty"`
@@ -885,6 +918,12 @@ type Datacenter struct {
 // DatacenterK8sServiceType The type of the Kubernetes service. The values can be 'LOADBALANCER' or 'NODEPORT'.
 type DatacenterK8sServiceType string
 
+// DatacenterRequest defines model for DatacenterRequest.
+type DatacenterRequest struct {
+	// EnvironmentId The unique identifier of the datacenter's environment.
+	EnvironmentId *string `json:"environmentId,omitempty"`
+}
+
 // DatacenterResponse defines model for DatacenterResponse.
 type DatacenterResponse struct {
 	Data Datacenter                        `json:"data"`
@@ -894,6 +933,30 @@ type DatacenterResponse struct {
 // DatacentersResponse defines model for DatacentersResponse.
 type DatacentersResponse struct {
 	Data []Datacenter                      `json:"data"`
+	Meta map[string]map[string]interface{} `json:"meta"`
+}
+
+// Environment defines model for Environment.
+type Environment struct {
+	// AllowServiceCreationInPublicRegions When this setting is false, it blocks the creation of services in public regions in this environment.
+	AllowServiceCreationInPublicRegions *bool `json:"allowServiceCreationInPublicRegions,omitempty"`
+
+	// Id The unique identifier for this environment.
+	Id *string `json:"id,omitempty"`
+
+	// Type The type of object for informational purposes.
+	Type *string `json:"type,omitempty"`
+}
+
+// EnvironmentRequest defines model for EnvironmentRequest.
+type EnvironmentRequest struct {
+	// AllowServiceCreationInPublicRegions When this setting is false, it blocks the creation of services in public regions in this environment.
+	AllowServiceCreationInPublicRegions *bool `json:"allowServiceCreationInPublicRegions,omitempty"`
+}
+
+// EnvironmentResponse defines model for EnvironmentResponse.
+type EnvironmentResponse struct {
+	Data Environment                       `json:"data"`
 	Meta map[string]map[string]interface{} `json:"meta"`
 }
 
@@ -961,6 +1024,18 @@ type EventBrokerServiceVersion struct {
 	Version string `json:"version"`
 }
 
+// EventBrokerServiceVersionDetails The event broker service version details.
+type EventBrokerServiceVersionDetails struct {
+	// ReleaseStatus The event broker service version release status.
+	ReleaseStatus *EventBrokerServiceVersionDetailsReleaseStatus `json:"releaseStatus,omitempty"`
+
+	// ReleaseStatusDetails The event broker service version release status details.
+	ReleaseStatusDetails *string `json:"releaseStatusDetails,omitempty"`
+}
+
+// EventBrokerServiceVersionDetailsReleaseStatus The event broker service version release status.
+type EventBrokerServiceVersionDetailsReleaseStatus string
+
 // EventBrokerServiceVersionsResponse defines model for EventBrokerServiceVersionsResponse.
 type EventBrokerServiceVersionsResponse struct {
 	Data []EventBrokerServiceVersion       `json:"data"`
@@ -979,6 +1054,26 @@ type EventBrokerVersions struct {
 type EventBrokerVersionsResponse struct {
 	Data EventBrokerVersions               `json:"data"`
 	Meta map[string]map[string]interface{} `json:"meta"`
+}
+
+// InfrastructureDetails Infrastructure details per service. Available on expand only.
+type InfrastructureDetails struct {
+	// BackupNodeHostname The backup node hostname.
+	BackupNodeHostname *string `json:"backupNodeHostname,omitempty"`
+
+	// InfrastructureId The identifier of the infrastructure.
+	InfrastructureId *string `json:"infrastructureId,omitempty"`
+
+	// MonitoringNodeHostname The monitoring node hostname.
+	MonitoringNodeHostname *string `json:"monitoringNodeHostname,omitempty"`
+
+	// PrimaryNodeHostname The primary node hostname.
+	PrimaryNodeHostname *string `json:"primaryNodeHostname,omitempty"`
+}
+
+// InstallCertificateRequest defines model for InstallCertificateRequest.
+type InstallCertificateRequest struct {
+	Passphrase *string `json:"passphrase,omitempty"`
 }
 
 // LdapProfile The LDAP profiles configured for the event broker service.
@@ -1014,7 +1109,7 @@ type LoginCredential struct {
 	Username *string `json:"username,omitempty"`
 }
 
-// ManagementLoginCredential The management admin login credentials
+// ManagementLoginCredential The mission control manager login credentials
 type ManagementLoginCredential struct {
 	// Password The password to log into the event broker service.
 	Password *string `json:"password,omitempty"`
@@ -1026,12 +1121,27 @@ type ManagementLoginCredential struct {
 	Username *string `json:"username,omitempty"`
 }
 
+// MessageSpool defines model for MessageSpool.
+type MessageSpool struct {
+	Id *string `json:"id,omitempty"`
+
+	// MessageSpoolSizeInGB The new size of the message spool in gigabytes (GB).
+	MessageSpoolSizeInGB int32 `json:"messageSpoolSizeInGB"`
+
+	// Type The type of object for informational purposes.
+	Type *string `json:"type,omitempty"`
+}
+
 // MessageSpoolDetails Message Spool details per service. Available on expand only.
 type MessageSpoolDetails struct {
-	DefaultGbSize    *int32 `json:"defaultGbSize,omitempty"`
+	// DefaultGbSize The default spool size for the service class in GB.
+	DefaultGbSize *int32 `json:"defaultGbSize,omitempty"`
+
+	// ExpandedGbBilled The number of GB billed for the service class.
 	ExpandedGbBilled *int32 `json:"expandedGbBilled,omitempty"`
-	StorageType      *int32 `json:"storageType,omitempty"`
-	TotalGbSize      *int32 `json:"totalGbSize,omitempty"`
+
+	// TotalGbSize The total spool size in GB.
+	TotalGbSize *int32 `json:"totalGbSize,omitempty"`
 }
 
 // MessageSpoolLimitClassesResponse defines model for MessageSpoolLimitClassesResponse.
@@ -1090,7 +1200,7 @@ type MsgVpn struct {
 	// EventLargeMsgThreshold The large message threshold generates events when the size of a message in a Message VPN exceeds a specified size.
 	EventLargeMsgThreshold *int32 `json:"eventLargeMsgThreshold,omitempty"`
 
-	// ManagementAdminLoginCredential The management admin login credentials
+	// ManagementAdminLoginCredential The mission control manager login credentials
 	ManagementAdminLoginCredential *ManagementLoginCredential `json:"managementAdminLoginCredential,omitempty"`
 
 	// MaxConnectionCount The maximum number of clients that are permitted to simultaneously connect to the Message VPN.
@@ -1116,6 +1226,9 @@ type MsgVpn struct {
 
 	// MaxTransactionCount The total number of simultaneous transactions (both local transactions and transactions within distributed/XA transaction branches) in a Message VPN.
 	MaxTransactionCount *int32 `json:"maxTransactionCount,omitempty"`
+
+	// MissionControlManagerLoginCredential The mission control manager login credentials
+	MissionControlManagerLoginCredential *ManagementLoginCredential `json:"missionControlManagerLoginCredential,omitempty"`
 
 	// MsgVpnName The name of the Message VPN.
 	MsgVpnName *string `json:"msgVpnName,omitempty"`
@@ -1148,10 +1261,10 @@ type Operation struct {
 	CreatedTime *string `json:"createdTime,omitempty"`
 	Error       *Error  `json:"error,omitempty"`
 
-	// Id The unique identifier for the operation.
+	// Id Operations requiring time to complete provide an operation identifier so you can query their progress.
 	Id *string `json:"id,omitempty"`
 
-	// OperationType The type of operation against the resource, such as 'createService', 'cloneService', 'deleteService', 'createClientProfile', 'updateClientProfile', and 'deleteClientProfile'.
+	// OperationType The type of operation against the resource.
 	OperationType *OperationOperationType `json:"operationType,omitempty"`
 
 	// ResourceId The resource ID that the operation belongs to.
@@ -1167,7 +1280,7 @@ type Operation struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// OperationOperationType The type of operation against the resource, such as 'createService', 'cloneService', 'deleteService', 'createClientProfile', 'updateClientProfile', and 'deleteClientProfile'.
+// OperationOperationType The type of operation against the resource.
 type OperationOperationType string
 
 // OperationStatus The status of the operation.
@@ -1222,6 +1335,66 @@ type SempRequest struct {
 	Uri    *string `json:"uri,omitempty"`
 }
 
+// ServerCertificate defines model for ServerCertificate.
+type ServerCertificate struct {
+	// CertificateType The certificate type.
+	CertificateType *CertificateType `json:"certificateType,omitempty"`
+
+	// Id The unique identifier for the server certificate. The server certificate ID is a combination of the event broker service ID where the server certificate is uploaded and the path to the server certificate.
+	Id *string `json:"id,omitempty"`
+
+	// Installed Indicates whether the certificate is installed.
+	Installed *bool `json:"installed,omitempty"`
+
+	// InstalledCertificateDetails This field appears only for an installed server certificate. The field provides information about the server certificate, and subject public key in a string, including: Serial Number, Signature Algorithm, Issuer, Validity dates, Subject, and Subject public key info. The Subject public key info includes: Public Key Algorithm, RSA Public Key value, and Modulus.This field is only present when the certificate is installed.
+	InstalledCertificateDetails *string `json:"installedCertificateDetails,omitempty"`
+
+	// SerialNumber The server certificate’s serial number. The certificate authority issues the serial number, which uniquely identifies the certificate.
+	SerialNumber *string `json:"serialNumber,omitempty"`
+
+	// Sha1Thumbprint The server certificate's SHA-1 Thumbprint. This value is the SHA-1 digest of the server certificate under DER form.  Equivalent of 'openssl x509 -fingerprint'.
+	Sha1Thumbprint *string `json:"sha1Thumbprint,omitempty"`
+
+	// SubjectCN The server certificate’s common name (CN).
+	SubjectCN *string `json:"subjectCN,omitempty"`
+
+	// Type The type of object for informational purposes.
+	Type *string `json:"type,omitempty"`
+
+	// ValidityNotAfter The date the server certificate expires, in ISO 8601 date/time format.
+	ValidityNotAfter *string `json:"validityNotAfter,omitempty"`
+
+	// ValidityNotBefore The date the server certificate is valid from in ISO 8601 date/time format.
+	ValidityNotBefore *string `json:"validityNotBefore,omitempty"`
+}
+
+// ServerCertificateResponse defines model for ServerCertificateResponse.
+type ServerCertificateResponse struct {
+	Data ServerCertificate                 `json:"data"`
+	Meta map[string]map[string]interface{} `json:"meta"`
+}
+
+// ServerCertificateSummary defines model for ServerCertificateSummary.
+type ServerCertificateSummary struct {
+	// CertificateType The certificate type.
+	CertificateType *CertificateType `json:"certificateType,omitempty"`
+
+	// Id The unique identifier for the server certificate. The server certificate ID is a combination of the event broker service ID where the server certificate is uploaded and the path to the server certificate.
+	Id *string `json:"id,omitempty"`
+
+	// Installed Indicates whether the certificate is installed.
+	Installed *bool `json:"installed,omitempty"`
+
+	// Type The type of object for informational purposes.
+	Type *string `json:"type,omitempty"`
+}
+
+// ServerCertificateSummaryResponse defines model for ServerCertificateSummaryResponse.
+type ServerCertificateSummaryResponse struct {
+	Data []ServerCertificateSummary        `json:"data"`
+	Meta map[string]map[string]interface{} `json:"meta"`
+}
+
 // Service defines model for Service.
 type Service struct {
 	// AdminState The administration state of the event broker service.
@@ -1229,9 +1402,6 @@ type Service struct {
 
 	// AllowedActions The allowed actions the user can perform on the event broker service and its configurations,  including: '<code>get</code>','<code>configure</code>','<code>update</code>','<code>broker_update</code>','<code>delete</code>','<code>assign</code>'.
 	AllowedActions *[]string `json:"allowedActions,omitempty"`
-
-	// AutomatedUpgradeEnabled Whether the event broker service is included in automated upgrades if automated upgrade is enabled for the org. The valid values are 'true' (enabled) or 'false' (disabled).
-	AutomatedUpgradeEnabled *bool `json:"automatedUpgradeEnabled,omitempty"`
 
 	// Broker Broker Details available on expand only.
 	Broker *Broker `json:"broker,omitempty"`
@@ -1250,13 +1420,22 @@ type Service struct {
 
 	// DefaultManagementHostname Default management hostname.
 	DefaultManagementHostname *string `json:"defaultManagementHostname,omitempty"`
+
+	// EnvironmentId The unique identifier of the environment the service is associated with.
+	EnvironmentId             *string `json:"environmentId,omitempty"`
 	EventBrokerServiceVersion string  `json:"eventBrokerServiceVersion"`
+
+	// EventBrokerServiceVersionDetails The event broker service version details.
+	EventBrokerServiceVersionDetails *EventBrokerServiceVersionDetails `json:"eventBrokerServiceVersionDetails,omitempty"`
 
 	// EventMeshId The identifier of the event mesh for which the event broker service belongs, if applicable.
 	EventMeshId *string `json:"eventMeshId,omitempty"`
 
 	// Id The identifier of the event broker service.
 	Id *string `json:"id,omitempty"`
+
+	// InfrastructureDetails Infrastructure details per service. Available on expand only.
+	InfrastructureDetails *InfrastructureDetails `json:"infrastructureDetails,omitempty"`
 
 	// InfrastructureId A unique identifier representing for the infrastructure of the event broker service.
 	InfrastructureId *string `json:"infrastructureId,omitempty"`
@@ -1294,9 +1473,6 @@ type Service struct {
 
 // ServiceAdminState The administration state of the event broker service.
 type ServiceAdminState string
-
-// ServiceCreationState The creation state of the event broker service.
-type ServiceCreationState string
 
 // ServiceClass defines model for ServiceClass.
 type ServiceClass struct {
@@ -1396,6 +1572,7 @@ type ServiceCloneAttributesComponents string
 // <li><b>Management</b></li>
 // <ul>
 // <li>'serviceManagementTlsListenPort'-Use the secured management connection, which uses SEMP to manage the event broker. This port must be enabled on at least one of the service connection endpoints on the event broker service.</li>
+// <li>'managementSshTlsListenPort'-Use a secure port to connect to the event broker service to issue Solace Command Line Interface (CLI). This port provides you with scope-restricted access to the event broker service.</li>
 // </ul>
 // <ul>
 type ServiceConnectionEndpointPort struct {
@@ -1409,15 +1586,84 @@ type ServiceConnectionEndpointPort struct {
 // ServiceConnectionEndpointPortProtocol Messaging or management protocol.
 type ServiceConnectionEndpointPortProtocol string
 
+// ServiceCreationState The creation state of the event broker service.
+type ServiceCreationState string
+
 // ServiceResponse defines model for ServiceResponse.
 type ServiceResponse struct {
 	Data Service                           `json:"data"`
 	Meta map[string]map[string]interface{} `json:"meta"`
 }
 
+// ServiceSummary defines model for ServiceSummary.
+type ServiceSummary struct {
+	// AdminState The administration state of the event broker service.
+	AdminState *ServiceAdminState `json:"adminState,omitempty"`
+
+	// AllowedActions The allowed actions the user can perform on the event broker service and its configurations,  including: '<code>get</code>','<code>configure</code>','<code>update</code>','<code>broker_update</code>','<code>delete</code>','<code>assign</code>'.
+	AllowedActions *[]string `json:"allowedActions,omitempty"`
+
+	// CreatedBy The unique identifier representing the user who created the event broker service.
+	CreatedBy *string `json:"createdBy,omitempty"`
+
+	// CreatedTime The time the event broker service was created, in ISO 8601 date/time format.
+	CreatedTime *time.Time `json:"createdTime,omitempty"`
+
+	// CreationState The creation state of the event broker service.
+	CreationState *ServiceCreationState `json:"creationState,omitempty"`
+
+	// DatacenterId The identifier of the datacenter.
+	DatacenterId *string `json:"datacenterId,omitempty"`
+
+	// EnvironmentId The unique identifier of the environment the service is associated with.
+	EnvironmentId *string `json:"environmentId,omitempty"`
+
+	// EventBrokerServiceVersion Event broker service version.
+	EventBrokerServiceVersion *string `json:"eventBrokerServiceVersion,omitempty"`
+
+	// EventBrokerServiceVersionDetails The event broker service version details.
+	EventBrokerServiceVersionDetails *EventBrokerServiceVersionDetails `json:"eventBrokerServiceVersionDetails,omitempty"`
+
+	// EventMeshId The identifier of the event mesh for which the event broker service belongs, if applicable.
+	EventMeshId *string `json:"eventMeshId,omitempty"`
+
+	// Id The identifier of the event broker service.
+	Id *string `json:"id,omitempty"`
+
+	// InfrastructureId A unique identifier representing for the infrastructure of the event broker service.
+	InfrastructureId *string `json:"infrastructureId,omitempty"`
+
+	// Locked Whether the event broker service has deletion protection enabled. The valid values are 'true' (enabled) or 'false' (disabled).
+	Locked *bool `json:"locked,omitempty"`
+
+	// MessageSpoolDetails Message Spool details per service. Available on expand only.
+	MessageSpoolDetails *MessageSpoolDetails `json:"messageSpoolDetails,omitempty"`
+
+	// Name The name of the event broker service.
+	Name *string `json:"name,omitempty"`
+
+	// OngoingOperationIds The operation identifiers for an ongoing operation on the event broker service.
+	OngoingOperationIds *[]string `json:"ongoingOperationIds,omitempty"`
+
+	// OwnedBy The unique identifier representing the user who owns the event broker service.
+	OwnedBy *string `json:"ownedBy,omitempty"`
+
+	// ServiceClassId Supported service classes.
+	ServiceClassId *ServiceClassId `json:"serviceClassId,omitempty"`
+
+	// Type The type of object for informational purposes.
+	Type *string `json:"type,omitempty"`
+
+	// UpdatedBy The unique identifier representing the user who last updated the event broker service.
+	UpdatedBy *string `json:"updatedBy,omitempty"`
+
+	// UpdatedTime The time of the last update was performed on the event broker service, in ISO 8601 date/time format.
+	UpdatedTime *time.Time `json:"updatedTime,omitempty"`
+}
+
 // ServiceSummaryResponse defines model for ServiceSummaryResponse.
 type ServiceSummaryResponse struct {
-	Data []Service                         `json:"data"`
+	Data []ServiceSummary                  `json:"data"`
 	Meta map[string]map[string]interface{} `json:"meta"`
 }
 
@@ -1445,6 +1691,12 @@ type UpdateServiceRequest struct {
 	OwnedBy *string `json:"ownedBy,omitempty"`
 }
 
+// UploadCertificateRequest defines model for UploadCertificateRequest.
+type UploadCertificateRequest struct {
+	Certificate string `json:"certificate"`
+	PrivateKey  string `json:"privateKey"`
+}
+
 // GetDatacentersParams defines parameters for GetDatacenters.
 type GetDatacentersParams struct {
 	// PageNumber The page number to retrieve.
@@ -1453,14 +1705,45 @@ type GetDatacentersParams struct {
 	// PageSize The number of datacenters to return per page.
 	PageSize *int `form:"pageSize,omitempty" json:"pageSize,omitempty"`
 
-	// Sort The sorting criteria for the list of datacenters.
+	// Sort <p>The sorting criteria for the returned results. You can sort the results by query
+	// parameter in ascending or descending order. Define the sort order using the following string:
+	// <code>fieldname:asc/desc</code> where:</p>
+	// <ul>
+	//         <li><code>fieldname</code>—The field name of the query parameter to sort by.</li>
+	//         <li><code>asc</code>—Sort the selected field name in ascending order.</li>
+	//         <li><code>desc</code>—Sort the selected field name in descending order.</li>
+	// </ul>
+	// <p>You can use multiple query parameters to refine the sorting order.</p>
 	Sort *string `form:"sort,omitempty" json:"sort,omitempty"`
 
-	// DatacenterType The datacenter type to filter datacenters list.
+	// DatacenterType <p>Filter the returned query results by datacenter type. The filtering options include:</p>
+	// <ul>
+	//         <li>'<code>Empty</code>'—Returns all datacenter types.</li>
+	//         <li>'<code>Unknown</code>'—Returns any datacenters where the <code>datacenterType</code>
+	//         is not set.</li>
+	//         <li>'<code>SolacePublic</code>'—Known as Public Regions. Public Regions are cloud-based,
+	//         managed datacenters shared between customers.</li>
+	//         <li>'<code>SolaceDedicated</code>'—Known as Dedicated Regions. Dedicated Regions are
+	//         cloud-based, managed datacenters dedicated to a single-customer.</li>
+	//         <li>'<code>CustomerControlled</code>'—Cloud-based Customer-Controlled Regions.</li>
+	//         <li>'<code>CustomerOnPrem</code>'—On-premises Customer-Controlled Regions.</li>
+	// </ul>
 	DatacenterType *GetDatacentersParamsDatacenterType `form:"datacenterType,omitempty" json:"datacenterType,omitempty"`
 
-	// Provider The provider name to filter datacenters list.
+	// Provider <p>Filter the returned query results by Kubernetes provider type.
+	// The filtering options include:</p>
+	// <ul>
+	//         <li>'<code>aks</code>'-Azure Kubernetes Service.</li>
+	//         <li>‘<code>eks</code>’-AWS Elastic Kubernetes Service.</li>
+	//         <li>‘<code>gce</code>’-Google Kubernetes Engine.</li>
+	//         <li>‘<code>k8s</code>’-Other Kubernetes provider.</li>
+	//         <li>‘<code>aws</code>’-(deprecated) VM-based on Amazon Web Services.</li>
+	//         <li>‘<code>azure</code>’-(deprecated) VM-based on Azure.</li>
+	// </ul>
 	Provider *GetDatacentersParamsProvider `form:"provider,omitempty" json:"provider,omitempty"`
+
+	// EnvironmentId <p>Filter the returned query results by an environment's unique identifier. You cannot filter public datacenters using an environment's unique identifier.</p>
+	EnvironmentId *string `form:"environmentId,omitempty" json:"environmentId,omitempty"`
 }
 
 // GetDatacentersParamsDatacenterType defines parameters for GetDatacenters.
@@ -1481,6 +1764,11 @@ type GetServicesParams struct {
 	// <li><code>ownedBy</code>, examples include:</li>
 	// <ul>
 	// <li><code>ownedBy==userId</code></li>
+	// </ul>
+	// <li><code>environmentId</code>, examples include:</li>
+	// <ul>
+	// <li><code>environmentId==12345</code></li>
+	// <li><code>environmentId!=345678</code></li>
 	// </ul>
 	// </ul>
 	CustomAttributes *string `form:"customAttributes,omitempty" json:"customAttributes,omitempty"`
@@ -1522,7 +1810,7 @@ type GetServicesParams struct {
 
 // GetServiceParams defines parameters for GetService.
 type GetServiceParams struct {
-	// Expand Additional information to retrieve for event broker service, such as connection endpoint information, broker details or allowed actions to perform on the event broker service
+	// Expand You can request additional information about the event broker service by selecting expand parameters, including connection endpoint information, broker details including version, allowed actions you can perform on the service, and message spool details.
 	Expand *[]GetServiceParamsExpand `form:"expand,omitempty" json:"expand,omitempty"`
 }
 
@@ -1573,6 +1861,12 @@ type GetServiceClassParams struct {
 // GetServiceClassParamsId defines parameters for GetServiceClass.
 type GetServiceClassParamsId string
 
+// UpdateDatacenterJSONRequestBody defines body for UpdateDatacenter for application/json ContentType.
+type UpdateDatacenterJSONRequestBody = DatacenterRequest
+
+// PatchEnvironmentJSONRequestBody defines body for PatchEnvironment for application/json ContentType.
+type PatchEnvironmentJSONRequestBody = EnvironmentRequest
+
 // CreateServiceJSONRequestBody defines body for CreateService for application/json ContentType.
 type CreateServiceJSONRequestBody = CreateServiceRequest
 
@@ -1600,8 +1894,17 @@ type UpdateClientProfileJSONRequestBody = ClientProfileRequest
 // ReplaceClientProfileJSONRequestBody defines body for ReplaceClientProfile for application/json ContentType.
 type ReplaceClientProfileJSONRequestBody = ClientProfileRequest
 
+// UpdateMessageSpoolJSONRequestBody defines body for UpdateMessageSpool for application/json ContentType.
+type UpdateMessageSpoolJSONRequestBody = MessageSpool
+
 // DisableOrEnableJSONRequestBody defines body for DisableOrEnable for application/json ContentType.
 type DisableOrEnableJSONRequestBody = BasicAuthAvailability
+
+// UploadServerCertificateJSONRequestBody defines body for UploadServerCertificate for application/json ContentType.
+type UploadServerCertificateJSONRequestBody = UploadCertificateRequest
+
+// InstallServerCertificateJSONRequestBody defines body for InstallServerCertificate for application/json ContentType.
+type InstallServerCertificateJSONRequestBody = InstallCertificateRequest
 
 // RequestEditorFn  is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
@@ -1682,11 +1985,24 @@ type ClientInterface interface {
 	// GetDatacenter request
 	GetDatacenter(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// UpdateDatacenterWithBody request with any body
+	UpdateDatacenterWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateDatacenter(ctx context.Context, id string, body UpdateDatacenterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetEventBrokerServiceVersions request
 	GetEventBrokerServiceVersions(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetVersions request
 	GetVersions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetEnvironment request
+	GetEnvironment(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PatchEnvironmentWithBody request with any body
+	PatchEnvironmentWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	PatchEnvironment(ctx context.Context, id string, body PatchEnvironmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetServices request
 	GetServices(ctx context.Context, params *GetServicesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -1757,6 +2073,11 @@ type ClientInterface interface {
 
 	ReplaceClientProfile(ctx context.Context, serviceId string, name string, body ReplaceClientProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// UpdateMessageSpoolWithBody request with any body
+	UpdateMessageSpoolWithBody(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateMessageSpool(ctx context.Context, serviceId string, body UpdateMessageSpoolJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetServiceOperation request
 	GetServiceOperation(ctx context.Context, serviceId string, operationId string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -1764,6 +2085,25 @@ type ClientInterface interface {
 	DisableOrEnableWithBody(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	DisableOrEnable(ctx context.Context, serviceId string, body DisableOrEnableJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetAllServerCertificates request
+	GetAllServerCertificates(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UploadServerCertificateWithBody request with any body
+	UploadServerCertificateWithBody(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UploadServerCertificate(ctx context.Context, serviceId string, body UploadServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteServerCertificateById request
+	DeleteServerCertificateById(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetServerCertificateById request
+	GetServerCertificateById(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// InstallServerCertificateWithBody request with any body
+	InstallServerCertificateWithBody(ctx context.Context, serviceId string, certificateId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	InstallServerCertificate(ctx context.Context, serviceId string, certificateId string, body InstallServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetLimits request
 	GetLimits(ctx context.Context, orgId string, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -1799,6 +2139,30 @@ func (c *Client) GetDatacenter(ctx context.Context, id string, reqEditors ...Req
 	return c.Client.Do(req)
 }
 
+func (c *Client) UpdateDatacenterWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateDatacenterRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateDatacenter(ctx context.Context, id string, body UpdateDatacenterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateDatacenterRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) GetEventBrokerServiceVersions(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetEventBrokerServiceVersionsRequest(c.Server, id)
 	if err != nil {
@@ -1813,6 +2177,42 @@ func (c *Client) GetEventBrokerServiceVersions(ctx context.Context, id string, r
 
 func (c *Client) GetVersions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetVersionsRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetEnvironment(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetEnvironmentRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) PatchEnvironmentWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPatchEnvironmentRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) PatchEnvironment(ctx context.Context, id string, body PatchEnvironmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPatchEnvironmentRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -2135,6 +2535,30 @@ func (c *Client) ReplaceClientProfile(ctx context.Context, serviceId string, nam
 	return c.Client.Do(req)
 }
 
+func (c *Client) UpdateMessageSpoolWithBody(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateMessageSpoolRequestWithBody(c.Server, serviceId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateMessageSpool(ctx context.Context, serviceId string, body UpdateMessageSpoolJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateMessageSpoolRequest(c.Server, serviceId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) GetServiceOperation(ctx context.Context, serviceId string, operationId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetServiceOperationRequest(c.Server, serviceId, operationId)
 	if err != nil {
@@ -2161,6 +2585,90 @@ func (c *Client) DisableOrEnableWithBody(ctx context.Context, serviceId string, 
 
 func (c *Client) DisableOrEnable(ctx context.Context, serviceId string, body DisableOrEnableJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDisableOrEnableRequest(c.Server, serviceId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetAllServerCertificates(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetAllServerCertificatesRequest(c.Server, serviceId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UploadServerCertificateWithBody(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUploadServerCertificateRequestWithBody(c.Server, serviceId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UploadServerCertificate(ctx context.Context, serviceId string, body UploadServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUploadServerCertificateRequest(c.Server, serviceId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteServerCertificateById(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteServerCertificateByIdRequest(c.Server, serviceId, certificateId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetServerCertificateById(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetServerCertificateByIdRequest(c.Server, serviceId, certificateId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) InstallServerCertificateWithBody(ctx context.Context, serviceId string, certificateId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewInstallServerCertificateRequestWithBody(c.Server, serviceId, certificateId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) InstallServerCertificate(ctx context.Context, serviceId string, certificateId string, body InstallServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewInstallServerCertificateRequest(c.Server, serviceId, certificateId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -2309,6 +2817,22 @@ func NewGetDatacentersRequest(server string, params *GetDatacentersParams) (*htt
 
 		}
 
+		if params.EnvironmentId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "environmentId", runtime.ParamLocationQuery, *params.EnvironmentId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		queryURL.RawQuery = queryValues.Encode()
 	}
 
@@ -2350,6 +2874,53 @@ func NewGetDatacenterRequest(server string, id string) (*http.Request, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewUpdateDatacenterRequest calls the generic UpdateDatacenter builder with application/json body
+func NewUpdateDatacenterRequest(server string, id string, body UpdateDatacenterJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateDatacenterRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateDatacenterRequestWithBody generates requests for UpdateDatacenter with any type of body
+func NewUpdateDatacenterRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/datacenters/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -2411,6 +2982,87 @@ func NewGetVersionsRequest(server string) (*http.Request, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewGetEnvironmentRequest generates requests for GetEnvironment
+func NewGetEnvironmentRequest(server string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/environments/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewPatchEnvironmentRequest calls the generic PatchEnvironment builder with application/json body
+func NewPatchEnvironmentRequest(server string, id string, body PatchEnvironmentJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewPatchEnvironmentRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewPatchEnvironmentRequestWithBody generates requests for PatchEnvironment with any type of body
+func NewPatchEnvironmentRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/environments/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -3343,6 +3995,53 @@ func NewReplaceClientProfileRequestWithBody(server string, serviceId string, nam
 	return req, nil
 }
 
+// NewUpdateMessageSpoolRequest calls the generic UpdateMessageSpool builder with application/json body
+func NewUpdateMessageSpoolRequest(server string, serviceId string, body UpdateMessageSpoolJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateMessageSpoolRequestWithBody(server, serviceId, "application/json", bodyReader)
+}
+
+// NewUpdateMessageSpoolRequestWithBody generates requests for UpdateMessageSpool with any type of body
+func NewUpdateMessageSpoolRequestWithBody(server string, serviceId string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "serviceId", runtime.ParamLocationPath, serviceId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/messageSpool", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewGetServiceOperationRequest generates requests for GetServiceOperation
 func NewGetServiceOperationRequest(server string, serviceId string, operationId string) (*http.Request, error) {
 	var err error
@@ -3422,6 +4121,223 @@ func NewDisableOrEnableRequestWithBody(server string, serviceId string, contentT
 	}
 
 	req, err := http.NewRequest("PUT", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetAllServerCertificatesRequest generates requests for GetAllServerCertificates
+func NewGetAllServerCertificatesRequest(server string, serviceId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "serviceId", runtime.ParamLocationPath, serviceId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/serverCertificates", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUploadServerCertificateRequest calls the generic UploadServerCertificate builder with application/json body
+func NewUploadServerCertificateRequest(server string, serviceId string, body UploadServerCertificateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUploadServerCertificateRequestWithBody(server, serviceId, "application/json", bodyReader)
+}
+
+// NewUploadServerCertificateRequestWithBody generates requests for UploadServerCertificate with any type of body
+func NewUploadServerCertificateRequestWithBody(server string, serviceId string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "serviceId", runtime.ParamLocationPath, serviceId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/serverCertificates", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteServerCertificateByIdRequest generates requests for DeleteServerCertificateById
+func NewDeleteServerCertificateByIdRequest(server string, serviceId string, certificateId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "serviceId", runtime.ParamLocationPath, serviceId)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "certificateId", runtime.ParamLocationPath, certificateId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/serverCertificates/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetServerCertificateByIdRequest generates requests for GetServerCertificateById
+func NewGetServerCertificateByIdRequest(server string, serviceId string, certificateId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "serviceId", runtime.ParamLocationPath, serviceId)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "certificateId", runtime.ParamLocationPath, certificateId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/serverCertificates/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewInstallServerCertificateRequest calls the generic InstallServerCertificate builder with application/json body
+func NewInstallServerCertificateRequest(server string, serviceId string, certificateId string, body InstallServerCertificateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewInstallServerCertificateRequestWithBody(server, serviceId, certificateId, "application/json", bodyReader)
+}
+
+// NewInstallServerCertificateRequestWithBody generates requests for InstallServerCertificate with any type of body
+func NewInstallServerCertificateRequestWithBody(server string, serviceId string, certificateId string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "serviceId", runtime.ParamLocationPath, serviceId)
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithLocation("simple", false, "certificateId", runtime.ParamLocationPath, certificateId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/serverCertificates/%s/install", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
@@ -3619,11 +4535,24 @@ type ClientWithResponsesInterface interface {
 	// GetDatacenterWithResponse request
 	GetDatacenterWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetDatacenterResponse, error)
 
+	// UpdateDatacenterWithBodyWithResponse request with any body
+	UpdateDatacenterWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateDatacenterResponse, error)
+
+	UpdateDatacenterWithResponse(ctx context.Context, id string, body UpdateDatacenterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateDatacenterResponse, error)
+
 	// GetEventBrokerServiceVersionsWithResponse request
 	GetEventBrokerServiceVersionsWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetEventBrokerServiceVersionsResponse, error)
 
 	// GetVersionsWithResponse request
 	GetVersionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetVersionsResponse, error)
+
+	// GetEnvironmentWithResponse request
+	GetEnvironmentWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetEnvironmentResponse, error)
+
+	// PatchEnvironmentWithBodyWithResponse request with any body
+	PatchEnvironmentWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchEnvironmentResponse, error)
+
+	PatchEnvironmentWithResponse(ctx context.Context, id string, body PatchEnvironmentJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchEnvironmentResponse, error)
 
 	// GetServicesWithResponse request
 	GetServicesWithResponse(ctx context.Context, params *GetServicesParams, reqEditors ...RequestEditorFn) (*GetServicesResponse, error)
@@ -3694,6 +4623,11 @@ type ClientWithResponsesInterface interface {
 
 	ReplaceClientProfileWithResponse(ctx context.Context, serviceId string, name string, body ReplaceClientProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceClientProfileResponse, error)
 
+	// UpdateMessageSpoolWithBodyWithResponse request with any body
+	UpdateMessageSpoolWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateMessageSpoolResponse, error)
+
+	UpdateMessageSpoolWithResponse(ctx context.Context, serviceId string, body UpdateMessageSpoolJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateMessageSpoolResponse, error)
+
 	// GetServiceOperationWithResponse request
 	GetServiceOperationWithResponse(ctx context.Context, serviceId string, operationId string, reqEditors ...RequestEditorFn) (*GetServiceOperationResponse, error)
 
@@ -3701,6 +4635,25 @@ type ClientWithResponsesInterface interface {
 	DisableOrEnableWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DisableOrEnableResponse, error)
 
 	DisableOrEnableWithResponse(ctx context.Context, serviceId string, body DisableOrEnableJSONRequestBody, reqEditors ...RequestEditorFn) (*DisableOrEnableResponse, error)
+
+	// GetAllServerCertificatesWithResponse request
+	GetAllServerCertificatesWithResponse(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*GetAllServerCertificatesResponse, error)
+
+	// UploadServerCertificateWithBodyWithResponse request with any body
+	UploadServerCertificateWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadServerCertificateResponse, error)
+
+	UploadServerCertificateWithResponse(ctx context.Context, serviceId string, body UploadServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*UploadServerCertificateResponse, error)
+
+	// DeleteServerCertificateByIdWithResponse request
+	DeleteServerCertificateByIdWithResponse(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*DeleteServerCertificateByIdResponse, error)
+
+	// GetServerCertificateByIdWithResponse request
+	GetServerCertificateByIdWithResponse(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*GetServerCertificateByIdResponse, error)
+
+	// InstallServerCertificateWithBodyWithResponse request with any body
+	InstallServerCertificateWithBodyWithResponse(ctx context.Context, serviceId string, certificateId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*InstallServerCertificateResponse, error)
+
+	InstallServerCertificateWithResponse(ctx context.Context, serviceId string, certificateId string, body InstallServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*InstallServerCertificateResponse, error)
 
 	// GetLimitsWithResponse request
 	GetLimitsWithResponse(ctx context.Context, orgId string, reqEditors ...RequestEditorFn) (*GetLimitsResponse, error)
@@ -3763,6 +4716,32 @@ func (r GetDatacenterResponse) StatusCode() int {
 	return 0
 }
 
+type UpdateDatacenterResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *DatacenterResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateDatacenterResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateDatacenterResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type GetEventBrokerServiceVersionsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -3808,6 +4787,56 @@ func (r GetVersionsResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r GetVersionsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetEnvironmentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetEnvironmentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetEnvironmentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type PatchEnvironmentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r PatchEnvironmentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PatchEnvironmentResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -4250,6 +5279,33 @@ func (r ReplaceClientProfileResponse) StatusCode() int {
 	return 0
 }
 
+type UpdateMessageSpoolResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON202      *OperationResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateMessageSpoolResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateMessageSpoolResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type GetServiceOperationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -4294,6 +5350,136 @@ func (r DisableOrEnableResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r DisableOrEnableResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetAllServerCertificatesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *ServerCertificateSummaryResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetAllServerCertificatesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetAllServerCertificatesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type UploadServerCertificateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON202      *OperationResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r UploadServerCertificateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UploadServerCertificateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteServerCertificateByIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON202      *OperationResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteServerCertificateByIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteServerCertificateByIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetServerCertificateByIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *ServerCertificateResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetServerCertificateByIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetServerCertificateByIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type InstallServerCertificateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON202      *OperationResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r InstallServerCertificateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r InstallServerCertificateResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -4396,6 +5582,23 @@ func (c *ClientWithResponses) GetDatacenterWithResponse(ctx context.Context, id 
 	return ParseGetDatacenterResponse(rsp)
 }
 
+// UpdateDatacenterWithBodyWithResponse request with arbitrary body returning *UpdateDatacenterResponse
+func (c *ClientWithResponses) UpdateDatacenterWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateDatacenterResponse, error) {
+	rsp, err := c.UpdateDatacenterWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateDatacenterResponse(rsp)
+}
+
+func (c *ClientWithResponses) UpdateDatacenterWithResponse(ctx context.Context, id string, body UpdateDatacenterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateDatacenterResponse, error) {
+	rsp, err := c.UpdateDatacenter(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateDatacenterResponse(rsp)
+}
+
 // GetEventBrokerServiceVersionsWithResponse request returning *GetEventBrokerServiceVersionsResponse
 func (c *ClientWithResponses) GetEventBrokerServiceVersionsWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetEventBrokerServiceVersionsResponse, error) {
 	rsp, err := c.GetEventBrokerServiceVersions(ctx, id, reqEditors...)
@@ -4412,6 +5615,32 @@ func (c *ClientWithResponses) GetVersionsWithResponse(ctx context.Context, reqEd
 		return nil, err
 	}
 	return ParseGetVersionsResponse(rsp)
+}
+
+// GetEnvironmentWithResponse request returning *GetEnvironmentResponse
+func (c *ClientWithResponses) GetEnvironmentWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetEnvironmentResponse, error) {
+	rsp, err := c.GetEnvironment(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetEnvironmentResponse(rsp)
+}
+
+// PatchEnvironmentWithBodyWithResponse request with arbitrary body returning *PatchEnvironmentResponse
+func (c *ClientWithResponses) PatchEnvironmentWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchEnvironmentResponse, error) {
+	rsp, err := c.PatchEnvironmentWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePatchEnvironmentResponse(rsp)
+}
+
+func (c *ClientWithResponses) PatchEnvironmentWithResponse(ctx context.Context, id string, body PatchEnvironmentJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchEnvironmentResponse, error) {
+	rsp, err := c.PatchEnvironment(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePatchEnvironmentResponse(rsp)
 }
 
 // GetServicesWithResponse request returning *GetServicesResponse
@@ -4639,6 +5868,23 @@ func (c *ClientWithResponses) ReplaceClientProfileWithResponse(ctx context.Conte
 	return ParseReplaceClientProfileResponse(rsp)
 }
 
+// UpdateMessageSpoolWithBodyWithResponse request with arbitrary body returning *UpdateMessageSpoolResponse
+func (c *ClientWithResponses) UpdateMessageSpoolWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateMessageSpoolResponse, error) {
+	rsp, err := c.UpdateMessageSpoolWithBody(ctx, serviceId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateMessageSpoolResponse(rsp)
+}
+
+func (c *ClientWithResponses) UpdateMessageSpoolWithResponse(ctx context.Context, serviceId string, body UpdateMessageSpoolJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateMessageSpoolResponse, error) {
+	rsp, err := c.UpdateMessageSpool(ctx, serviceId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateMessageSpoolResponse(rsp)
+}
+
 // GetServiceOperationWithResponse request returning *GetServiceOperationResponse
 func (c *ClientWithResponses) GetServiceOperationWithResponse(ctx context.Context, serviceId string, operationId string, reqEditors ...RequestEditorFn) (*GetServiceOperationResponse, error) {
 	rsp, err := c.GetServiceOperation(ctx, serviceId, operationId, reqEditors...)
@@ -4663,6 +5909,67 @@ func (c *ClientWithResponses) DisableOrEnableWithResponse(ctx context.Context, s
 		return nil, err
 	}
 	return ParseDisableOrEnableResponse(rsp)
+}
+
+// GetAllServerCertificatesWithResponse request returning *GetAllServerCertificatesResponse
+func (c *ClientWithResponses) GetAllServerCertificatesWithResponse(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*GetAllServerCertificatesResponse, error) {
+	rsp, err := c.GetAllServerCertificates(ctx, serviceId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetAllServerCertificatesResponse(rsp)
+}
+
+// UploadServerCertificateWithBodyWithResponse request with arbitrary body returning *UploadServerCertificateResponse
+func (c *ClientWithResponses) UploadServerCertificateWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadServerCertificateResponse, error) {
+	rsp, err := c.UploadServerCertificateWithBody(ctx, serviceId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUploadServerCertificateResponse(rsp)
+}
+
+func (c *ClientWithResponses) UploadServerCertificateWithResponse(ctx context.Context, serviceId string, body UploadServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*UploadServerCertificateResponse, error) {
+	rsp, err := c.UploadServerCertificate(ctx, serviceId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUploadServerCertificateResponse(rsp)
+}
+
+// DeleteServerCertificateByIdWithResponse request returning *DeleteServerCertificateByIdResponse
+func (c *ClientWithResponses) DeleteServerCertificateByIdWithResponse(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*DeleteServerCertificateByIdResponse, error) {
+	rsp, err := c.DeleteServerCertificateById(ctx, serviceId, certificateId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteServerCertificateByIdResponse(rsp)
+}
+
+// GetServerCertificateByIdWithResponse request returning *GetServerCertificateByIdResponse
+func (c *ClientWithResponses) GetServerCertificateByIdWithResponse(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*GetServerCertificateByIdResponse, error) {
+	rsp, err := c.GetServerCertificateById(ctx, serviceId, certificateId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetServerCertificateByIdResponse(rsp)
+}
+
+// InstallServerCertificateWithBodyWithResponse request with arbitrary body returning *InstallServerCertificateResponse
+func (c *ClientWithResponses) InstallServerCertificateWithBodyWithResponse(ctx context.Context, serviceId string, certificateId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*InstallServerCertificateResponse, error) {
+	rsp, err := c.InstallServerCertificateWithBody(ctx, serviceId, certificateId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseInstallServerCertificateResponse(rsp)
+}
+
+func (c *ClientWithResponses) InstallServerCertificateWithResponse(ctx context.Context, serviceId string, certificateId string, body InstallServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*InstallServerCertificateResponse, error) {
+	rsp, err := c.InstallServerCertificate(ctx, serviceId, certificateId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseInstallServerCertificateResponse(rsp)
 }
 
 // GetLimitsWithResponse request returning *GetLimitsResponse
@@ -4793,6 +6100,60 @@ func ParseGetDatacenterResponse(rsp *http.Response) (*GetDatacenterResponse, err
 	return response, nil
 }
 
+// ParseUpdateDatacenterResponse parses an HTTP response from a UpdateDatacenterWithResponse call
+func ParseUpdateDatacenterResponse(rsp *http.Response) (*UpdateDatacenterResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateDatacenterResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DatacenterResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseGetEventBrokerServiceVersionsResponse parses an HTTP response from a GetEventBrokerServiceVersionsWithResponse call
 func ParseGetEventBrokerServiceVersionsResponse(rsp *http.Response) (*GetEventBrokerServiceVersionsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -4874,6 +6235,103 @@ func ParseGetVersionsResponse(rsp *http.Response) (*GetVersionsResponse, error) 
 			return nil, err
 		}
 		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	case rsp.StatusCode == 400:
+		// Content-type (*/*) unsupported
+
+	}
+
+	return response, nil
+}
+
+// ParseGetEnvironmentResponse parses an HTTP response from a GetEnvironmentWithResponse call
+func ParseGetEnvironmentResponse(rsp *http.Response) (*GetEnvironmentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetEnvironmentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePatchEnvironmentResponse parses an HTTP response from a PatchEnvironmentWithResponse call
+func ParsePatchEnvironmentResponse(rsp *http.Response) (*PatchEnvironmentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PatchEnvironmentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
 		var dest ErrorResponse
@@ -5770,6 +7228,67 @@ func ParseReplaceClientProfileResponse(rsp *http.Response) (*ReplaceClientProfil
 	return response, nil
 }
 
+// ParseUpdateMessageSpoolResponse parses an HTTP response from a UpdateMessageSpoolWithResponse call
+func ParseUpdateMessageSpoolResponse(rsp *http.Response) (*UpdateMessageSpoolResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateMessageSpoolResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest OperationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseGetServiceOperationResponse parses an HTTP response from a GetServiceOperationWithResponse call
 func ParseGetServiceOperationResponse(rsp *http.Response) (*GetServiceOperationResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -5864,6 +7383,276 @@ func ParseDisableOrEnableResponse(rsp *http.Response) (*DisableOrEnableResponse,
 	return response, nil
 }
 
+// ParseGetAllServerCertificatesResponse parses an HTTP response from a GetAllServerCertificatesWithResponse call
+func ParseGetAllServerCertificatesResponse(rsp *http.Response) (*GetAllServerCertificatesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetAllServerCertificatesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerCertificateSummaryResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUploadServerCertificateResponse parses an HTTP response from a UploadServerCertificateWithResponse call
+func ParseUploadServerCertificateResponse(rsp *http.Response) (*UploadServerCertificateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UploadServerCertificateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest OperationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteServerCertificateByIdResponse parses an HTTP response from a DeleteServerCertificateByIdWithResponse call
+func ParseDeleteServerCertificateByIdResponse(rsp *http.Response) (*DeleteServerCertificateByIdResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteServerCertificateByIdResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest OperationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetServerCertificateByIdResponse parses an HTTP response from a GetServerCertificateByIdWithResponse call
+func ParseGetServerCertificateByIdResponse(rsp *http.Response) (*GetServerCertificateByIdResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetServerCertificateByIdResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerCertificateResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseInstallServerCertificateResponse parses an HTTP response from a InstallServerCertificateWithResponse call
+func ParseInstallServerCertificateResponse(rsp *http.Response) (*InstallServerCertificateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &InstallServerCertificateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest OperationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseGetLimitsResponse parses an HTTP response from a GetLimitsWithResponse call
 func ParseGetLimitsResponse(rsp *http.Response) (*GetLimitsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -5912,6 +7701,9 @@ func ParseGetLimitsResponse(rsp *http.Response) (*GetLimitsResponse, error) {
 			return nil, err
 		}
 		response.JSON503 = &dest
+
+	case rsp.StatusCode == 400:
+		// Content-type (*/*) unsupported
 
 	}
 
