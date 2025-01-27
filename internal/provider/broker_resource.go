@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httputil"
+	"strings"
 	"terraform-provider-gsolaceclustermgr/internal/missioncontrol"
 	"time"
 
@@ -279,13 +280,22 @@ func (r *brokerResource) Read(ctx context.Context, req resource.ReadRequest, res
 		return
 	}
 	if getResp.StatusCode() != 200 {
-		// 404 in recent API has there might be an ErrorDTO with message / errorId
+		tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", getResp.Body))
 
+		// handle vanished resources
+		if getResp.StatusCode() == 404 {
+			// As of 20250127 the response is not as specified, so we cannot use getResp.JSON404
+			if strings.Contains(string(getResp.Body), "Could not find event broker service with id") {
+				tflog.Warn(ctx, "Could not find event broker service")
+				// refresh state
+				resp.State.RemoveResource(ctx)
+				return
+			}
+		}
 		resp.Diagnostics.AddError(
-			"Error Checking broker status",
+			"Error getting broker service info",
 			fmt.Sprintf("Unexpected response code: %v", getResp.StatusCode()),
 		)
-		tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", getResp.Body))
 		return
 	}
 
@@ -338,6 +348,7 @@ func (r *brokerResource) Update(ctx context.Context, req resource.UpdateRequest,
 		return
 	}
 	if updateResp.StatusCode() != 200 {
+		// do not catch 404 (vanished resources), that is an error
 		resp.Diagnostics.AddError(
 			"Error creating broker service",
 			fmt.Sprintf("Unexpected response code: %v", updateResp.StatusCode()),
@@ -386,6 +397,17 @@ func (r *brokerResource) Delete(ctx context.Context, req resource.DeleteRequest,
 		return
 	}
 	if delResp.StatusCode() != 202 {
+		tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", delResp.Body))
+
+		// handlin a vanished resource (likely already detected in plan/read)
+		if delResp.StatusCode() == 404 {
+			// As of 20250127 the response is not as specified, so we cannot use getResp.JSON404
+			if strings.Contains(string(delResp.Body), "Could not find event broker service with id") {
+				tflog.Warn(ctx, "Could not find event broker service")
+				// this is tolerable!
+				return
+			}
+		}
 		resp.Diagnostics.AddError(
 			"Error Checking broker status",
 			fmt.Sprintf("Unexpected response code: %v", delResp.StatusCode()),
