@@ -235,9 +235,13 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 			plannedState.Status = types.StringValue(string(*(getResp.JSON200.Data.CreationState)))
 			if getResp.JSON200.Data.CreatedTime != nil {
 				plannedState.Created = types.StringValue(getResp.JSON200.Data.CreatedTime.Format(time.RFC850))
+			} else {
+				plannedState.Created = types.StringValue(time.Now().Format(time.RFC850))
 			}
 			if getResp.JSON200.Data.UpdatedTime != nil {
 				plannedState.LastUpdated = types.StringValue(getResp.JSON200.Data.UpdatedTime.Format(time.RFC850))
+			} else {
+				plannedState.LastUpdated = types.StringValue("")
 			}
 		}
 
@@ -275,6 +279,8 @@ func (r *brokerResource) Read(ctx context.Context, req resource.ReadRequest, res
 		return
 	}
 	if getResp.StatusCode() != 200 {
+		// 404 in recent API has there might be an ErrorDTO with message / errorId
+
 		resp.Diagnostics.AddError(
 			"Error Checking broker status",
 			fmt.Sprintf("Unexpected response code: %v", getResp.StatusCode()),

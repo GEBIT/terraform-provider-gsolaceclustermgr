@@ -38,7 +38,7 @@ This provider is  based on the [HashiCorp Developer Tutorial](https://developer.
 ### Requirements
 
 - [Terraform](https://developer.hashicorp.com/terraform/downloads) >= 1.0
-- [Go](https://golang.org/doc/install) 1.22
+- [Go](https://golang.org/doc/install) >= 1.22
 
 ### Building The Provider
 
@@ -56,7 +56,7 @@ This provider uses [Go modules](https://github.com/golang/go/wiki/Modules).
 Please see the Go documentation for the most up to date information about using Go modules.
 
 ```shell
-go get github.com/author/dependency
+go get <github.com/author/dependency>
 go mod tidy
 ```
 
