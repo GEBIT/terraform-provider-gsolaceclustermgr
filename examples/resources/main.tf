@@ -17,7 +17,7 @@ provider "gsolaceclustermgr" {
 resource "gsolaceclustermgr_broker" "ocs-test" {
   count           = 1
   serviceclass_id = "ENTERPRISE_250_STANDALONE"
-  name            = "ocs-prov-testX"
+  name            = "ocs-prov-test"
   datacenter_id   = "aks-germanywestcentral"
   msg_vpn_name    = "ocs-msgvpn-1"
   cluster_name    = "gwc-aks-cluster1"

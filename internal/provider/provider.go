@@ -6,12 +6,9 @@ import (
 	"os"
 	"terraform-provider-gsolaceclustermgr/internal/missioncontrol"
 
-	// "missioncontrol"
-
 	"net/http"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
-	"github.com/hashicorp/terraform-plugin-framework/ephemeral"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
@@ -28,8 +25,7 @@ type clusterManagerProviderModel struct {
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ provider.Provider                       = &clusterManagerProvider{}
-	_ provider.ProviderWithEphemeralResources = &clusterManagerProvider{}
+	_ provider.Provider = &clusterManagerProvider{}
 )
 
 // New is a helper function to simplify provider server and testing implementation.
@@ -185,11 +181,6 @@ func (p *clusterManagerProvider) Configure(ctx context.Context, req provider.Con
 
 // DataSources defines the data sources implemented in the provider.
 func (p *clusterManagerProvider) DataSources(_ context.Context) []func() datasource.DataSource {
-	return nil
-}
-
-// Ephemeral defines the ephemeral sources implemented in the provider.
-func (p *clusterManagerProvider) EphemeralResources(ctx context.Context) []func() ephemeral.EphemeralResource {
 	return nil
 }
 
