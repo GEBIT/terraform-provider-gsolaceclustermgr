@@ -11,5 +11,5 @@ import (
 	_ "github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs"
 
 	// api client generation
-	_ "github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen"
+	_ "github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen"
 )
