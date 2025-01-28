@@ -223,15 +223,29 @@ func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo ServiceInfo) {
 	}
 }
 
-func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo ServiceInfo, jObj map[string]interface{}) {
-	// handle update - only supported when get returns actual completed service
-	sInfo.Name = jObj["Name"].(string)
-	sInfo.Updated = time.Now()
+func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo ServiceInfo, body []byte) {
+	var jObj map[string]interface{}
 
 	if svr.debug {
 		log.Printf("fakeserver.go: PATCH service %v", sInfo)
 	}
-	// return what?)
+
+	err := json.Unmarshal(body, &jObj)
+	if err != nil {
+		log.Printf("fakeserver.go: Unmarshal of request failed: %s\n", err)
+		log.Printf("\nBEGIN passed data:\n%s\nEND passed data.", string(body))
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
+	}
+
+	if svr.debug {
+		log.Printf("fakeserver.go: receipt payload %v", jObj)
+	}
+
+	// handle update - only supported when get returns actual completed service
+	sInfo.Name = jObj["name"].(string)
+	sInfo.Updated = time.Now()
+
 	result := map[string]interface{}{
 		"data": map[string]interface{}{
 			"id":            sInfo.ID,
@@ -255,6 +269,7 @@ func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo ServiceInfo, jOb
 		log.Printf("fakeserver.go: failed to write result: %s\n", err)
 	}
 }
+
 func (svr *Fakeserver) handleDelete(w http.ResponseWriter, sInfo ServiceInfo, id string) {
 	if svr.debug {
 		log.Printf("fakeserver.go: DELETE service %v", sInfo)
@@ -288,7 +303,7 @@ func (svr *Fakeserver) handleDelete(w http.ResponseWriter, sInfo ServiceInfo, id
 }
 
 func (svr *Fakeserver) handleBrokerServices(w http.ResponseWriter, r *http.Request) {
-	var jObj map[string]interface{}
+
 	var sInfo ServiceInfo
 	var id string
 	var ok bool
@@ -320,7 +335,7 @@ func (svr *Fakeserver) handleBrokerServices(w http.ResponseWriter, r *http.Reque
 			svr.handleGet(w, sInfo)
 			return
 		case "PATCH":
-			svr.handlePatch(w, sInfo, jObj)
+			svr.handlePatch(w, sInfo, body)
 			return
 		case "DELETE":
 			svr.handleDelete(w, sInfo, id)

@@ -347,6 +347,9 @@ func (r *brokerResource) Update(ctx context.Context, req resource.UpdateRequest,
 		)
 		return
 	}
+
+	// NOTE: in theory we will get a PENDING or INPROGRESS status, and should wait for the operatin to finish.
+	// It is only a quick renaming however, so we do not bother...
 	if updateResp.StatusCode() != 200 {
 		// do not catch 404 (vanished resources), that is an error
 		resp.Diagnostics.AddError(
