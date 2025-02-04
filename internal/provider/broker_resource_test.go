@@ -76,6 +76,11 @@ func TestAccBrokerResource(t *testing.T) {
 						tfjsonpath.New("event_broker_version"),
 						knownvalue.StringExact("1.2.3"),
 					),
+					statecheck.ExpectKnownValue(
+						"gsolaceclustermgr_broker.test",
+						tfjsonpath.New("max_spool_usage"),
+						knownvalue.Int32Exact(23),
+					),
 					// Verify Computed attributes
 					statecheck.ExpectKnownValue(
 						"gsolaceclustermgr_broker.test",
@@ -142,6 +147,11 @@ func TestAccBrokerResource(t *testing.T) {
 						tfjsonpath.New("event_broker_version"),
 						knownvalue.StringExact("1.0.0"),
 					),
+					statecheck.ExpectKnownValue(
+						"gsolaceclustermgr_broker.test2",
+						tfjsonpath.New("max_spool_usage"),
+						knownvalue.Int32Exact(20),
+					),
 					// Verify Computed attributes
 					statecheck.ExpectKnownValue(
 						"gsolaceclustermgr_broker.test2",
@@ -193,7 +203,8 @@ func testConfig(rname string, name string, allValues bool) string {
 		optionals = `msg_vpn_name    = "ocs-msgvpn"
 					cluster_name    = "gwc-aks-ocs"
 					custom_router_name = "ocs-router"
-					event_broker_version = "1.2.3"`
+					event_broker_version = "1.2.3"
+					max_spool_usage = 23`
 	}
 	return providerConfig + `
 	resource "gsolaceclustermgr_broker" "` + rname + `" {

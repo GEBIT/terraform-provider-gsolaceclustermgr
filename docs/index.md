@@ -26,3 +26,8 @@ provider "gsolaceclustermgr" {
 
 - `bearer_token` (String, Sensitive)
 - `host` (String)
+
+### Optional
+
+- `polling_interval_duration` (String)
+- `polling_timeout_duration` (String)

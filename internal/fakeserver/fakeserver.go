@@ -35,6 +35,7 @@ type ServiceInfo struct {
 	EventBrokerVersion string
 	CustomRouterName   string
 	ClusterName        string
+	MaxSpoolUsage      int32
 	Created            time.Time
 	Updated            time.Time
 }
@@ -161,6 +162,7 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 		MsgVpnName:         orDefault(jObj["msgVpnName"], "test-vpn1"),
 		EventBrokerVersion: orDefault(jObj["eventBrokerVersion"], "1.0.0"),
 		CustomRouterName:   orDefault(jObj["customRouterName"], "test-router1"),
+		MaxSpoolUsage:      orDefaultInt32(jObj["maxSpoolUsage"], 20),
 		Created:            time.Now(),
 	}
 	svr.objects[sid] = sInfo
@@ -228,6 +230,7 @@ func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo *ServiceInfo, id s
 						"msgVpnName": sInfo.MsgVpnName,
 					},
 				},
+				"maxSpoolUsage": sInfo.MaxSpoolUsage,
 			},
 		},
 		"meta": map[string]interface{}{
@@ -292,6 +295,7 @@ func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo *ServiceInfo, id
 						"msgVpnName": sInfo.MsgVpnName,
 					},
 				},
+				"maxSpoolUsage": sInfo.MaxSpoolUsage,
 			},
 		},
 		"meta": map[string]interface{}{
@@ -400,6 +404,14 @@ func (svr *Fakeserver) handleBrokerServices(w http.ResponseWriter, r *http.Reque
 func orDefault(s interface{}, ds string) string {
 	if s != nil && s.(string) != "" {
 		return s.(string)
+	}
+	return ds
+}
+
+func orDefaultInt32(s interface{}, ds int32) int32 {
+	if s != nil {
+		// json will generically map numbers to float64
+		return int32(s.(float64))
 	}
 	return ds
 }

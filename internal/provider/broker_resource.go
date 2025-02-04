@@ -12,6 +12,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int32planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -32,9 +33,7 @@ type brokerResourceModel struct {
 	ServiceClassId     types.String `tfsdk:"serviceclass_id"`
 	CustomRouterName   types.String `tfsdk:"custom_router_name"`
 	EventBrokerVersion types.String `tfsdk:"event_broker_version"`
-	/** figure out how to handle int32
-	MaxSpoolUsage  types.Int64  `tfsdk:"max_spool_usage"`
-	*/
+	MaxSpoolUsage      types.Int32  `tfsdk:"max_spool_usage"`
 }
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -96,19 +95,23 @@ func (r *brokerResource) Configure(ctx context.Context, req resource.ConfigureRe
 func (r *brokerResource) Schema(ctx context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	tflog.Info(ctx, "define broker schema")
 	resp.Schema = schema.Schema{
+		MarkdownDescription: "Event Broker Resource. Note that *name* is the only attribute you can update without forcing a replacement",
 		Attributes: map[string]schema.Attribute{
 			// creation params
 			"name": schema.StringAttribute{
-				Required: true,
+				MarkdownDescription: "Broker name",
+				Required:            true,
 			},
 			"serviceclass_id": schema.StringAttribute{
-				Required: true,
+				MarkdownDescription: "Serviceclass_id like DEVELOPER, ENTERPRISE_250_STANDALONE,... (see api docs)",
+				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
 			"datacenter_id": schema.StringAttribute{
-				Required: true,
+				MarkdownDescription: "the datacenter, e.g. aks-germanywestcentral-1",
+				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
@@ -142,14 +145,15 @@ func (r *brokerResource) Schema(ctx context.Context, _ resource.SchemaRequest, r
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 			},
-			/* figure out how to handle int32
-			"max_spool_usage": schema.NumberAttribute{
+			// figure out how to handle int32
+			"max_spool_usage": schema.Int32Attribute{
+				Computed: true,
 				Optional: true,
-				PlanModifiers: []planmodifier.Int64{
-					int64planmodifier.RequiresReplace(),
+				PlanModifiers: []planmodifier.Int32{
+					int32planmodifier.RequiresReplaceIfConfigured(),
 				},
 			},
-			*/
+			//
 			// computed attributes
 			"id": schema.StringAttribute{
 				Computed: true,
@@ -194,7 +198,7 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 		ClusterName:        nullIfEmptyStringPtr(plannedState.ClusterName),
 		EventBrokerVersion: nullIfEmptyStringPtr(plannedState.EventBrokerVersion),
 		CustomRouterName:   nullIfEmptyStringPtr(plannedState.CustomRouterName),
-		// MaxSpoolUsage:  plannedState.MaxSpoolUsage.ValueInt64Pointer(),   *int64/*int32 clash
+		MaxSpoolUsage:      nullIfEmptyInt32Ptr(plannedState.MaxSpoolUsage),
 	}
 	tflog.Info(ctx, fmt.Sprintf("Request: %s %s %v %s using %s", "Foo", body.Name, body.ServiceClassId, body.DatacenterId, plannedState.ServiceClassId.ValueString()))
 
@@ -276,7 +280,8 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 			plannedState.ClusterName = types.StringValue(*(getResp.JSON200.Data.Broker.Cluster.Name))
 			routerPrefix, _ := strings.CutSuffix(*(getResp.JSON200.Data.Broker.Cluster.PrimaryRouterName), "primary")
 			plannedState.CustomRouterName = types.StringValue(routerPrefix)
-			plannedState.MsgVpnName = types.StringValue(*((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MsgVpnName))
+			plannedState.MsgVpnName = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MsgVpnName)
+			plannedState.MaxSpoolUsage = types.Int32PointerValue(getResp.JSON200.Data.Broker.MaxSpoolUsage)
 		}
 
 	}
@@ -341,12 +346,12 @@ func (r *brokerResource) Read(ctx context.Context, req resource.ReadRequest, res
 		currentState.LastUpdated = types.StringValue(getResp.JSON200.Data.UpdatedTime.Format(time.RFC850))
 	}
 	currentState.Status = types.StringValue(string(*(getResp.JSON200.Data.CreationState)))
-	currentState.Name = types.StringValue(*(getResp.JSON200.Data.Name))
-	currentState.ClusterName = types.StringValue(*(getResp.JSON200.Data.Broker.Cluster.Name))
+	currentState.Name = types.StringPointerValue(getResp.JSON200.Data.Name)
+	currentState.ClusterName = types.StringPointerValue(getResp.JSON200.Data.Broker.Cluster.Name)
 	routerPrefix, _ := strings.CutSuffix(*(getResp.JSON200.Data.Broker.Cluster.PrimaryRouterName), "primary")
 	currentState.CustomRouterName = types.StringValue(routerPrefix)
-	currentState.MsgVpnName = types.StringValue(*((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MsgVpnName))
-	//currentState.MsgVpnName = types.StringValue(*(*getResp.JSON200.Data.Broker.MsgVpns)[0].MsgVpnName)
+	currentState.MsgVpnName = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MsgVpnName)
+	currentState.MaxSpoolUsage = types.Int32PointerValue(getResp.JSON200.Data.Broker.MaxSpoolUsage)
 
 	tflog.Debug(ctx, fmt.Sprintf("Read Broker state %s %s %v", currentState.Name, currentState.Status.ValueString(), currentState.LastUpdated))
 	// Set refreshed state
@@ -410,10 +415,11 @@ func (r *brokerResource) Update(ctx context.Context, req resource.UpdateRequest,
 
 	// read computed values for optional fields
 	plannedState.EventBrokerVersion = types.StringValue(updateResp.JSON200.Data.EventBrokerServiceVersion)
-	plannedState.ClusterName = types.StringValue(*(updateResp.JSON200.Data.Broker.Cluster.Name))
+	plannedState.ClusterName = types.StringPointerValue(updateResp.JSON200.Data.Broker.Cluster.Name)
 	routerPrefix, _ := strings.CutSuffix(*(updateResp.JSON200.Data.Broker.Cluster.PrimaryRouterName), "primary")
 	plannedState.CustomRouterName = types.StringValue(routerPrefix)
-	plannedState.MsgVpnName = types.StringValue(*((*(updateResp.JSON200.Data.Broker.MsgVpns))[0].MsgVpnName))
+	plannedState.MsgVpnName = types.StringPointerValue((*(updateResp.JSON200.Data.Broker.MsgVpns))[0].MsgVpnName)
+	plannedState.MaxSpoolUsage = types.Int32PointerValue(updateResp.JSON200.Data.Broker.MaxSpoolUsage)
 
 	// handle other computed attributes
 	tflog.Info(ctx, fmt.Sprintf("Updated broker to %s %v %v", plannedState.Name.ValueString(), plannedState.Status.ValueString(), plannedState.LastUpdated.ValueString()))
@@ -485,4 +491,12 @@ func nullIfEmptyStringPtr(s basetypes.StringValue) *string {
 		return s.ValueStringPointer()
 	}
 	return nil
+}
+
+// TODO nullIfEmptyINt32Pointer
+func nullIfEmptyInt32Ptr(v basetypes.Int32Value) *int32 {
+	if v.IsUnknown() {
+		return nil
+	}
+	return v.ValueInt32Pointer()
 }

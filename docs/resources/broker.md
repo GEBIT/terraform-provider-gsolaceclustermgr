@@ -3,12 +3,12 @@
 page_title: "gsolaceclustermgr_broker Resource - gsolaceclustermgr"
 subcategory: ""
 description: |-
-  
+  Event Broker Resource. Note that name is the only attribute you can update without forcing a replacement
 ---
 
 # gsolaceclustermgr_broker (Resource)
 
-
+Event Broker Resource. Note that *name* is the only attribute you can update without forcing a replacement
 
 
 
@@ -17,13 +17,16 @@ description: |-
 
 ### Required
 
-- `name` (String)
-- `serviceclass_id` (String)
+- `datacenter_id` (String) the datacenter, e.g. aks-germanywestcentral-1
+- `name` (String) Broker name
+- `serviceclass_id` (String) Serviceclass_id like DEVELOPER, ENTERPRISE_250_STANDALONE,... (see api docs)
 
 ### Optional
 
 - `cluster_name` (String)
-- `datacenter_id` (String)
+- `custom_router_name` (String)
+- `event_broker_version` (String)
+- `max_spool_usage` (Number)
 - `msg_vpn_name` (String)
 
 ### Read-Only
