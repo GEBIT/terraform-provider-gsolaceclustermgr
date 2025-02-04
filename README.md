@@ -20,13 +20,17 @@ Then create a broker using the *gsolaceclustermgr_broker* resource
 resource "gsolaceclustermgr_broker" "ocs-test" {
   count           = 1
   serviceclass_id = "ENTERPRISE_250_STANDALONE"
-  name            = "ocs-prov-testHH"
+  name            = "ocs-prov-test"
   datacenter_id   = "aks-germanywestcentral"
+  # optional attributes
   msg_vpn_name    = "ocs-msgvpn-1"
   cluster_name    = "gwc-aks-cluster1"
+  custom_router_name = "ocs-router-1"
+  event_broker_version = "10.8.1.152-7"
+  max_spool_usage = 50
 }
 ~~~
-Updating the broker is supported - but only the name attribute may be changed.
+Updating the broker is supported - but *only* the name attribute may be changed.
 
 The official [solace terraform provider](https://github.com/SolaceProducts/terraform-provider-solacebroker) covers further manipulation like messageVPN setup.
 
