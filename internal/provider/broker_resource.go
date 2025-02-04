@@ -15,20 +15,23 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 )
 
 // brokerResourceModel maps the resource schema data.
 type brokerResourceModel struct {
-	ID             types.String `tfsdk:"id"`
-	DataCenterId   types.String `tfsdk:"datacenter_id"`
-	Name           types.String `tfsdk:"name"`
-	ClusterName    types.String `tfsdk:"cluster_name"`
-	MsgVpnName     types.String `tfsdk:"msg_vpn_name"`
-	Created        types.String `tfsdk:"created"`
-	LastUpdated    types.String `tfsdk:"last_updated"`
-	Status         types.String `tfsdk:"status"`
-	ServiceClassId types.String `tfsdk:"serviceclass_id"`
+	ID                 types.String `tfsdk:"id"`
+	DataCenterId       types.String `tfsdk:"datacenter_id"`
+	Name               types.String `tfsdk:"name"`
+	ClusterName        types.String `tfsdk:"cluster_name"`
+	MsgVpnName         types.String `tfsdk:"msg_vpn_name"`
+	Created            types.String `tfsdk:"created"`
+	LastUpdated        types.String `tfsdk:"last_updated"`
+	Status             types.String `tfsdk:"status"`
+	ServiceClassId     types.String `tfsdk:"serviceclass_id"`
+	CustomRouterName   types.String `tfsdk:"custom_router_name"`
+	EventBrokerVersion types.String `tfsdk:"event_broker_version"`
 	/** figure out how to handle int32
 	MaxSpoolUsage  types.Int64  `tfsdk:"max_spool_usage"`
 	*/
@@ -48,7 +51,7 @@ func NewBrokerResource() resource.Resource {
 
 // helper func to add bearer token auth header to requests
 func (r *brokerResource) BearerReqEditorFn(ctx context.Context, req *http.Request) error {
-	req.Header.Set("Authorization", "Bearer "+r.clientHolder.BearerToken)
+	req.Header.Set("Authorization", "Bearer "+r.cMProviderData.BearerToken)
 	dump, err := httputil.DumpRequestOut(req, true)
 	if err != nil {
 		tflog.Error(ctx, err.Error())
@@ -60,7 +63,7 @@ func (r *brokerResource) BearerReqEditorFn(ctx context.Context, req *http.Reques
 
 // brokerResource is the resource implementation.
 type brokerResource struct {
-	clientHolder MCClientHolder
+	cMProviderData CMProviderData
 }
 
 // Metadata returns the resource type name.
@@ -75,7 +78,7 @@ func (r *brokerResource) Configure(ctx context.Context, req resource.ConfigureRe
 		return
 	}
 
-	clientHolder, ok := req.ProviderData.(MCClientHolder)
+	cMProviderData, ok := req.ProviderData.(CMProviderData)
 
 	if !ok {
 		resp.Diagnostics.AddError(
@@ -86,7 +89,7 @@ func (r *brokerResource) Configure(ctx context.Context, req resource.ConfigureRe
 		return
 	}
 
-	r.clientHolder = clientHolder
+	r.cMProviderData = cMProviderData
 }
 
 // Schema defines the schema for the resource.
@@ -105,21 +108,38 @@ func (r *brokerResource) Schema(ctx context.Context, _ resource.SchemaRequest, r
 				},
 			},
 			"datacenter_id": schema.StringAttribute{
-				Optional: true,
+				Required: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
+			// optional attributes that be filled with defaults from API server
 			"msg_vpn_name": schema.StringAttribute{
+				Computed: true,
 				Optional: true,
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 			},
 			"cluster_name": schema.StringAttribute{
+				Computed: true,
 				Optional: true,
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+				},
+			},
+			"custom_router_name": schema.StringAttribute{
+				Computed: true,
+				Optional: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+				},
+			},
+			"event_broker_version": schema.StringAttribute{
+				Computed: true,
+				Optional: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 			},
 			/* figure out how to handle int32
@@ -149,6 +169,7 @@ func (r *brokerResource) Schema(ctx context.Context, _ resource.SchemaRequest, r
 			"status": schema.StringAttribute{
 				Computed: true,
 			},
+			// TODO: report
 		},
 	}
 }
@@ -166,11 +187,13 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 
 	// Generate API request body from plan
 	var body = missioncontrol.CreateServiceJSONRequestBody{
-		Name:           plannedState.Name.ValueString(),
-		ServiceClassId: missioncontrol.ServiceClassId(plannedState.ServiceClassId.ValueString()),
-		DatacenterId:   plannedState.DataCenterId.ValueString(),
-		MsgVpnName:     plannedState.MsgVpnName.ValueStringPointer(),
-		ClusterName:    plannedState.ClusterName.ValueStringPointer(),
+		Name:               plannedState.Name.ValueString(),
+		ServiceClassId:     missioncontrol.ServiceClassId(plannedState.ServiceClassId.ValueString()),
+		DatacenterId:       plannedState.DataCenterId.ValueString(),
+		MsgVpnName:         nullIfEmptyStringPtr(plannedState.MsgVpnName),
+		ClusterName:        nullIfEmptyStringPtr(plannedState.ClusterName),
+		EventBrokerVersion: nullIfEmptyStringPtr(plannedState.EventBrokerVersion),
+		CustomRouterName:   nullIfEmptyStringPtr(plannedState.CustomRouterName),
 		// MaxSpoolUsage:  plannedState.MaxSpoolUsage.ValueInt64Pointer(),   *int64/*int32 clash
 	}
 	tflog.Info(ctx, fmt.Sprintf("Request: %s %s %v %s using %s", "Foo", body.Name, body.ServiceClassId, body.DatacenterId, plannedState.ServiceClassId.ValueString()))
@@ -178,7 +201,7 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 	// Use client to create new broker
 	tflog.Info(ctx, fmt.Sprintf("Creating broker service using %v", body))
 
-	createResp, err := r.clientHolder.Client.CreateServiceWithResponse(ctx, body, r.BearerReqEditorFn)
+	createResp, err := r.cMProviderData.Client.CreateServiceWithResponse(ctx, body, r.BearerReqEditorFn)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error creating broker service",
@@ -199,8 +222,11 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 	resourceId := *(createResp.JSON202.Data.ResourceId)
 
 	tflog.Info(ctx, fmt.Sprintf("Waiting for broker service using %s to finish creation", resourceId))
-	getParams := missioncontrol.GetServiceParams{}
-	timeout := time.Now().Add(30 * time.Minute)
+	getParams := missioncontrol.GetServiceParams{
+		Expand: &[]missioncontrol.GetServiceParamsExpand{"broker"},
+	}
+
+	timeout := time.Now().Add(r.cMProviderData.PollingTimeoutDuration)
 	for created := false; !created; {
 		// sleep, timeout
 		if time.Now().After(timeout) {
@@ -210,9 +236,9 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 			)
 			return
 		}
-		time.Sleep(20 * time.Second)
+		time.Sleep(r.cMProviderData.PollingIntervalDuration)
 		tflog.Info(ctx, fmt.Sprintf("Checking broker status for %s", resourceId))
-		getResp, err := r.clientHolder.Client.GetServiceWithResponse(ctx, resourceId, &getParams, r.BearerReqEditorFn)
+		getResp, err := r.cMProviderData.Client.GetServiceWithResponse(ctx, resourceId, &getParams, r.BearerReqEditorFn)
 		if err != nil {
 			resp.Diagnostics.AddError(
 				"Error getting broker service",
@@ -228,7 +254,8 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 			tflog.Debug(ctx, fmt.Sprintf("CreateResponse Body:%s", getResp.Body))
 			return
 		}
-		tflog.Debug(ctx, fmt.Sprintf("CreationState %v", getResp.JSON200.Data.CreationState))
+		tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", getResp.Body))
+		tflog.Debug(ctx, fmt.Sprintf("CreationState %v", *getResp.JSON200.Data.CreationState))
 		if *(getResp.JSON200.Data.CreationState) == missioncontrol.ServiceCreationStateCOMPLETED {
 			created = true
 			// Map response body to schema and populate Computed attribute values
@@ -244,6 +271,12 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 			} else {
 				plannedState.LastUpdated = types.StringValue("")
 			}
+			// read computed values for optional fields
+			plannedState.EventBrokerVersion = types.StringValue(getResp.JSON200.Data.EventBrokerServiceVersion)
+			plannedState.ClusterName = types.StringValue(*(getResp.JSON200.Data.Broker.Cluster.Name))
+			routerPrefix, _ := strings.CutSuffix(*(getResp.JSON200.Data.Broker.Cluster.PrimaryRouterName), "primary")
+			plannedState.CustomRouterName = types.StringValue(routerPrefix)
+			plannedState.MsgVpnName = types.StringValue(*((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MsgVpnName))
 		}
 
 	}
@@ -271,7 +304,7 @@ func (r *brokerResource) Read(ctx context.Context, req resource.ReadRequest, res
 	}
 
 	// Get refreshed broker state
-	getResp, err := r.clientHolder.Client.GetServiceWithResponse(ctx, currentState.ID.ValueString(), &getParams, r.BearerReqEditorFn)
+	getResp, err := r.cMProviderData.Client.GetServiceWithResponse(ctx, currentState.ID.ValueString(), &getParams, r.BearerReqEditorFn)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error getting broker service info",
@@ -309,6 +342,11 @@ func (r *brokerResource) Read(ctx context.Context, req resource.ReadRequest, res
 	}
 	currentState.Status = types.StringValue(string(*(getResp.JSON200.Data.CreationState)))
 	currentState.Name = types.StringValue(*(getResp.JSON200.Data.Name))
+	currentState.ClusterName = types.StringValue(*(getResp.JSON200.Data.Broker.Cluster.Name))
+	routerPrefix, _ := strings.CutSuffix(*(getResp.JSON200.Data.Broker.Cluster.PrimaryRouterName), "primary")
+	currentState.CustomRouterName = types.StringValue(routerPrefix)
+	currentState.MsgVpnName = types.StringValue(*((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MsgVpnName))
+	//currentState.MsgVpnName = types.StringValue(*(*getResp.JSON200.Data.Broker.MsgVpns)[0].MsgVpnName)
 
 	tflog.Debug(ctx, fmt.Sprintf("Read Broker state %s %s %v", currentState.Name, currentState.Status.ValueString(), currentState.LastUpdated))
 	// Set refreshed state
@@ -339,7 +377,7 @@ func (r *brokerResource) Update(ctx context.Context, req resource.UpdateRequest,
 	// Use client to update broker
 	tflog.Info(ctx, fmt.Sprintf("Updating broker service using %v", body))
 
-	updateResp, err := r.clientHolder.Client.UpdateServiceWithResponse(ctx, brokerId, body, r.BearerReqEditorFn)
+	updateResp, err := r.cMProviderData.Client.UpdateServiceWithResponse(ctx, brokerId, body, r.BearerReqEditorFn)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error updating broker service",
@@ -367,7 +405,17 @@ func (r *brokerResource) Update(ctx context.Context, req resource.UpdateRequest,
 	}
 	plannedState.Status = types.StringValue(string(*(updateResp.JSON200.Data.CreationState)))
 
-	// we don't have to check actual attributes (nothing new is computed)
+	// refresh the actual patched name
+	plannedState.Name = types.StringValue(*(updateResp.JSON200.Data.Name))
+
+	// read computed values for optional fields
+	plannedState.EventBrokerVersion = types.StringValue(updateResp.JSON200.Data.EventBrokerServiceVersion)
+	plannedState.ClusterName = types.StringValue(*(updateResp.JSON200.Data.Broker.Cluster.Name))
+	routerPrefix, _ := strings.CutSuffix(*(updateResp.JSON200.Data.Broker.Cluster.PrimaryRouterName), "primary")
+	plannedState.CustomRouterName = types.StringValue(routerPrefix)
+	plannedState.MsgVpnName = types.StringValue(*((*(updateResp.JSON200.Data.Broker.MsgVpns))[0].MsgVpnName))
+
+	// handle other computed attributes
 	tflog.Info(ctx, fmt.Sprintf("Updated broker to %s %v %v", plannedState.Name.ValueString(), plannedState.Status.ValueString(), plannedState.LastUpdated.ValueString()))
 
 	// Save updated data into Terraform state
@@ -391,7 +439,7 @@ func (r *brokerResource) Delete(ctx context.Context, req resource.DeleteRequest,
 
 	// then delete
 	brokerId := currentState.ID.ValueString()
-	delResp, err := r.clientHolder.Client.DeleteServiceWithResponse(ctx, brokerId, r.BearerReqEditorFn)
+	delResp, err := r.cMProviderData.Client.DeleteServiceWithResponse(ctx, brokerId, r.BearerReqEditorFn)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error getting broker service info",
@@ -429,4 +477,12 @@ func (r *brokerResource) ImportState(ctx context.Context, req resource.ImportSta
 
 	// check this
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+}
+
+/** helper for handling defaults, returns nil instead of ponter to "" for empty strings */
+func nullIfEmptyStringPtr(s basetypes.StringValue) *string {
+	if s.ValueString() != "" {
+		return s.ValueStringPointer()
+	}
+	return nil
 }

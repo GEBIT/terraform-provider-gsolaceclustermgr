@@ -8,19 +8,24 @@ terraform {
 }
 
 provider "gsolaceclustermgr" {
-  // insert a valid token here
-  bearer_token = "<solaceAPIToken>"
+  // test against solace cloud 
+  // bearer_token = "<aSolaceApiToken"
+  //host = "https://api.solace.cloud"
+  
+  // test against fakeserrvef
+  bearer_token = "bt42"	
+	host = "http://localhost:8091"
+  polling_interval_duration = "2s"
 
-  host = "https://api.solace.cloud"
 }
 
 resource "gsolaceclustermgr_broker" "ocs-test" {
   count           = 1
   serviceclass_id = "ENTERPRISE_250_STANDALONE"
-  name            = "ocs-prov-test"
+  name            = "ocs-prov-test222222"
   datacenter_id   = "aks-germanywestcentral"
-  msg_vpn_name    = "ocs-msgvpn-1"
-  cluster_name    = "gwc-aks-cluster1"
+  #msg_vpn_name    = "ocs-msgvpn-1"
+  #cluster_name    = "gwc-aks-cluster1"
 }
 
 

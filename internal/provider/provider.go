@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"terraform-provider-gsolaceclustermgr/internal/missioncontrol"
+	"time"
 
 	"net/http"
 
@@ -19,8 +20,10 @@ import (
 
 // clusterManagerProviderModel maps provider schema data to a Go type.
 type clusterManagerProviderModel struct {
-	Host        types.String `tfsdk:"host"`
-	BearerToken types.String `tfsdk:"bearer_token"`
+	Host                    types.String `tfsdk:"host"`
+	BearerToken             types.String `tfsdk:"bearer_token"`
+	PollingTimeoutDuration  types.String `tfsdk:"polling_timeout_duration"`
+	PollingIntervalDuration types.String `tfsdk:"polling_interval_duration"`
 }
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -45,9 +48,12 @@ type clusterManagerProvider struct {
 	version string
 }
 
-type MCClientHolder struct {
-	Client      *missioncontrol.ClientWithResponses
-	BearerToken string
+// providerdata for resources
+type CMProviderData struct {
+	Client                  *missioncontrol.ClientWithResponses
+	BearerToken             string
+	PollingIntervalDuration time.Duration
+	PollingTimeoutDuration  time.Duration
 }
 
 // Metadata returns the provider type name.
@@ -66,6 +72,12 @@ func (p *clusterManagerProvider) Schema(_ context.Context, _ provider.SchemaRequ
 			"bearer_token": schema.StringAttribute{
 				Required:  true,
 				Sensitive: true,
+			},
+			"polling_interval_duration": schema.StringAttribute{
+				Optional: true,
+			},
+			"polling_timeout_duration": schema.StringAttribute{
+				Optional: true,
 			},
 		},
 	}
@@ -113,6 +125,8 @@ func (p *clusterManagerProvider) Configure(ctx context.Context, req provider.Con
 
 	host := os.Getenv("MISSIONCONTROL_HOST")
 	bearerToken := os.Getenv("MISSIONCONTROL_TOKEN")
+	pollingIntervalDurationStr := os.Getenv("POLLING_INTERVAL_DURATION")
+	pollingTimeoutDurationStr := os.Getenv("POLLING_TIMEOUT_DURATION")
 
 	if !config.Host.IsNull() {
 		host = config.Host.ValueString()
@@ -120,6 +134,21 @@ func (p *clusterManagerProvider) Configure(ctx context.Context, req provider.Con
 
 	if !config.BearerToken.IsNull() {
 		bearerToken = config.BearerToken.ValueString()
+	}
+
+	if !config.PollingIntervalDuration.IsNull() {
+		pollingIntervalDurationStr = config.PollingIntervalDuration.ValueString()
+	}
+
+	if !config.PollingTimeoutDuration.IsNull() {
+		pollingTimeoutDurationStr = config.PollingTimeoutDuration.ValueString()
+	}
+
+	if pollingIntervalDurationStr == "" {
+		pollingIntervalDurationStr = "20s"
+	}
+	if pollingTimeoutDurationStr == "" {
+		pollingTimeoutDurationStr = "30m"
 	}
 
 	// If any of the expected configurations are missing, return
@@ -145,6 +174,24 @@ func (p *clusterManagerProvider) Configure(ctx context.Context, req provider.Con
 		)
 	}
 
+	pollingIntervalDuration, err := time.ParseDuration(pollingIntervalDurationStr)
+	if err != nil {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("polling_intervall_duration"),
+			"Invalid polling intervall duration",
+			"The provider cannot create the MissionControl API client as the value cannot be parsed as a Duration. ",
+		)
+	}
+
+	pollingTimeoutDuration, err := time.ParseDuration(pollingTimeoutDurationStr)
+	if err != nil {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("polling_timeout_duration"),
+			"Invalid polling timeout duration",
+			"The provider cannot create the MissionControl API client as the value cannot be parsed as a Duration. ",
+		)
+	}
+
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -152,6 +199,8 @@ func (p *clusterManagerProvider) Configure(ctx context.Context, req provider.Con
 	ctx = tflog.SetField(ctx, "missioncontrol_host", host)
 	ctx = tflog.SetField(ctx, "missioncontrol_token", bearerToken)
 	ctx = tflog.MaskFieldValuesWithFieldKeys(ctx, "missioncontrol_token")
+	ctx = tflog.SetField(ctx, "polling_interval_duration", pollingIntervalDuration)
+	ctx = tflog.SetField(ctx, "polling_timeout_duration", pollingTimeoutDuration)
 
 	tflog.Info(ctx, fmt.Sprintf("Creating MissionControl client using %s", host))
 
@@ -173,8 +222,8 @@ func (p *clusterManagerProvider) Configure(ctx context.Context, req provider.Con
 
 	// Make the HashiCups client available during DataSource and Resource
 	// type Configure methods.
-	resp.DataSourceData = client
-	resp.ResourceData = MCClientHolder{client, bearerToken}
+	resp.DataSourceData = CMProviderData{client, bearerToken, pollingIntervalDuration, pollingTimeoutDuration}
+	resp.ResourceData = CMProviderData{client, bearerToken, pollingIntervalDuration, pollingTimeoutDuration}
 
 	tflog.Info(ctx, "Configured MissionControl client", map[string]any{"success": true})
 }

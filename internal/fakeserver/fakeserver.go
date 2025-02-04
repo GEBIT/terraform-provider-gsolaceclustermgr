@@ -2,7 +2,7 @@
 fakeserver to mock the solace api for testing.
 Code based on / inspired by https://github.com/Mastercard/terraform-provider-restapi/blob/master/fakeserver
 
-Note that we intentionallay do NOT use generator code here!
+Note that we intentionally do NOT use generator code here!
 */
 
 package fakeserver
@@ -28,11 +28,15 @@ type Fakeserver struct {
 }
 
 type ServiceInfo struct {
-	ID      string
-	Name    string
-	State   string
-	Created time.Time
-	Updated time.Time
+	ID                 string
+	Name               string
+	State              string
+	MsgVpnName         string
+	EventBrokerVersion string
+	CustomRouterName   string
+	ClusterName        string
+	Created            time.Time
+	Updated            time.Time
 }
 
 /* NewFakeServer creates a HTTP server used for tests and debugging*/
@@ -149,14 +153,20 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 
 	// parse and store obj
 	sInfo := ServiceInfo{
-		ID:      sid,
-		Name:    jObj["name"].(string),
-		State:   "PENDING",
-		Created: time.Now(),
+		ID:    sid,
+		Name:  jObj["name"].(string),
+		State: "PENDING",
+
+		ClusterName:        orDefault(jObj["clusterName"], "test-cluster1"),
+		MsgVpnName:         orDefault(jObj["msgVpnName"], "test-vpn1"),
+		EventBrokerVersion: orDefault(jObj["eventBrokerVersion"], "1.0.0"),
+		CustomRouterName:   orDefault(jObj["customRouterName"], "test-router1"),
+		Created:            time.Now(),
 	}
 	svr.objects[sid] = sInfo
 	if svr.debug {
 		log.Printf("Created Info: %v)", sInfo)
+		log.Printf("vpn: %v, jobj: %v)", sInfo.MsgVpnName, jObj["msgVpnName"])
 	}
 	// return created obj
 	result := map[string]interface{}{
@@ -166,6 +176,7 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 			"name":          sInfo.Name,
 			"createdTime":   sInfo.Created.Format(time.RFC3339),
 			"creationState": sInfo.State,
+			// do not yet fill details
 		},
 		"meta": map[string]interface{}{
 			"additionalProp": map[string]interface{}{},
@@ -185,15 +196,15 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 	}
 }
 
-func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo ServiceInfo) {
-	// complete creation on first GET after ten seconds
-	if sInfo.State == "PENDING" && time.Since(sInfo.Created).Seconds() > 10.0 {
-		sInfo.State = "COMPLETED"
-		sInfo.Updated = time.Now()
-	}
-	sUpdated := ""
-	if !sInfo.Updated.IsZero() {
-		sUpdated = sInfo.Updated.Format(time.RFC3339)
+func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo *ServiceInfo, id string) {
+	// complete creation after a certain delay, so we can test PENDING answers
+	if sInfo.State == "PENDING" {
+		sInfo.Updated = time.Now() // the actual semantics of updated when pending are unclear, but not really important
+		if time.Since(sInfo.Created).Seconds() > 5.0 {
+			sInfo.State = "COMPLETED"
+		}
+		// writeback change
+		svr.objects[id] = *sInfo
 	}
 	if svr.debug {
 		log.Printf("fakeserver.go: GET service %v", sInfo)
@@ -201,11 +212,23 @@ func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo ServiceInfo) {
 
 	result := map[string]interface{}{
 		"data": map[string]interface{}{
-			"id":            sInfo.ID,
-			"name":          sInfo.Name,
-			"createdTime":   sInfo.Created.Format(time.RFC3339),
-			"updatedTime":   sUpdated,
-			"creationState": sInfo.State,
+			"id":                        sInfo.ID,
+			"name":                      sInfo.Name,
+			"createdTime":               sInfo.Created.Format(time.RFC3339),
+			"updatedTime":               sInfo.Updated.Format(time.RFC3339),
+			"creationState":             sInfo.State,
+			"eventBrokerServiceVersion": sInfo.EventBrokerVersion,
+			"broker": map[string]interface{}{
+				"cluster": map[string]interface{}{
+					"name":              sInfo.ClusterName,
+					"primaryRouterName": sInfo.CustomRouterName,
+				},
+				"msgVpns": []interface{}{
+					map[string]interface{}{
+						"msgVpnName": sInfo.MsgVpnName,
+					},
+				},
+			},
 		},
 		"meta": map[string]interface{}{
 			"additionalProp": map[string]interface{}{},
@@ -223,7 +246,7 @@ func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo ServiceInfo) {
 	}
 }
 
-func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo ServiceInfo, body []byte) {
+func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo *ServiceInfo, id string, body []byte) {
 	var jObj map[string]interface{}
 
 	if svr.debug {
@@ -244,15 +267,32 @@ func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo ServiceInfo, bod
 
 	// handle update - only supported when get returns actual completed service
 	sInfo.Name = jObj["name"].(string)
+	sInfo.State = "PENDING"
 	sInfo.Updated = time.Now()
+
+	if svr.debug {
+		log.Printf("fakeserver.go: PATCH service updated to %v", sInfo)
+	}
 
 	result := map[string]interface{}{
 		"data": map[string]interface{}{
-			"id":            sInfo.ID,
-			"name":          sInfo.Name,
-			"createdTime":   sInfo.Created.Format(time.RFC3339),
-			"updatedTime":   sInfo.Updated.Format(time.RFC3339),
-			"creationState": sInfo.State,
+			"id":                        sInfo.ID,
+			"name":                      sInfo.Name,
+			"createdTime":               sInfo.Created.Format(time.RFC3339),
+			"updatedTime":               sInfo.Updated.Format(time.RFC3339),
+			"creationState":             sInfo.State,
+			"eventBrokerServiceVersion": sInfo.EventBrokerVersion,
+			"broker": map[string]interface{}{
+				"cluster": map[string]interface{}{
+					"name":              sInfo.ClusterName,
+					"primaryRouterName": sInfo.CustomRouterName,
+				},
+				"msgVpns": []interface{}{
+					map[string]interface{}{
+						"msgVpnName": sInfo.MsgVpnName,
+					},
+				},
+			},
 		},
 		"meta": map[string]interface{}{
 			"additionalProp": map[string]interface{}{},
@@ -263,6 +303,10 @@ func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo ServiceInfo, bod
 		log.Printf("fakeserver.go: failed to marshal result: %s\n", err)
 		return
 	}
+
+	// writeback change
+	svr.objects[id] = *sInfo
+
 	w.Header().Add("Content-Type", "json")
 	_, err2 := w.Write(b)
 	if err2 != nil {
@@ -270,7 +314,7 @@ func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo ServiceInfo, bod
 	}
 }
 
-func (svr *Fakeserver) handleDelete(w http.ResponseWriter, sInfo ServiceInfo, id string) {
+func (svr *Fakeserver) handleDelete(w http.ResponseWriter, sInfo *ServiceInfo, id string) {
 	if svr.debug {
 		log.Printf("fakeserver.go: DELETE service %v", sInfo)
 	}
@@ -332,13 +376,13 @@ func (svr *Fakeserver) handleBrokerServices(w http.ResponseWriter, r *http.Reque
 		}
 		switch r.Method {
 		case "GET":
-			svr.handleGet(w, sInfo)
+			svr.handleGet(w, &sInfo, id)
 			return
 		case "PATCH":
-			svr.handlePatch(w, sInfo, body)
+			svr.handlePatch(w, &sInfo, id, body)
 			return
 		case "DELETE":
-			svr.handleDelete(w, sInfo, id)
+			svr.handleDelete(w, &sInfo, id)
 			return
 		default:
 			log.Printf("fakeserver.go: unexpected method: %s\n", r.Method)
@@ -351,4 +395,11 @@ func (svr *Fakeserver) handleBrokerServices(w http.ResponseWriter, r *http.Reque
 	}
 	http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
 
+}
+
+func orDefault(s interface{}, ds string) string {
+	if s != nil && s.(string) != "" {
+		return s.(string)
+	}
+	return ds
 }

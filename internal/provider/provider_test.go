@@ -11,6 +11,8 @@ const (
 	provider "gsolaceclustermgr" {
 		bearer_token = "bt42"	
 		host = "http://localhost:8091"
+		polling_interval_duration = "2s"
+		polling_timeout_duration = "1m"
 		}
 		`
 )
