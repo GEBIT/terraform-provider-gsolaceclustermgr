@@ -300,7 +300,9 @@ func (r *brokerResource) Read(ctx context.Context, req resource.ReadRequest, res
 	// Get current currentState
 	var currentState brokerResourceModel
 
-	getParams := missioncontrol.GetServiceParams{}
+	getParams := missioncontrol.GetServiceParams{
+		Expand: &[]missioncontrol.GetServiceParamsExpand{"broker"},
+	}
 
 	diags := req.State.Get(ctx, &currentState)
 	resp.Diagnostics.Append(diags...)
