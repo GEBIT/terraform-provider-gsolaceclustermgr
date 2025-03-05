@@ -18,7 +18,6 @@ provider "gsolaceclustermgr" {
 Then create a broker using the *gsolaceclustermgr_broker* resource
 ~~~
 resource "gsolaceclustermgr_broker" "ocs-test" {
-  count           = 1
   serviceclass_id = "ENTERPRISE_250_STANDALONE"
   name            = "ocs-prov-test"
   datacenter_id   = "aks-germanywestcentral"
@@ -31,6 +30,9 @@ resource "gsolaceclustermgr_broker" "ocs-test" {
 }
 ~~~
 Updating the broker is supported - but *only* the name attribute may be changed.
+Note that the broker *version* cannot be updated (the solace cloud API does not support broker upgrade). 
+If you change the version attribute , terraform will replace the exisiting broker.
+If you omit the attribute (or provide the value *null*), version differences will be ignored. This is the recommended approach when you schedule a broker upgrade with the solace team.
 
 The official [solace terraform provider](https://github.com/SolaceProducts/terraform-provider-solacebroker) covers further manipulation like messageVPN setup.
 
