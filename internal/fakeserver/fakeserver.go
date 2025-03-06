@@ -29,6 +29,8 @@ type Fakeserver struct {
 
 type ServiceInfo struct {
 	ID                 string
+	ServiceClassId     string
+	DatacenterId       string
 	Name               string
 	State              string
 	MsgVpnName         string
@@ -38,6 +40,8 @@ type ServiceInfo struct {
 	MaxSpoolUsage      int32
 	Created            time.Time
 	Updated            time.Time
+	ClientUsername     string
+	ClientPassword     string
 }
 
 /* NewFakeServer creates a HTTP server used for tests and debugging*/
@@ -154,16 +158,19 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 
 	// parse and store obj
 	sInfo := ServiceInfo{
-		ID:    sid,
-		Name:  jObj["name"].(string),
-		State: "PENDING",
-
+		ID:                 sid,
+		Name:               jObj["name"].(string),
+		State:              "PENDING",
+		ServiceClassId:     jObj["serviceClassId"].(string),
+		DatacenterId:       jObj["datacenterId"].(string),
 		ClusterName:        orDefault(jObj["clusterName"], "test-cluster1"),
 		MsgVpnName:         orDefault(jObj["msgVpnName"], "test-vpn1"),
 		EventBrokerVersion: orDefault(jObj["eventBrokerVersion"], "1.0.0"),
 		CustomRouterName:   orDefault(jObj["customRouterName"], "test-router1"),
 		MaxSpoolUsage:      orDefaultInt32(jObj["maxSpoolUsage"], 20),
 		Created:            time.Now(),
+		ClientUsername:     "client-user",
+		ClientPassword:     "client-passwd",
 	}
 	svr.objects[sid] = sInfo
 	if svr.debug {
@@ -216,6 +223,8 @@ func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo *ServiceInfo, id s
 		"data": map[string]interface{}{
 			"id":                        sInfo.ID,
 			"name":                      sInfo.Name,
+			"serviceClassId":            sInfo.ServiceClassId,
+			"datacenterId":              sInfo.DatacenterId,
 			"createdTime":               sInfo.Created.Format(time.RFC3339),
 			"updatedTime":               sInfo.Updated.Format(time.RFC3339),
 			"creationState":             sInfo.State,
@@ -228,6 +237,10 @@ func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo *ServiceInfo, id s
 				"msgVpns": []interface{}{
 					map[string]interface{}{
 						"msgVpnName": sInfo.MsgVpnName,
+						"serviceLoginCredential": map[string]interface{}{
+							"username": sInfo.ClientUsername,
+							"password": sInfo.ClientPassword,
+						},
 					},
 				},
 				"maxSpoolUsage": sInfo.MaxSpoolUsage,
@@ -280,11 +293,13 @@ func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo *ServiceInfo, id
 	result := map[string]interface{}{
 		"data": map[string]interface{}{
 			"id":                        sInfo.ID,
+			"serviceClassId":            sInfo.ServiceClassId,
 			"name":                      sInfo.Name,
 			"createdTime":               sInfo.Created.Format(time.RFC3339),
 			"updatedTime":               sInfo.Updated.Format(time.RFC3339),
 			"creationState":             sInfo.State,
 			"eventBrokerServiceVersion": sInfo.EventBrokerVersion,
+
 			"broker": map[string]interface{}{
 				"cluster": map[string]interface{}{
 					"name":              sInfo.ClusterName,

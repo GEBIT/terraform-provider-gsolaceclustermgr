@@ -347,6 +347,7 @@ func (r *brokerResource) Read(ctx context.Context, req resource.ReadRequest, res
 	if getResp.JSON200.Data.UpdatedTime != nil {
 		currentState.LastUpdated = types.StringValue(getResp.JSON200.Data.UpdatedTime.Format(time.RFC850))
 	}
+	currentState.EventBrokerVersion = types.StringValue(getResp.JSON200.Data.EventBrokerServiceVersion)
 	currentState.Status = types.StringValue(string(*(getResp.JSON200.Data.CreationState)))
 	currentState.Name = types.StringPointerValue(getResp.JSON200.Data.Name)
 	currentState.ClusterName = types.StringPointerValue(getResp.JSON200.Data.Broker.Cluster.Name)

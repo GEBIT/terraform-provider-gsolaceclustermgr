@@ -15,6 +15,18 @@
             ]
         },
         {
+            "name": "Debug Terraform Provider",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            // this assumes your workspace is the root of the repo
+            "program": "${workspaceFolder}",
+            "env": {},
+            "args": [
+                "-debug",
+            ]
+        },
+        {
             "name": "Run tf tests",
             "type": "go",
             "request": "launch",

@@ -230,7 +230,9 @@ func (p *clusterManagerProvider) Configure(ctx context.Context, req provider.Con
 
 // DataSources defines the data sources implemented in the provider.
 func (p *clusterManagerProvider) DataSources(_ context.Context) []func() datasource.DataSource {
-	return nil
+	return []func() datasource.DataSource{
+		NewBrokerDataSource,
+	}
 }
 
 // Resources defines the resources implemented in the provider.

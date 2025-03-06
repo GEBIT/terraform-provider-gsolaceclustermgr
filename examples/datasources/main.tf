@@ -19,21 +19,15 @@ provider "gsolaceclustermgr" {
 
 }
 
-resource "gsolaceclustermgr_broker" "ocs-test" {
-  serviceclass_id = "ENTERPRISE_250_STANDALONE"
-  name            = "ocs-prov-test-1"
-  datacenter_id   = "aks-germanywestcentral"
-
-  # optional attributes
-
-  #msg_vpn_name    = "ocs-msgvpn-1"
-  #cluster_name    = "gwc-aks-cluster1"
-  #custom_router_name = "ocs-router-1"
-  #event_broker_version = "10.8.1.152-7"
-  #max_spool_usage = 40
+data "gsolaceclustermgr_broker" "ocs-test" {
+  id = "f4d0e212-a6e0-40a3-8d3e-7ad897228a75"
 }
 
 
-output "broker_ocs-test" {
-  value = gsolaceclustermgr_broker.ocs-test
+output "ocs-test_id" {
+  value = data.gsolaceclustermgr_broker.ocs-test.id
+}
+output "ocs-test_secret" {
+  value = data.gsolaceclustermgr_broker.ocs-test.client_secret
+  sensitive = true
 }
