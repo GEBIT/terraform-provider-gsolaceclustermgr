@@ -3,6 +3,7 @@ package provider
 import (
 	"fmt"
 	"os"
+	"regexp"
 	"terraform-provider-gsolaceclustermgr/internal/fakeserver"
 	"testing"
 
@@ -18,7 +19,7 @@ func startFakeServer() {
 	apiServerObjects := make(map[string]fakeserver.ServiceInfo)
 	port := 8091
 	fmt.Printf("Starting fake server on port %d...\n", port)
-	svr = fakeserver.NewFakeServer(port, apiServerObjects, true, os.Getenv("DEBUG") != "")
+	svr = fakeserver.NewFakeServer(port, apiServerObjects, true, os.Getenv("EXT_SERVER_DEBUG") != "", 0)
 }
 
 func stopFakeServer() {
@@ -37,7 +38,7 @@ func TestAccBrokerResource(t *testing.T) {
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testConfig("test", "ocs-prov-test", true),
+				Config: testResourceConfig("test", "ocs-prov-test", true),
 				ConfigStateChecks: []statecheck.StateCheck{
 					// verify attributes
 					statecheck.ExpectKnownValue(
@@ -108,7 +109,7 @@ func TestAccBrokerResource(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Create and Read testing (optionals not set)
 			{
-				Config: testConfig("test2", "ocs-prov-test2", false),
+				Config: testResourceConfig("test2", "ocs-prov-test2", false),
 				ConfigStateChecks: []statecheck.StateCheck{
 					// verify attributes
 					statecheck.ExpectKnownValue(
@@ -173,7 +174,7 @@ func TestAccBrokerResource(t *testing.T) {
 			},
 			// Update and Read testing
 			{
-				Config: testConfig("test2", "ocs-prov-test-changed", false),
+				Config: testResourceConfig("test2", "ocs-prov-test-changed", false),
 				//ExpectNonEmptyPlan: true,
 				ConfigStateChecks: []statecheck.StateCheck{
 					statecheck.ExpectKnownValue(
@@ -195,9 +196,89 @@ func TestAccBrokerResource(t *testing.T) {
 			// Delete testing automatically occurs in TestCase
 		},
 	})
+
 }
 
-func testConfig(rname string, name string, allValues bool) string {
+func TestAccBrokerDataSource(t *testing.T) {
+	if os.Getenv("EXT_SERVER") == "" {
+		startFakeServer()
+		defer stopFakeServer()
+	}
+	resource.Test(t, resource.TestCase{
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			// Read fail testing
+			{
+				Config:      testDataSourceConfig("test3dsFail", "NotExisting1"),
+				ExpectError: regexp.MustCompile("Error getting broker service info"),
+			},
+			// Read testing
+			{
+				PreConfig: func() {
+					if svr != nil {
+						svr.SetBaseSid(1234)
+					}
+				},
+				Config: testResoureAndDataSourceConfig("test3ds"),
+				ConfigStateChecks: []statecheck.StateCheck{
+					// verify success:  attributes
+					statecheck.ExpectKnownValue(
+						"data.gsolaceclustermgr_broker.test3ds",
+						tfjsonpath.New("id"),
+						knownvalue.StringExact("1234"),
+					),
+					statecheck.ExpectKnownValue(
+						"data.gsolaceclustermgr_broker.test3ds",
+						tfjsonpath.New("msg_vpn_name"),
+						knownvalue.StringExact("ocs-msgvpn"),
+					),
+					statecheck.ExpectKnownValue(
+						"data.gsolaceclustermgr_broker.test3ds",
+						tfjsonpath.New("cluster_name"),
+						knownvalue.StringExact("gwc-aks-ocs"),
+					),
+					statecheck.ExpectKnownValue(
+						"data.gsolaceclustermgr_broker.test3ds",
+						tfjsonpath.New("custom_router_name"),
+						knownvalue.StringExact("ocs-router"),
+					),
+					statecheck.ExpectKnownValue(
+						"data.gsolaceclustermgr_broker.test3ds",
+						tfjsonpath.New("event_broker_version"),
+						knownvalue.StringExact("1.2.3"),
+					),
+					statecheck.ExpectKnownValue(
+						"data.gsolaceclustermgr_broker.test3ds",
+						tfjsonpath.New("max_spool_usage"),
+						knownvalue.Int32Exact(23),
+					),
+					statecheck.ExpectKnownValue(
+						"data.gsolaceclustermgr_broker.test3ds",
+						tfjsonpath.New("status"),
+						knownvalue.StringExact("COMPLETED"),
+					),
+					statecheck.ExpectKnownValue(
+						"data.gsolaceclustermgr_broker.test3ds",
+						tfjsonpath.New("last_updated"),
+						knownvalue.NotNull(),
+					),
+					statecheck.ExpectKnownValue(
+						"data.gsolaceclustermgr_broker.test3ds",
+						tfjsonpath.New("client_username"),
+						knownvalue.StringExact("client-user"),
+					),
+					statecheck.ExpectKnownValue(
+						"data.gsolaceclustermgr_broker.test3ds",
+						tfjsonpath.New("client_secret"),
+						knownvalue.StringExact("client-passwd"),
+					),
+				},
+			},
+		},
+	})
+}
+
+func testResourceConfig(rname string, name string, allValues bool) string {
 	var optionals = ""
 	if allValues {
 		optionals = `msg_vpn_name    = "ocs-msgvpn"
@@ -212,6 +293,22 @@ func testConfig(rname string, name string, allValues bool) string {
 		name            = "` + name + `"
 		datacenter_id   = "aks-germanywestcentral"
 	    ` + optionals + `		
+	}
+	`
+}
+
+func testDataSourceConfig(rname string, id string) string {
+	return providerConfig + `
+	data "gsolaceclustermgr_broker" "` + rname + `" {
+		id            = "` + id + `"
+	}
+	`
+}
+
+func testResoureAndDataSourceConfig(rname string) string {
+	return testResourceConfig(rname, "foo", true) + `
+	data "gsolaceclustermgr_broker" "` + rname + `" {
+		id            = gsolaceclustermgr_broker.` + rname + `.id
 	}
 	`
 }

@@ -25,6 +25,7 @@ type Fakeserver struct {
 	objects map[string]ServiceInfo
 	debug   bool
 	running bool
+	baseSid int
 }
 
 type ServiceInfo struct {
@@ -45,13 +46,14 @@ type ServiceInfo struct {
 }
 
 /* NewFakeServer creates a HTTP server used for tests and debugging*/
-func NewFakeServer(iPort int, iObjects map[string]ServiceInfo, iStart bool, iDebug bool) *Fakeserver {
+func NewFakeServer(iPort int, iObjects map[string]ServiceInfo, iStart bool, iDebug bool, iBaseSid int) *Fakeserver {
 	serverMux := http.NewServeMux()
 
 	svr := &Fakeserver{
 		debug:   iDebug,
 		objects: iObjects,
 		running: false,
+		baseSid: iBaseSid, // 0 means generate uuids
 	}
 
 	serverMux.HandleFunc("/api/v2/missionControl/", svr.handleBrokerServices)
@@ -74,6 +76,11 @@ func NewFakeServer(iPort int, iObjects map[string]ServiceInfo, iStart bool, iDeb
 	log.Printf("fakeserver ready")
 
 	return svr
+}
+
+func (svr *Fakeserver) SetBaseSid(sid int) {
+	svr.baseSid = sid
+	log.Printf("fakeserver.go: setting baseSid to %d\n", svr.baseSid)
 }
 
 func (svr *Fakeserver) safeServe() {
@@ -146,7 +153,13 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 	var jObj map[string]interface{}
 
 	/* handle creation */
-	sid := uuid.New().String()
+	var sid string
+	if svr.baseSid == 0 {
+		sid = uuid.New().String()
+	} else {
+		sid = fmt.Sprintf("%d", svr.baseSid)
+		svr.baseSid++
+	}
 
 	err := json.Unmarshal(body, &jObj)
 	if err != nil {

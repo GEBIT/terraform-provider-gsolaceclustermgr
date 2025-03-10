@@ -15,10 +15,11 @@ func main() {
 
 	port := flag.Int("port", 8091, "The port fakeserver will listen on")
 	debug := flag.Bool("debug", false, "Enable debug output of the server")
+	baseSid := flag.Int("base-sid", 0, "generate SIDs from seqeunce starting with this. 0 = UUID-Generation instead")
 
 	flag.Parse()
 
-	svr := fakeserver.NewFakeServer(*port, apiServerObjects, false, *debug)
+	svr := fakeserver.NewFakeServer(*port, apiServerObjects, false, *debug, *baseSid)
 
 	fmt.Printf("Starting server on port %d...\n", *port)
 
