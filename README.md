@@ -1,6 +1,6 @@
 # Terraform Provider for Solace MissionControl ClusterManager
 
-This provider, maintained by GEBIT Solutions GmbH, supports a small part of the Solace missioncontrol API (https://api.solace.cloud/api/v2/missionControl), namely the operations to create and delete PubSub+ Software Event Brokers in the Solace cloud (while the  official [solace terraform provider](https://github.com/SolaceProducts/terraform-provider-solacebroker) allows you to configure them further).
+This provider, maintained by GEBIT Solutions GmbH, supports a small part of the Solace missioncontrol API (https://api.solace.cloud/api/v2/missionControl), namely the operations to create and delete PubSub+ Software Event Brokers in the Solace cloud (while the  official [solace terraform provider](https://github.com/SolaceProducts/terraform-provider-solacebroker) allows you to configure them further using the SEMP API).
 
 It is available on the [Terraform Registry](https://developer.hashicorp.com/terraform/registry/providers/publishing) 
 
@@ -34,11 +34,25 @@ Note that the broker *version* cannot be updated (the solace cloud API does not 
 If you change the version attribute , terraform will replace the exisiting broker.
 If you omit the attribute (or provide the value *null*), version differences will be ignored. This is the recommended approach when you schedule a broker upgrade with the solace team.
 
-The official [solace terraform provider](https://github.com/SolaceProducts/terraform-provider-solacebroker) covers further manipulation like messageVPN setup.
+The broker resource output contains some important information you will need for further modifuiactions using the SEMP API, like the missionControlManagerLoginCredentials, and the id of the first ServiceConnectionEndpoint (required for  adding custom hostnames)
+
+You can later access the broker information using a datasource:
+~~~
+data "gsolaceclustermgr_broker" "ocs-test" {
+  id = "<brokerservice-id>"
+}  
+~
+
+The official [solace terraform provider](https://github.com/SolaceProducts/terraform-provider-solacebroker) covers further manipulation like messageVPN setup - for things like adding custom hostnames you will need the legacy REST API 
+
+The broker resource output contains some important information you will need for further modifuiactions using the SEMP API, like the missionControlManagerLoginCredentials, and the id of the first ServiceConnectionEndpoint (required for  adding custom hostnames)
+
 
 ## Development
 
-This provider is  based on the [HashiCorp Developer Tutorial](https://developer.hashicorp.com/terraform/tutorials/providers-plugin-framework). 
+This provider is based on the [HashiCorp Developer Tutorial](https://developer.hashicorp.com/terraform/tutorials/providers-plugin-framework). 
+
+
 
 
 ### Requirements
@@ -102,6 +116,9 @@ provider_installation {
 }
 ~~~
 
+Tips: 
+- if you set FAKE_SERVER_DEBUG=1 the fakeserver will be started with the debug option during acc tests
+- if you set FAKE_SERVER_EXT=1 the acc test will expect a running fakeserver and skips start, so you can run the fakeserver (with -debug) in a separate window for easier checking logs
 
 ## Contributing
 Feedback and / or contributions are welcome. Contact hartmut.franz@gebit.de for details.

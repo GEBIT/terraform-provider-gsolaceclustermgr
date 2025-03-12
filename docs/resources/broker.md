@@ -32,6 +32,10 @@ Event Broker Resource. Note that *name* is the only attribute you can update wit
 ### Read-Only
 
 - `created` (String)
+- `hostnames` (List of String)
 - `id` (String) The ID of this resource.
 - `last_updated` (String)
+- `missioncontrol_password` (String, Sensitive)
+- `missioncontrol_username` (String, Sensitive)
+- `service_endpoint_id` (String)
 - `status` (String)

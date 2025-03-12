@@ -8,11 +8,11 @@ terraform {
 }
 
 provider "gsolaceclustermgr" {
-  // --- test against solace cloud 
-  // bearer_token = "<aSolaceApiToken"
-  // host = "https://api.solace.cloud"
+  ###### test against solace cloud 
+  # bearer_token = "<aSolaceApiToken"
+  # host = "https://api.solace.cloud"
 
-  // --- test against fakeserver
+  ###### test against fakeserver
   bearer_token              = "bt42"
   host                      = "http://localhost:8091"
   polling_interval_duration = "2s"
@@ -26,14 +26,17 @@ resource "gsolaceclustermgr_broker" "ocs-test" {
 
   # optional attributes
 
-  #msg_vpn_name    = "ocs-msgvpn-1"
+  msg_vpn_name = "ocs-msgvpn-1"
   #cluster_name    = "gwc-aks-cluster1"
   #custom_router_name = "ocs-router-1"
   #event_broker_version = "10.8.1.152-7"
   #max_spool_usage = 40
 }
 
-
-output "broker_ocs-test" {
-  value = gsolaceclustermgr_broker.ocs-test
+output "ocs-test_id" {
+  value = gsolaceclustermgr_broker.ocs-test.id
+}
+output "ocs-test" {
+  value     = gsolaceclustermgr_broker.ocs-test
+  sensitive = true
 }

@@ -9,6 +9,7 @@ import (
 	"terraform-provider-gsolaceclustermgr/internal/missioncontrol"
 	"time"
 
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -22,18 +23,22 @@ import (
 
 // brokerResourceModel maps the resource schema data.
 type brokerResourceModel struct {
-	ID                 types.String `tfsdk:"id"`
-	DataCenterId       types.String `tfsdk:"datacenter_id"`
-	Name               types.String `tfsdk:"name"`
-	ClusterName        types.String `tfsdk:"cluster_name"`
-	MsgVpnName         types.String `tfsdk:"msg_vpn_name"`
-	Created            types.String `tfsdk:"created"`
-	LastUpdated        types.String `tfsdk:"last_updated"`
-	Status             types.String `tfsdk:"status"`
-	ServiceClassId     types.String `tfsdk:"serviceclass_id"`
-	CustomRouterName   types.String `tfsdk:"custom_router_name"`
-	EventBrokerVersion types.String `tfsdk:"event_broker_version"`
-	MaxSpoolUsage      types.Int32  `tfsdk:"max_spool_usage"`
+	ID                     types.String `tfsdk:"id"`
+	DataCenterId           types.String `tfsdk:"datacenter_id"`
+	Name                   types.String `tfsdk:"name"`
+	ClusterName            types.String `tfsdk:"cluster_name"`
+	MsgVpnName             types.String `tfsdk:"msg_vpn_name"`
+	Created                types.String `tfsdk:"created"`
+	LastUpdated            types.String `tfsdk:"last_updated"`
+	Status                 types.String `tfsdk:"status"`
+	ServiceClassId         types.String `tfsdk:"serviceclass_id"`
+	CustomRouterName       types.String `tfsdk:"custom_router_name"`
+	EventBrokerVersion     types.String `tfsdk:"event_broker_version"`
+	MaxSpoolUsage          types.Int32  `tfsdk:"max_spool_usage"`
+	MissionControlUserName types.String `tfsdk:"missioncontrol_username"`
+	MissionControlPassword types.String `tfsdk:"missioncontrol_password"`
+	HostNames              types.List   `tfsdk:"hostnames"`
+	ServiceEndpointId      types.String `tfsdk:"service_endpoint_id"`
 }
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -173,7 +178,21 @@ func (r *brokerResource) Schema(ctx context.Context, _ resource.SchemaRequest, r
 			"status": schema.StringAttribute{
 				Computed: true,
 			},
-			// TODO: report
+			"hostnames": schema.ListAttribute{
+				ElementType: types.StringType,
+				Computed:    true,
+			},
+			"service_endpoint_id": schema.StringAttribute{
+				Computed: true,
+			},
+			"missioncontrol_username": schema.StringAttribute{
+				Computed:  true,
+				Sensitive: true,
+			},
+			"missioncontrol_password": schema.StringAttribute{
+				Computed:  true,
+				Sensitive: true,
+			},
 		},
 	}
 }
@@ -214,7 +233,6 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 		return
 	}
 	tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", createResp.Body))
-
 	if createResp.StatusCode() != 202 {
 		resp.Diagnostics.AddError(
 			"Error creating broker service",
@@ -226,9 +244,8 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 	resourceId := *(createResp.JSON202.Data.ResourceId)
 
 	tflog.Info(ctx, fmt.Sprintf("Waiting for broker service using %s to finish creation", resourceId))
-	getParams := missioncontrol.GetServiceParams{
-		Expand: &[]missioncontrol.GetServiceParamsExpand{"broker"},
-	}
+
+	// TODO: polling GET with full expansion is maybe expensive - we could poll for the operation and fetch the full state once instead
 
 	timeout := time.Now().Add(r.cMProviderData.PollingTimeoutDuration)
 	for created := false; !created; {
@@ -242,46 +259,17 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 		}
 		time.Sleep(r.cMProviderData.PollingIntervalDuration)
 		tflog.Info(ctx, fmt.Sprintf("Checking broker status for %s", resourceId))
-		getResp, err := r.cMProviderData.Client.GetServiceWithResponse(ctx, resourceId, &getParams, r.BearerReqEditorFn)
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"Error getting broker service",
-				"Could not get broker service, unexpected error: "+err.Error(),
-			)
+
+		r.fullGet(ctx, resourceId, &plannedState, &resp.Diagnostics)
+
+		tflog.Info(ctx, fmt.Sprintf("Broker status %s", plannedState.Status.ValueString()))
+
+		if resp.Diagnostics.HasError() {
 			return
 		}
-		if getResp.StatusCode() != 200 {
-			resp.Diagnostics.AddError(
-				"Error Checking broker status",
-				fmt.Sprintf("unexpected response code: %v from ", getResp.StatusCode()),
-			)
-			tflog.Debug(ctx, fmt.Sprintf("CreateResponse Body:%s", getResp.Body))
-			return
-		}
-		tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", getResp.Body))
-		tflog.Debug(ctx, fmt.Sprintf("CreationState %v", *getResp.JSON200.Data.CreationState))
-		if *(getResp.JSON200.Data.CreationState) == missioncontrol.ServiceCreationStateCOMPLETED {
+
+		if plannedState.Status.ValueString() == string(missioncontrol.ServiceCreationStateCOMPLETED) {
 			created = true
-			// Map response body to schema and populate Computed attribute values
-			plannedState.ID = types.StringValue(resourceId)
-			plannedState.Status = types.StringValue(string(*(getResp.JSON200.Data.CreationState)))
-			if getResp.JSON200.Data.CreatedTime != nil {
-				plannedState.Created = types.StringValue(getResp.JSON200.Data.CreatedTime.Format(time.RFC850))
-			} else {
-				plannedState.Created = types.StringValue(time.Now().Format(time.RFC850))
-			}
-			if getResp.JSON200.Data.UpdatedTime != nil {
-				plannedState.LastUpdated = types.StringValue(getResp.JSON200.Data.UpdatedTime.Format(time.RFC850))
-			} else {
-				plannedState.LastUpdated = types.StringValue("")
-			}
-			// read computed values for optional fields
-			plannedState.EventBrokerVersion = types.StringValue(getResp.JSON200.Data.EventBrokerServiceVersion)
-			plannedState.ClusterName = types.StringValue(*(getResp.JSON200.Data.Broker.Cluster.Name))
-			routerPrefix, _ := strings.CutSuffix(*(getResp.JSON200.Data.Broker.Cluster.PrimaryRouterName), "primary")
-			plannedState.CustomRouterName = types.StringValue(routerPrefix)
-			plannedState.MsgVpnName = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MsgVpnName)
-			plannedState.MaxSpoolUsage = types.Int32PointerValue(getResp.JSON200.Data.Broker.MaxSpoolUsage)
 		}
 
 	}
@@ -300,10 +288,6 @@ func (r *brokerResource) Read(ctx context.Context, req resource.ReadRequest, res
 	// Get current currentState
 	var currentState brokerResourceModel
 
-	getParams := missioncontrol.GetServiceParams{
-		Expand: &[]missioncontrol.GetServiceParamsExpand{"broker"},
-	}
-
 	diags := req.State.Get(ctx, &currentState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -311,52 +295,18 @@ func (r *brokerResource) Read(ctx context.Context, req resource.ReadRequest, res
 	}
 
 	// Get refreshed broker state
-	getResp, err := r.cMProviderData.Client.GetServiceWithResponse(ctx, currentState.ID.ValueString(), &getParams, r.BearerReqEditorFn)
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"Error getting broker service info",
-			"Could not get broker service, unexpected error: "+err.Error(),
-		)
-		return
-	}
-	if getResp.StatusCode() != 200 {
-		tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", getResp.Body))
-
-		// handle vanished resources
-		if getResp.StatusCode() == 404 {
-			// As of 20250127 the response is not as specified, so we cannot use getResp.JSON404
-			if strings.Contains(string(getResp.Body), "Could not find event broker service with id") {
-				tflog.Warn(ctx, "Could not find event broker service")
-				// refresh state
-				resp.State.RemoveResource(ctx)
-				return
-			}
+	r.fullGet(ctx, currentState.ID.ValueString(), &currentState, &resp.Diagnostics)
+	if resp.Diagnostics.WarningsCount() > 0 {
+		if resp.Diagnostics.Warnings()[0].Summary() == "404:VANISHED" {
+			tflog.Info(ctx, "Removing vanished resource from state gracefully")
+			resp.State.RemoveResource(ctx)
+			return
 		}
-		resp.Diagnostics.AddError(
-			"Error getting broker service info",
-			fmt.Sprintf("Unexpected response code: %v", getResp.StatusCode()),
-		)
+	}
+	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	// Overwrite items with refreshed state
-	tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", getResp.Body))
-	if getResp.JSON200.Data.CreatedTime != nil {
-		currentState.Created = types.StringValue(getResp.JSON200.Data.CreatedTime.Format(time.RFC850))
-	}
-	if getResp.JSON200.Data.UpdatedTime != nil {
-		currentState.LastUpdated = types.StringValue(getResp.JSON200.Data.UpdatedTime.Format(time.RFC850))
-	}
-	currentState.EventBrokerVersion = types.StringValue(getResp.JSON200.Data.EventBrokerServiceVersion)
-	currentState.Status = types.StringValue(string(*(getResp.JSON200.Data.CreationState)))
-	currentState.Name = types.StringPointerValue(getResp.JSON200.Data.Name)
-	currentState.ClusterName = types.StringPointerValue(getResp.JSON200.Data.Broker.Cluster.Name)
-	routerPrefix, _ := strings.CutSuffix(*(getResp.JSON200.Data.Broker.Cluster.PrimaryRouterName), "primary")
-	currentState.CustomRouterName = types.StringValue(routerPrefix)
-	currentState.MsgVpnName = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MsgVpnName)
-	currentState.MaxSpoolUsage = types.Int32PointerValue(getResp.JSON200.Data.Broker.MaxSpoolUsage)
-
-	tflog.Debug(ctx, fmt.Sprintf("Read Broker state %s %s %v", currentState.Name, currentState.Status.ValueString(), currentState.LastUpdated))
 	// Set refreshed state
 	diags = resp.State.Set(ctx, &currentState)
 	resp.Diagnostics.Append(diags...)
@@ -396,35 +346,24 @@ func (r *brokerResource) Update(ctx context.Context, req resource.UpdateRequest,
 
 	// NOTE: in theory we will get a PENDING or INPROGRESS status, and should wait for the operatin to finish.
 	// It is only a quick renaming however, so we do not bother...
+	tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", updateResp.Body))
 	if updateResp.StatusCode() != 200 {
 		// do not catch 404 (vanished resources), that is an error
 		resp.Diagnostics.AddError(
 			"Error creating broker service",
 			fmt.Sprintf("Unexpected response code: %v", updateResp.StatusCode()),
 		)
-		tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", updateResp.Body))
 		return
 	}
 
-	if updateResp.JSON200.Data.UpdatedTime != nil {
-		plannedState.LastUpdated = types.StringValue(updateResp.JSON200.Data.UpdatedTime.Format(time.RFC850))
-	} else {
-		plannedState.LastUpdated = types.StringValue(time.Now().Format(time.RFC850))
+	// Update will NOT deliver expanded infos (epand query param is not specified for this method)
+	// Therfore we get the full info again
+	// Get refreshed broker state
+	r.fullGet(ctx, plannedState.ID.ValueString(), &plannedState, &resp.Diagnostics)
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	plannedState.Status = types.StringValue(string(*(updateResp.JSON200.Data.CreationState)))
 
-	// refresh the actual patched name
-	plannedState.Name = types.StringValue(*(updateResp.JSON200.Data.Name))
-
-	// read computed values for optional fields
-	plannedState.EventBrokerVersion = types.StringValue(updateResp.JSON200.Data.EventBrokerServiceVersion)
-	plannedState.ClusterName = types.StringPointerValue(updateResp.JSON200.Data.Broker.Cluster.Name)
-	routerPrefix, _ := strings.CutSuffix(*(updateResp.JSON200.Data.Broker.Cluster.PrimaryRouterName), "primary")
-	plannedState.CustomRouterName = types.StringValue(routerPrefix)
-	plannedState.MsgVpnName = types.StringPointerValue((*(updateResp.JSON200.Data.Broker.MsgVpns))[0].MsgVpnName)
-	plannedState.MaxSpoolUsage = types.Int32PointerValue(updateResp.JSON200.Data.Broker.MaxSpoolUsage)
-
-	// handle other computed attributes
 	tflog.Info(ctx, fmt.Sprintf("Updated broker to %s %v %v", plannedState.Name.ValueString(), plannedState.Status.ValueString(), plannedState.LastUpdated.ValueString()))
 
 	// Save updated data into Terraform state
@@ -456,10 +395,10 @@ func (r *brokerResource) Delete(ctx context.Context, req resource.DeleteRequest,
 		)
 		return
 	}
+	tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", delResp.Body))
 	if delResp.StatusCode() != 202 {
-		tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", delResp.Body))
 
-		// handlin a vanished resource (likely already detected in plan/read)
+		// handling a vanished resource (likely already detected in plan/read)
 		if delResp.StatusCode() == 404 {
 			// As of 20250127 the response is not as specified, so we cannot use getResp.JSON404
 			if strings.Contains(string(delResp.Body), "Could not find event broker service with id") {
@@ -486,6 +425,81 @@ func (r *brokerResource) ImportState(ctx context.Context, req resource.ImportSta
 
 	// check this
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+}
+
+// helper to fully retrieve brokerInfos
+func (r *brokerResource) fullGet(ctx context.Context, id string, model *brokerResourceModel, diagnostics *diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	getParams := missioncontrol.GetServiceParams{
+		Expand: &[]missioncontrol.GetServiceParamsExpand{"broker,serviceConnectionEndpoints"},
+	}
+
+	// Get refreshed broker state
+	getResp, err := r.cMProviderData.Client.GetServiceWithResponse(ctx, id, &getParams, r.BearerReqEditorFn)
+	if err != nil {
+		diagnostics.AddError(
+			"Error getting broker service",
+			"Could not get broker service, unexpected error: "+err.Error(),
+		)
+		return
+	}
+	tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", getResp.Body))
+	if getResp.StatusCode() != 200 {
+
+		// handle vanished resources
+		if getResp.StatusCode() == 404 {
+			// As of 20250127 the response is not as specified, so we cannot use getResp.JSON404
+			if strings.Contains(string(getResp.Body), "Could not find event broker service with id") {
+				tflog.Warn(ctx, "Could not find event broker service")
+				// this might be tolerable
+				diagnostics.AddWarning(
+					"404:VANISHED",
+					"Could not find event broker service with id "+id)
+				return
+			}
+		}
+		diagnostics.AddError(
+			"Error creating broker service",
+			fmt.Sprintf("Unexpected response code: %v", getResp.StatusCode()),
+		)
+		return
+	}
+
+	tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", getResp.Body))
+	// extract all infos when status is COMPLETED
+	if *(getResp.JSON200.Data.CreationState) == missioncontrol.ServiceCreationStateCOMPLETED {
+		model.ID = types.StringPointerValue(getResp.JSON200.Data.Id)
+		if getResp.JSON200.Data.CreatedTime != nil {
+			model.Created = types.StringValue(getResp.JSON200.Data.CreatedTime.Format(time.RFC850))
+		}
+		if getResp.JSON200.Data.UpdatedTime != nil {
+			model.LastUpdated = types.StringValue(getResp.JSON200.Data.UpdatedTime.Format(time.RFC850))
+		}
+		model.ServiceClassId = types.StringPointerValue((*string)(getResp.JSON200.Data.ServiceClassId))
+		model.DataCenterId = types.StringPointerValue(getResp.JSON200.Data.DatacenterId)
+		model.EventBrokerVersion = types.StringValue(getResp.JSON200.Data.EventBrokerServiceVersion)
+		model.Status = types.StringValue(string(*(getResp.JSON200.Data.CreationState)))
+		model.Name = types.StringPointerValue(getResp.JSON200.Data.Name)
+		model.ClusterName = types.StringPointerValue(getResp.JSON200.Data.Broker.Cluster.Name)
+		routerPrefix, _ := strings.CutSuffix(*(getResp.JSON200.Data.Broker.Cluster.PrimaryRouterName), "primary")
+		model.CustomRouterName = types.StringValue(routerPrefix)
+		model.MsgVpnName = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MsgVpnName)
+		model.MaxSpoolUsage = types.Int32PointerValue(getResp.JSON200.Data.Broker.MaxSpoolUsage)
+		model.MissionControlUserName = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MissionControlManagerLoginCredential.Username)
+		model.MissionControlPassword = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MissionControlManagerLoginCredential.Password)
+		model.ServiceEndpointId = types.StringPointerValue((*getResp.JSON200.Data.ServiceConnectionEndpoints)[0].Id)
+		hostNames := (*getResp.JSON200.Data.ServiceConnectionEndpoints)[0].HostNames
+
+		model.HostNames, diags = types.ListValueFrom(ctx, types.StringType, hostNames)
+		diagnostics.Append(diags...)
+		if diagnostics.HasError() {
+			return
+		}
+
+		tflog.Debug(ctx, fmt.Sprintf("Read Broker state %s %s %s %v", model.ID, model.Name, model.Status.ValueString(), model.LastUpdated))
+	}
+
 }
 
 /** helper for handling defaults, returns nil instead of ponter to "" for empty strings */

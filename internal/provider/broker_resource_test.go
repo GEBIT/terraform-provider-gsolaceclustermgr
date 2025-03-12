@@ -19,7 +19,7 @@ func startFakeServer() {
 	apiServerObjects := make(map[string]fakeserver.ServiceInfo)
 	port := 8091
 	fmt.Printf("Starting fake server on port %d...\n", port)
-	svr = fakeserver.NewFakeServer(port, apiServerObjects, true, os.Getenv("EXT_SERVER_DEBUG") != "", 0)
+	svr = fakeserver.NewFakeServer(port, apiServerObjects, true, os.Getenv("FAKE_SERVER_DEBUG") != "", 0)
 }
 
 func stopFakeServer() {
@@ -30,7 +30,7 @@ func stopFakeServer() {
 }
 
 func TestAccBrokerResource(t *testing.T) {
-	if os.Getenv("EXT_SERVER") == "" {
+	if os.Getenv("FAKE_SERVER_EXT") == "" {
 		startFakeServer()
 		defer stopFakeServer()
 	}
@@ -87,6 +87,29 @@ func TestAccBrokerResource(t *testing.T) {
 						"gsolaceclustermgr_broker.test",
 						tfjsonpath.New("status"),
 						knownvalue.StringExact("COMPLETED"),
+					),
+					statecheck.ExpectKnownValue(
+						"gsolaceclustermgr_broker.test",
+						tfjsonpath.New("hostnames"),
+						knownvalue.ListExact([]knownvalue.Check{
+							knownvalue.StringExact("test-host1"),
+							knownvalue.StringExact("test-host2"),
+						}),
+					),
+					statecheck.ExpectKnownValue(
+						"gsolaceclustermgr_broker.test",
+						tfjsonpath.New("service_endpoint_id"),
+						knownvalue.StringExact("test-endpoint"),
+					),
+					statecheck.ExpectKnownValue(
+						"gsolaceclustermgr_broker.test",
+						tfjsonpath.New("missioncontrol_username"),
+						knownvalue.StringExact("mc-user"),
+					),
+					statecheck.ExpectKnownValue(
+						"gsolaceclustermgr_broker.test",
+						tfjsonpath.New("missioncontrol_password"),
+						knownvalue.StringExact("mc-passwd"),
 					),
 					// Verify dynamic values have any value set in the state.
 					statecheck.ExpectKnownValue(
@@ -153,6 +176,29 @@ func TestAccBrokerResource(t *testing.T) {
 						tfjsonpath.New("max_spool_usage"),
 						knownvalue.Int32Exact(20),
 					),
+					statecheck.ExpectKnownValue(
+						"gsolaceclustermgr_broker.test2",
+						tfjsonpath.New("hostnames"),
+						knownvalue.ListExact([]knownvalue.Check{
+							knownvalue.StringExact("test-host1"),
+							knownvalue.StringExact("test-host2"),
+						}),
+					),
+					statecheck.ExpectKnownValue(
+						"gsolaceclustermgr_broker.test2",
+						tfjsonpath.New("service_endpoint_id"),
+						knownvalue.StringExact("test-endpoint"),
+					),
+					statecheck.ExpectKnownValue(
+						"gsolaceclustermgr_broker.test2",
+						tfjsonpath.New("missioncontrol_username"),
+						knownvalue.StringExact("mc-user"),
+					),
+					statecheck.ExpectKnownValue(
+						"gsolaceclustermgr_broker.test2",
+						tfjsonpath.New("missioncontrol_password"),
+						knownvalue.StringExact("mc-passwd"),
+					),
 					// Verify Computed attributes
 					statecheck.ExpectKnownValue(
 						"gsolaceclustermgr_broker.test2",
@@ -172,7 +218,7 @@ func TestAccBrokerResource(t *testing.T) {
 					),
 				},
 			},
-			// Update and Read testing
+			// Update and Read testing   (think about this again)
 			{
 				Config: testResourceConfig("test2", "ocs-prov-test-changed", false),
 				//ExpectNonEmptyPlan: true,
@@ -189,7 +235,7 @@ func TestAccBrokerResource(t *testing.T) {
 					statecheck.ExpectKnownValue(
 						"gsolaceclustermgr_broker.test2",
 						tfjsonpath.New("status"),
-						knownvalue.StringExact("PENDING"),
+						knownvalue.StringExact("COMPLETED"),
 					),
 				},
 			},
@@ -264,13 +310,26 @@ func TestAccBrokerDataSource(t *testing.T) {
 					),
 					statecheck.ExpectKnownValue(
 						"data.gsolaceclustermgr_broker.test3ds",
-						tfjsonpath.New("client_username"),
-						knownvalue.StringExact("client-user"),
+						tfjsonpath.New("hostnames"),
+						knownvalue.ListExact([]knownvalue.Check{
+							knownvalue.StringExact("test-host1"),
+							knownvalue.StringExact("test-host2"),
+						}),
 					),
 					statecheck.ExpectKnownValue(
 						"data.gsolaceclustermgr_broker.test3ds",
-						tfjsonpath.New("client_secret"),
-						knownvalue.StringExact("client-passwd"),
+						tfjsonpath.New("service_endpoint_id"),
+						knownvalue.StringExact("test-endpoint"),
+					),
+					statecheck.ExpectKnownValue(
+						"data.gsolaceclustermgr_broker.test3ds",
+						tfjsonpath.New("missioncontrol_username"),
+						knownvalue.StringExact("mc-user"),
+					),
+					statecheck.ExpectKnownValue(
+						"data.gsolaceclustermgr_broker.test3ds",
+						tfjsonpath.New("missioncontrol_password"),
+						knownvalue.StringExact("mc-passwd"),
 					),
 				},
 			},

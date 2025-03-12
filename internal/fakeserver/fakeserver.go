@@ -29,20 +29,23 @@ type Fakeserver struct {
 }
 
 type ServiceInfo struct {
-	ID                 string
-	ServiceClassId     string
-	DatacenterId       string
-	Name               string
-	State              string
-	MsgVpnName         string
-	EventBrokerVersion string
-	CustomRouterName   string
-	ClusterName        string
-	MaxSpoolUsage      int32
-	Created            time.Time
-	Updated            time.Time
-	ClientUsername     string
-	ClientPassword     string
+	ID                          string
+	ServiceClassId              string
+	DatacenterId                string
+	Name                        string
+	State                       string
+	MsgVpnName                  string
+	EventBrokerVersion          string
+	CustomRouterName            string
+	ClusterName                 string
+	MaxSpoolUsage               int32
+	Created                     time.Time
+	Updated                     time.Time
+	MissionControlUserName      string
+	MissionControlPassword      string
+	MissionControlToken         string
+	ServiceConnectionEndpointId string
+	hostnames                   []string
 }
 
 /* NewFakeServer creates a HTTP server used for tests and debugging*/
@@ -73,7 +76,7 @@ func NewFakeServer(iPort int, iObjects map[string]ServiceInfo, iStart bool, iDeb
 	if svr.debug {
 		log.Printf("fakeserver.go: Set up fakeserver: port=%d, debug=%t\n", iPort, svr.debug)
 	}
-	log.Printf("fakeserver ready")
+	log.Printf("fakeserver.go: fakeserver ready")
 
 	return svr
 }
@@ -86,7 +89,7 @@ func (svr *Fakeserver) SetBaseSid(sid int) {
 func (svr *Fakeserver) safeServe() {
 	err := svr.server.ListenAndServe()
 	if err != nil {
-		log.Printf("fakeserver.go: serving failed: %s\n", err)
+		log.Printf("fakeserver.go: serving ended: %s\n", err)
 	}
 }
 
@@ -171,24 +174,25 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 
 	// parse and store obj
 	sInfo := ServiceInfo{
-		ID:                 sid,
-		Name:               jObj["name"].(string),
-		State:              "PENDING",
-		ServiceClassId:     jObj["serviceClassId"].(string),
-		DatacenterId:       jObj["datacenterId"].(string),
-		ClusterName:        orDefault(jObj["clusterName"], "test-cluster1"),
-		MsgVpnName:         orDefault(jObj["msgVpnName"], "test-vpn1"),
-		EventBrokerVersion: orDefault(jObj["eventBrokerVersion"], "1.0.0"),
-		CustomRouterName:   orDefault(jObj["customRouterName"], "test-router1"),
-		MaxSpoolUsage:      orDefaultInt32(jObj["maxSpoolUsage"], 20),
-		Created:            time.Now(),
-		ClientUsername:     "client-user",
-		ClientPassword:     "client-passwd",
+		ID:                          sid,
+		Name:                        jObj["name"].(string),
+		State:                       "PENDING",
+		ServiceClassId:              jObj["serviceClassId"].(string),
+		DatacenterId:                jObj["datacenterId"].(string),
+		ClusterName:                 orDefault(jObj["clusterName"], "test-cluster1"),
+		MsgVpnName:                  orDefault(jObj["msgVpnName"], "test-vpn1"),
+		EventBrokerVersion:          orDefault(jObj["eventBrokerVersion"], "1.0.0"),
+		CustomRouterName:            orDefault(jObj["customRouterName"], "test-router1"),
+		MaxSpoolUsage:               orDefaultInt32(jObj["maxSpoolUsage"], 20),
+		Created:                     time.Now(),
+		MissionControlUserName:      "mc-user",
+		MissionControlPassword:      "mc-passwd",
+		ServiceConnectionEndpointId: "test-endpoint",
+		hostnames:                   []string{"test-host1", "test-host2"},
 	}
 	svr.objects[sid] = sInfo
 	if svr.debug {
-		log.Printf("Created Info: %v)", sInfo)
-		log.Printf("vpn: %v, jobj: %v)", sInfo.MsgVpnName, jObj["msgVpnName"])
+		log.Printf("fakeserver.go: Created Info: %v)", sInfo)
 	}
 	// return created obj
 	result := map[string]interface{}{
@@ -208,6 +212,9 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 	if err != nil {
 		log.Printf("fakeserver.go: failed to marshal result: %s\n", err)
 		return
+	}
+	if svr.debug {
+		log.Printf("fakeserver.go: BODY %s", string(b))
 	}
 
 	w.Header().Add("Content-Type", "json")
@@ -232,6 +239,7 @@ func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo *ServiceInfo, id s
 		log.Printf("fakeserver.go: GET service %v", sInfo)
 	}
 
+	// for simplicity we always return the fully expanded result here
 	result := map[string]interface{}{
 		"data": map[string]interface{}{
 			"id":                        sInfo.ID,
@@ -250,13 +258,20 @@ func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo *ServiceInfo, id s
 				"msgVpns": []interface{}{
 					map[string]interface{}{
 						"msgVpnName": sInfo.MsgVpnName,
-						"serviceLoginCredential": map[string]interface{}{
-							"username": sInfo.ClientUsername,
-							"password": sInfo.ClientPassword,
+						"missionControlManagerLoginCredential": map[string]interface{}{
+							"username": sInfo.MissionControlUserName,
+							"password": sInfo.MissionControlPassword,
+							"token":    sInfo.MissionControlToken,
 						},
 					},
 				},
 				"maxSpoolUsage": sInfo.MaxSpoolUsage,
+			},
+			"serviceConnectionEndpoints": []interface{}{
+				map[string]interface{}{
+					"id":        sInfo.ServiceConnectionEndpointId,
+					"hostnames": sInfo.hostnames,
+				},
 			},
 		},
 		"meta": map[string]interface{}{
@@ -267,6 +282,9 @@ func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo *ServiceInfo, id s
 	if err != nil {
 		log.Printf("fakeserver.go: failed to marshal result: %s\n", err)
 		return
+	}
+	if svr.debug {
+		log.Printf("fakeserver.go: BODY %s", string(b))
 	}
 	w.Header().Add("Content-Type", "json")
 	_, err2 := w.Write(b)
@@ -312,7 +330,6 @@ func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo *ServiceInfo, id
 			"updatedTime":               sInfo.Updated.Format(time.RFC3339),
 			"creationState":             sInfo.State,
 			"eventBrokerServiceVersion": sInfo.EventBrokerVersion,
-
 			"broker": map[string]interface{}{
 				"cluster": map[string]interface{}{
 					"name":              sInfo.ClusterName,
@@ -321,9 +338,20 @@ func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo *ServiceInfo, id
 				"msgVpns": []interface{}{
 					map[string]interface{}{
 						"msgVpnName": sInfo.MsgVpnName,
+						"missionControlManagerLoginCredential": map[string]interface{}{
+							"username": sInfo.MissionControlUserName,
+							"password": sInfo.MissionControlPassword,
+							"token":    sInfo.MissionControlToken,
+						},
 					},
 				},
 				"maxSpoolUsage": sInfo.MaxSpoolUsage,
+			},
+			"serviceConnectionEndpoints": []interface{}{
+				map[string]interface{}{
+					"id":        sInfo.ServiceConnectionEndpointId,
+					"hostnames": sInfo.hostnames,
+				},
 			},
 		},
 		"meta": map[string]interface{}{
@@ -334,6 +362,9 @@ func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo *ServiceInfo, id
 	if err != nil {
 		log.Printf("fakeserver.go: failed to marshal result: %s\n", err)
 		return
+	}
+	if svr.debug {
+		log.Printf("fakeserver.go: BODY %s", string(b))
 	}
 
 	// writeback change
@@ -370,6 +401,9 @@ func (svr *Fakeserver) handleDelete(w http.ResponseWriter, sInfo *ServiceInfo, i
 		log.Printf("fakeserver.go: failed to marshal result: %s\n", err)
 		return
 	}
+	if svr.debug {
+		log.Printf("fakeserver.go: BODY %s", string(b))
+	}
 	w.Header().Add("Content-Type", "json")
 	w.WriteHeader(202)
 	_, err2 := w.Write(b)
@@ -402,8 +436,8 @@ func (svr *Fakeserver) handleBrokerServices(w http.ResponseWriter, r *http.Reque
 			log.Printf("fakeserver.go: Detected ID %s (exists: %t, method: %s)", id, ok, r.Method)
 		}
 		if !ok {
-			log.Printf("Object with ID %s not found", id)
-			http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+			log.Printf("fakeserver.go: Object with ID %s not found", id)
+			http.Error(w, fmt.Sprintf("{\"message\":\"Could not find event broker service with id %s\",\"errorId\":\"42\"}", id), http.StatusNotFound)
 			return
 		}
 		switch r.Method {

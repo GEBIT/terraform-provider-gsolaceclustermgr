@@ -17,22 +17,22 @@ import (
 )
 
 type brokerDataSourceModel struct {
-	ID                 types.String `tfsdk:"id"`
-	DataCenterId       types.String `tfsdk:"datacenter_id"`
-	Name               types.String `tfsdk:"name"`
-	ClusterName        types.String `tfsdk:"cluster_name"`
-	MsgVpnName         types.String `tfsdk:"msg_vpn_name"`
-	Created            types.String `tfsdk:"created"`
-	LastUpdated        types.String `tfsdk:"last_updated"`
-	Status             types.String `tfsdk:"status"`
-	ServiceClassId     types.String `tfsdk:"serviceclass_id"`
-	CustomRouterName   types.String `tfsdk:"custom_router_name"`
-	EventBrokerVersion types.String `tfsdk:"event_broker_version"`
-	MaxSpoolUsage      types.Int32  `tfsdk:"max_spool_usage"`
-	ClientUsername     types.String `tfsdk:"client_username"`
-	ClientSecret       types.String `tfsdk:"client_secret"`
-
-	// TODO what about messagebroker hostname / alias, anything else?
+	ID                     types.String `tfsdk:"id"`
+	DataCenterId           types.String `tfsdk:"datacenter_id"`
+	Name                   types.String `tfsdk:"name"`
+	ClusterName            types.String `tfsdk:"cluster_name"`
+	MsgVpnName             types.String `tfsdk:"msg_vpn_name"`
+	Created                types.String `tfsdk:"created"`
+	LastUpdated            types.String `tfsdk:"last_updated"`
+	Status                 types.String `tfsdk:"status"`
+	ServiceClassId         types.String `tfsdk:"serviceclass_id"`
+	CustomRouterName       types.String `tfsdk:"custom_router_name"`
+	EventBrokerVersion     types.String `tfsdk:"event_broker_version"`
+	MaxSpoolUsage          types.Int32  `tfsdk:"max_spool_usage"`
+	MissionControlUserName types.String `tfsdk:"missioncontrol_username"`
+	MissionControlPassword types.String `tfsdk:"missioncontrol_password"`
+	HostNames              types.List   `tfsdk:"hostnames"`
+	ServiceEndpointId      types.String `tfsdk:"service_endpoint_id"`
 }
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -111,10 +111,18 @@ func (d *brokerDataSource) Schema(_ context.Context, _ datasource.SchemaRequest,
 			"status": schema.StringAttribute{
 				Computed: true,
 			},
-			"client_username": schema.StringAttribute{
+			"hostnames": schema.ListAttribute{
+				ElementType: types.StringType,
+				Computed:    true,
+			},
+			"service_endpoint_id": schema.StringAttribute{
 				Computed: true,
 			},
-			"client_secret": schema.StringAttribute{
+			"missioncontrol_username": schema.StringAttribute{
+				Computed:  true,
+				Sensitive: true,
+			},
+			"missioncontrol_password": schema.StringAttribute{
 				Computed:  true,
 				Sensitive: true,
 			},
@@ -141,7 +149,7 @@ func (d *brokerDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	tflog.Info(ctx, fmt.Sprintf("Query for broker Id: %v", queryID))
 
 	getParams := missioncontrol.GetServiceParams{
-		Expand: &[]missioncontrol.GetServiceParamsExpand{"broker"},
+		Expand: &[]missioncontrol.GetServiceParamsExpand{"broker,serviceConnectionEndpoints"},
 	}
 
 	// Get broker info
@@ -156,15 +164,12 @@ func (d *brokerDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	if getResp.StatusCode() != 200 {
 		tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", getResp.Body))
 
-		// handle vanished resources
 		if getResp.StatusCode() == 404 {
-			// As of 20250127 the response is not as specified, so we cannot use getResp.JSON404
-			if strings.Contains(string(getResp.Body), "Could not find event broker service with id") {
-				tflog.Warn(ctx, "Could not find event broker service")
-				// refresh state
-				resp.State.RemoveResource(ctx)
-				return
-			}
+			resp.Diagnostics.AddError(
+				"Error getting broker service info",
+				fmt.Sprintf("Could not find broker service for id %s", queryID),
+			)
+			return
 		}
 		resp.Diagnostics.AddError(
 			"Error getting broker service info",
@@ -192,14 +197,21 @@ func (d *brokerDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	currentState.CustomRouterName = types.StringValue(routerPrefix)
 	currentState.MsgVpnName = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MsgVpnName)
 	currentState.MaxSpoolUsage = types.Int32PointerValue(getResp.JSON200.Data.Broker.MaxSpoolUsage)
-	currentState.ClientUsername = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].ServiceLoginCredential.Username)
-	currentState.ClientSecret = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].ServiceLoginCredential.Password)
+	currentState.MissionControlUserName = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MissionControlManagerLoginCredential.Username)
+	currentState.MissionControlPassword = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MissionControlManagerLoginCredential.Password)
+	currentState.ServiceEndpointId = types.StringPointerValue((*getResp.JSON200.Data.ServiceConnectionEndpoints)[0].Id)
+	hostNames := (*getResp.JSON200.Data.ServiceConnectionEndpoints)[0].HostNames
+	currentState.HostNames, diags = types.ListValueFrom(ctx, types.StringType, hostNames)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	tflog.Debug(ctx, fmt.Sprintf("Read Broker state %s %s %v", currentState.Name, currentState.Status.ValueString(), currentState.LastUpdated))
 
 	// Set state
-	diags2 := resp.State.Set(ctx, &currentState)
-	resp.Diagnostics.Append(diags2...)
+	diags = resp.State.Set(ctx, &currentState)
+	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
