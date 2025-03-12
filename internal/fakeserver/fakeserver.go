@@ -76,7 +76,7 @@ func NewFakeServer(iPort int, iObjects map[string]ServiceInfo, iStart bool, iDeb
 	if svr.debug {
 		log.Printf("fakeserver.go: Set up fakeserver: port=%d, debug=%t\n", iPort, svr.debug)
 	}
-	log.Printf("fakeserver.go: fakeserver ready")
+	log.Println("fakeserver.go: fakeserver ready")
 
 	return svr
 }
