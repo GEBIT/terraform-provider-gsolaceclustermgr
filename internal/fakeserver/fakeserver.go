@@ -104,7 +104,10 @@ func (svr *Fakeserver) StartInBackground() {
 
 /*Shutdown closes the server*/
 func (svr *Fakeserver) Shutdown() {
-	svr.server.Close()
+	err := svr.server.Close()
+	if err != nil {
+		log.Printf("fakeserver.go: Server.close err: %s\n", err)
+	}
 	svr.running = false
 }
 
