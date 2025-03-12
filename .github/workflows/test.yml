@@ -45,6 +45,8 @@ jobs:
         uses: super-linter/super-linter@v7.1.0 # x-release-please-version
         env:
           GO111MODULE: on
+          # set correct default branch
+          DEFAULT_BRANCH: ${{ github.ref }}
           # only GO
           #VALIDATE_GO: true
           VALIDATE_GO_MODULES: true
@@ -54,6 +56,7 @@ jobs:
           LINTER_RULES_PATH: .
           # exclude tools dir
           FILTER_REGEX_EXCLUDE: (^|/)tools/
+          
 
 
   generate:
