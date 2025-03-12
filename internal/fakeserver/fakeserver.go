@@ -74,20 +74,20 @@ func NewFakeServer(iPort int, iObjects map[string]ServiceInfo, iStart bool, iDeb
 		svr.StartInBackground()
 	}
 	if svr.debug {
-		log.Printf("fakeserver.go: Set up fakeserver: port=%d, debug=%t\n", iPort, svr.debug)
+		log.Printf("fakeserver: Set up fakeserver: port=%d, debug=%t\n", iPort, svr.debug)
 	}
 	return svr
 }
 
 func (svr *Fakeserver) SetBaseSid(sid int) {
 	svr.baseSid = sid
-	log.Printf("fakeserver.go: setting baseSid to %d\n", svr.baseSid)
+	log.Printf("fakeserver: setting baseSid to %d\n", svr.baseSid)
 }
 
 func (svr *Fakeserver) safeServe() {
 	err := svr.server.ListenAndServe()
 	if err != nil {
-		log.Printf("fakeserver.go: serving ended: %s\n", err)
+		log.Printf("fakeserver: serving ended: %s\n", err)
 	}
 }
 
@@ -104,7 +104,7 @@ func (svr *Fakeserver) StartInBackground() {
 func (svr *Fakeserver) Shutdown() {
 	err := svr.server.Close()
 	if err != nil {
-		log.Printf("fakeserver.go: Server.close err: %s\n", err)
+		log.Printf("fakeserver: Server.close err: %s\n", err)
 	}
 	svr.running = false
 }
@@ -122,32 +122,32 @@ func (svr *Fakeserver) GetServer() *http.Server {
 func (svr *Fakeserver) parseRequest(r *http.Request, parts *[]string) ([]byte, error) {
 	b, err := io.ReadAll(r.Body)
 	if err != nil {
-		log.Printf("fakeserver.go: failed to read body: %s\n", err)
+		log.Printf("fakeserver: failed to read body: %s\n", err)
 		return nil, err
 	}
 
 	/** we don't handle bearer token right now */
 
 	if svr.debug {
-		log.Printf("fakeserver.go: Received request: %+v\n", r)
-		log.Printf("fakeserver.go: Headers:\n")
+		log.Printf("fakeserver: Received request: %+v\n", r)
+		log.Printf("fakeserver: Headers:\n")
 		for name, headers := range r.Header {
 			name = strings.ToLower(name)
 			for _, h := range headers {
-				log.Printf("fakeserver.go:  %v: %v", name, h)
+				log.Printf("fakeserver:  %v: %v", name, h)
 			}
 		}
-		log.Printf("fakeserver.go: BODY: %s\n", string(b))
+		log.Printf("fakeserver: BODY: %s\n", string(b))
 	}
 
 	path := r.URL.EscapedPath()
 
 	*parts = strings.Split(path, "/") // note: the first part is empty
 	if svr.debug {
-		log.Printf("fakeserver.go: Request received: %s %s\n", r.Method, path)
-		log.Printf("fakeserver.go: Split request up into %d parts: %v\n", len(*parts), *parts)
+		log.Printf("fakeserver: Request received: %s %s\n", r.Method, path)
+		log.Printf("fakeserver: Split request up into %d parts: %v\n", len(*parts), *parts)
 		if r.URL.RawQuery != "" {
-			log.Printf("fakeserver.go: Query string: %s\n", r.URL.RawQuery)
+			log.Printf("fakeserver: Query string: %s\n", r.URL.RawQuery)
 		}
 	}
 	return b, nil
@@ -167,7 +167,7 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 
 	err := json.Unmarshal(body, &jObj)
 	if err != nil {
-		log.Printf("fakeserver.go: Unmarshal of request failed: %s\n", err)
+		log.Printf("fakeserver: Unmarshal of request failed: %s\n", err)
 		log.Printf("\nBEGIN passed data:\n%s\nEND passed data.", string(body))
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
@@ -193,7 +193,7 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 	}
 	svr.objects[sid] = sInfo
 	if svr.debug {
-		log.Printf("fakeserver.go: Created Info: %v)", sInfo)
+		log.Printf("fakeserver: Created Info: %v)", sInfo)
 	}
 	// return created obj
 	result := map[string]interface{}{
@@ -211,18 +211,18 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 	}
 	b, err := json.Marshal(result)
 	if err != nil {
-		log.Printf("fakeserver.go: failed to marshal result: %s\n", err)
+		log.Printf("fakeserver: failed to marshal result: %s\n", err)
 		return
 	}
 	if svr.debug {
-		log.Printf("fakeserver.go: BODY %s", string(b))
+		log.Printf("fakeserver: BODY %s", string(b))
 	}
 
 	w.Header().Add("Content-Type", "json")
 	w.WriteHeader(202)
 	_, err2 := w.Write(b)
 	if err2 != nil {
-		log.Printf("fakeserver.go: failed to write result: %s\n", err)
+		log.Printf("fakeserver: failed to write result: %s\n", err)
 	}
 }
 
@@ -237,7 +237,7 @@ func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo *ServiceInfo, id s
 		svr.objects[id] = *sInfo
 	}
 	if svr.debug {
-		log.Printf("fakeserver.go: GET service %v", sInfo)
+		log.Printf("fakeserver: GET service %v", sInfo)
 	}
 
 	// for simplicity we always return the fully expanded result here
@@ -281,16 +281,16 @@ func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo *ServiceInfo, id s
 	}
 	b, err := json.Marshal(result)
 	if err != nil {
-		log.Printf("fakeserver.go: failed to marshal result: %s\n", err)
+		log.Printf("fakeserver: failed to marshal result: %s\n", err)
 		return
 	}
 	if svr.debug {
-		log.Printf("fakeserver.go: BODY %s", string(b))
+		log.Printf("fakeserver: BODY %s", string(b))
 	}
 	w.Header().Add("Content-Type", "json")
 	_, err2 := w.Write(b)
 	if err2 != nil {
-		log.Printf("fakeserver.go: failed to write result: %s\n", err)
+		log.Printf("fakeserver: failed to write result: %s\n", err)
 	}
 }
 
@@ -298,19 +298,19 @@ func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo *ServiceInfo, id
 	var jObj map[string]interface{}
 
 	if svr.debug {
-		log.Printf("fakeserver.go: PATCH service %v", sInfo)
+		log.Printf("fakeserver: PATCH service %v", sInfo)
 	}
 
 	err := json.Unmarshal(body, &jObj)
 	if err != nil {
-		log.Printf("fakeserver.go: Unmarshal of request failed: %s\n", err)
+		log.Printf("fakeserver: Unmarshal of request failed: %s\n", err)
 		log.Printf("\nBEGIN passed data:\n%s\nEND passed data.", string(body))
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
 
 	if svr.debug {
-		log.Printf("fakeserver.go: receipt payload %v", jObj)
+		log.Printf("fakeserver: receipt payload %v", jObj)
 	}
 
 	// handle update - only supported when get returns actual completed service
@@ -319,7 +319,7 @@ func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo *ServiceInfo, id
 	sInfo.Updated = time.Now()
 
 	if svr.debug {
-		log.Printf("fakeserver.go: PATCH service updated to %v", sInfo)
+		log.Printf("fakeserver: PATCH service updated to %v", sInfo)
 	}
 
 	result := map[string]interface{}{
@@ -361,11 +361,11 @@ func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo *ServiceInfo, id
 	}
 	b, err := json.Marshal(result)
 	if err != nil {
-		log.Printf("fakeserver.go: failed to marshal result: %s\n", err)
+		log.Printf("fakeserver: failed to marshal result: %s\n", err)
 		return
 	}
 	if svr.debug {
-		log.Printf("fakeserver.go: BODY %s", string(b))
+		log.Printf("fakeserver: BODY %s", string(b))
 	}
 
 	// writeback change
@@ -374,13 +374,13 @@ func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo *ServiceInfo, id
 	w.Header().Add("Content-Type", "json")
 	_, err2 := w.Write(b)
 	if err2 != nil {
-		log.Printf("fakeserver.go: failed to write result: %s\n", err)
+		log.Printf("fakeserver: failed to write result: %s\n", err)
 	}
 }
 
 func (svr *Fakeserver) handleDelete(w http.ResponseWriter, sInfo *ServiceInfo, id string) {
 	if svr.debug {
-		log.Printf("fakeserver.go: DELETE service %v", sInfo)
+		log.Printf("fakeserver: DELETE service %v", sInfo)
 	}
 	// handle delete
 	delete(svr.objects, id)
@@ -399,17 +399,17 @@ func (svr *Fakeserver) handleDelete(w http.ResponseWriter, sInfo *ServiceInfo, i
 	}
 	b, err := json.Marshal(result)
 	if err != nil {
-		log.Printf("fakeserver.go: failed to marshal result: %s\n", err)
+		log.Printf("fakeserver: failed to marshal result: %s\n", err)
 		return
 	}
 	if svr.debug {
-		log.Printf("fakeserver.go: BODY %s", string(b))
+		log.Printf("fakeserver: BODY %s", string(b))
 	}
 	w.Header().Add("Content-Type", "json")
 	w.WriteHeader(202)
 	_, err2 := w.Write(b)
 	if err2 != nil {
-		log.Printf("fakeserver.go: failed to write result: %s\n", err)
+		log.Printf("fakeserver: failed to write result: %s\n", err)
 	}
 }
 
@@ -434,10 +434,10 @@ func (svr *Fakeserver) handleBrokerServices(w http.ResponseWriter, r *http.Reque
 		id = parts[5]
 		sInfo, ok = svr.objects[id]
 		if svr.debug {
-			log.Printf("fakeserver.go: Detected ID %s (exists: %t, method: %s)", id, ok, r.Method)
+			log.Printf("fakeserver: Detected ID %s (exists: %t, method: %s)", id, ok, r.Method)
 		}
 		if !ok {
-			log.Printf("fakeserver.go: Object with ID %s not found", id)
+			log.Printf("fakeserver: Object with ID %s not found", id)
 			http.Error(w, fmt.Sprintf("{\"message\":\"Could not find event broker service with id %s\",\"errorId\":\"42\"}", id), http.StatusNotFound)
 			return
 		}
@@ -452,13 +452,13 @@ func (svr *Fakeserver) handleBrokerServices(w http.ResponseWriter, r *http.Reque
 			svr.handleDelete(w, &sInfo, id)
 			return
 		default:
-			log.Printf("fakeserver.go: unexpected method: %s\n", r.Method)
+			log.Printf("fakeserver: unexpected method: %s\n", r.Method)
 		}
 
 	}
 	// unexpected
 	if svr.debug {
-		log.Printf("fakeserver.go: Bad request!")
+		log.Printf("fakeserver: Bad request!")
 	}
 	http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
 
