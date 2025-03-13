@@ -186,9 +186,13 @@ func (d *brokerDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	currentState.EventBrokerVersion = types.StringValue(getResp.JSON200.Data.EventBrokerServiceVersion)
 	if getResp.JSON200.Data.CreatedTime != nil {
 		currentState.Created = types.StringValue(getResp.JSON200.Data.CreatedTime.Format(time.RFC850))
+	} else {
+		currentState.Created = types.StringValue("")
 	}
 	if getResp.JSON200.Data.UpdatedTime != nil {
 		currentState.LastUpdated = types.StringValue(getResp.JSON200.Data.UpdatedTime.Format(time.RFC850))
+	} else {
+		currentState.LastUpdated = types.StringValue("")
 	}
 	currentState.Status = types.StringValue(string(*(getResp.JSON200.Data.CreationState)))
 	currentState.Name = types.StringPointerValue(getResp.JSON200.Data.Name)

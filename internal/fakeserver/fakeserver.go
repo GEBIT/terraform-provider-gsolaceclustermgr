@@ -229,7 +229,6 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo *ServiceInfo, id string) {
 	// complete creation after a certain delay, so we can test PENDING answers
 	if sInfo.State == "PENDING" {
-		sInfo.Updated = time.Now() // the actual semantics of updated when pending are unclear, but not really important
 		if time.Since(sInfo.Created).Seconds() > 5.0 {
 			sInfo.State = "COMPLETED"
 		}
@@ -248,7 +247,6 @@ func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo *ServiceInfo, id s
 			"serviceClassId":            sInfo.ServiceClassId,
 			"datacenterId":              sInfo.DatacenterId,
 			"createdTime":               sInfo.Created.Format(time.RFC3339),
-			"updatedTime":               sInfo.Updated.Format(time.RFC3339),
 			"creationState":             sInfo.State,
 			"eventBrokerServiceVersion": sInfo.EventBrokerVersion,
 			"broker": map[string]interface{}{
@@ -279,6 +277,11 @@ func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo *ServiceInfo, id s
 			"additionalProp": map[string]interface{}{},
 		},
 	}
+	// add optional lastUpdated, this is slightly ugly
+	if !sInfo.Updated.IsZero() {
+		result["data"].(map[string]interface{})["updatedTime"] = sInfo.Updated.Format(time.RFC3339)
+	}
+
 	b, err := json.Marshal(result)
 	if err != nil {
 		log.Printf("fakeserver: failed to marshal result: %s\n", err)

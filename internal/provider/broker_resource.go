@@ -472,9 +472,13 @@ func (r *brokerResource) fullGet(ctx context.Context, id string, model *brokerRe
 		model.ID = types.StringPointerValue(getResp.JSON200.Data.Id)
 		if getResp.JSON200.Data.CreatedTime != nil {
 			model.Created = types.StringValue(getResp.JSON200.Data.CreatedTime.Format(time.RFC850))
+		} else {
+			model.Created = types.StringValue("")
 		}
 		if getResp.JSON200.Data.UpdatedTime != nil {
 			model.LastUpdated = types.StringValue(getResp.JSON200.Data.UpdatedTime.Format(time.RFC850))
+		} else {
+			model.LastUpdated = types.StringValue("")
 		}
 		model.ServiceClassId = types.StringPointerValue((*string)(getResp.JSON200.Data.ServiceClassId))
 		model.DataCenterId = types.StringPointerValue(getResp.JSON200.Data.DatacenterId)

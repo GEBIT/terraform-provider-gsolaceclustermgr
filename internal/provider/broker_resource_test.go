@@ -120,7 +120,7 @@ func TestAccBrokerResource(t *testing.T) {
 					statecheck.ExpectKnownValue(
 						"gsolaceclustermgr_broker.test",
 						tfjsonpath.New("last_updated"),
-						knownvalue.NotNull(),
+						knownvalue.StringExact(""),
 					),
 				},
 			},
