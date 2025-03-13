@@ -41,11 +41,11 @@ You can later access the broker information using a datasource:
 data "gsolaceclustermgr_broker" "ocs-test" {
   id = "<brokerservice-id>"
 }  
-~
+~~~
 
 The official [solace terraform provider](https://github.com/SolaceProducts/terraform-provider-solacebroker) covers further manipulation like messageVPN setup - for things like adding custom hostnames you will need the legacy REST API 
 
-The broker resource output contains some important information you will need for further modifuiactions using the SEMP API, like the missionControlManagerLoginCredentials, and the id of the first ServiceConnectionEndpoint (required for  adding custom hostnames)
+The broker resource and datasource contain some important information you will need for this, like the missionControlManagerLoginCredentials, and the id of the first ServiceConnectionEndpoint (required for adding custom hostnames)
 
 
 ## Development
