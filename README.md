@@ -10,6 +10,14 @@ The provider allows you to create/update/delate Solace cloud API broker instance
 
 Define the provider with the solace API URL and a valid bearerToken:
 ~~~
+terraform {
+  required_providers {
+    gsolaceclustermgr = {
+      source  = "gebit.de/tf/gsolaceclustermgr"
+    }
+  }
+}
+
 provider "gsolaceclustermgr" {
   bearer_token = "<someBearerToken>"
   host = "https://api.solace.cloud"
@@ -45,7 +53,9 @@ data "gsolaceclustermgr_broker" "ocs-test" {
 
 The official [solace terraform provider](https://github.com/SolaceProducts/terraform-provider-solacebroker) covers further manipulation like messageVPN setup - for things like adding custom hostnames you will need the legacy REST API 
 
-The broker resource and datasource contain some important information you will need for this, like the missionControlManagerLoginCredentials, and the id of the first ServiceConnectionEndpoint (required for adding custom hostnames)
+The broker resource and datasource contain some important information you will need for this, like the missionControlManagerLoginCredentials for accessing the broker via SEMP API. 
+
+*NOTE*: Adjusting the created solace broker using the official solace terrafom provider must be done in a separate terraform project because you need the output of the broker resource (credentials) as input for the initialization of the official provider. 
 
 
 ## Development
