@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     gsolaceclustermgr = {
-      source = "gebit.de/tf/gsolaceclustermgr"
+      source = "GEBIT/gsolaceclustermgr"
     }
   }
   required_version = ">= 1.1.0"

@@ -13,7 +13,7 @@ Define the provider with the solace API URL and a valid bearerToken:
 terraform {
   required_providers {
     gsolaceclustermgr = {
-      source  = "gebit.de/tf/gsolaceclustermgr"
+      source  = "GEBIT/gsolaceclustermgr"
     }
   }
 }
@@ -120,7 +120,7 @@ For local manual tests with terraform put this into your `%APPDATA%\terraform.rc
 provider_installation {
 
   dev_overrides {
-	  "gebit.de/tf/gsolaceclustermgr" = "C:/Users/<you>/go/bin"
+	  "GEBIT/gsolaceclustermgr" = "C:/Users/<you>/go/bin"
   }
   direct {}
 }

@@ -40,7 +40,7 @@ func main() {
 	flag.Parse()
 
 	opts := providerserver.ServeOpts{
-		Address: "gebit.de/tf/gsolaceclustermgr",
+		Address: "registry.terraform.io/GEBIT/gsolaceclustermgr",
 		Debug:   debug,
 	}
 

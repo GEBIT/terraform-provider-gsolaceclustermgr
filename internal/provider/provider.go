@@ -101,8 +101,8 @@ func (p *clusterManagerProvider) Configure(ctx context.Context, req provider.Con
 	if config.Host.IsUnknown() {
 		resp.Diagnostics.AddAttributeError(
 			path.Root("host"),
-			"Unknown HashiCups API Host",
-			"The provider cannot create the MissionControl API client as there is an unknown configuration value for the HashiCups API host. "+
+			"Unknown MissionControl API Host",
+			"The provider cannot create the MissionControl API client as there is an unknown configuration value for the MissionControl API host. "+
 				"Either target apply the source of the value first, set the value statically in the configuration, or use the MISSIONCONTROL_HOST environment variable.",
 		)
 	}
@@ -213,14 +213,14 @@ func (p *clusterManagerProvider) Configure(ctx context.Context, req provider.Con
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to Create MissionControl API Client",
-			"An unexpected error occurred when creating the HashiCups API client. "+
+			"An unexpected error occurred when creating the MissionControl API client. "+
 				"If the error is not clear, please contact the provider developers.\n\n"+
-				"HashiCups Client Error: "+err.Error(),
+				"MissionControl Client Error: "+err.Error(),
 		)
 		return
 	}
 
-	// Make the HashiCups client available during DataSource and Resource
+	// Make the MissionControl client available during DataSource and Resource
 	// type Configure methods.
 	resp.DataSourceData = CMProviderData{client, bearerToken, pollingIntervalDuration, pollingTimeoutDuration}
 	resp.ResourceData = CMProviderData{client, bearerToken, pollingIntervalDuration, pollingTimeoutDuration}
