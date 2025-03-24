@@ -28,7 +28,7 @@ resource "gsolaceclustermgr_broker" "ocs-test" {
 
   msg_vpn_name = "ocs-msgvpn-1"
   #cluster_name    = "gwc-aks-cluster1"
-  #custom_router_name = "ocs-router-1"
+  #custom_router_name = "ocsrouter1"
   #event_broker_version = "10.8.1.152-7"
   #max_spool_usage = 40
 }

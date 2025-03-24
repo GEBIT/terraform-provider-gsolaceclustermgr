@@ -183,7 +183,7 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 		ClusterName:                 orDefault(jObj["clusterName"], "test-cluster1"),
 		MsgVpnName:                  orDefault(jObj["msgVpnName"], "test-vpn1"),
 		EventBrokerVersion:          orDefault(jObj["eventBrokerVersion"], "1.0.0"),
-		CustomRouterName:            orDefault(jObj["customRouterName"], "test-router1"),
+		CustomRouterName:            orDefault(jObj["customRouterName"], "testrouter1"),
 		MaxSpoolUsage:               orDefaultInt32(jObj["maxSpoolUsage"], 20),
 		Created:                     time.Now(),
 		MissionControlUserName:      "mc-user",

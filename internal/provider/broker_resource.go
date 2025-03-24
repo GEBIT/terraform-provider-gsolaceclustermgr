@@ -5,10 +5,14 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httputil"
+	"regexp"
 	"strings"
 	"terraform-provider-gsolaceclustermgr/internal/missioncontrol"
 	"time"
 
+	"github.com/clbanning/mxj/v2"
+	"github.com/hashicorp/terraform-plugin-framework-validators/int32validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -16,6 +20,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int32planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
@@ -142,6 +147,13 @@ func (r *brokerResource) Schema(ctx context.Context, _ resource.SchemaRequest, r
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(3, 12),
+					stringvalidator.RegexMatches(
+						regexp.MustCompile(`^[a-z0-9]+$`),
+						"must contain only lowercase letters and digits",
+					),
+				},
 			},
 			"event_broker_version": schema.StringAttribute{
 				Computed: true,
@@ -152,10 +164,14 @@ func (r *brokerResource) Schema(ctx context.Context, _ resource.SchemaRequest, r
 			},
 			// figure out how to handle int32
 			"max_spool_usage": schema.Int32Attribute{
-				Computed: true,
-				Optional: true,
+				Computed:            true,
+				Optional:            true,
+				MarkdownDescription: "The message spool size, in gigabytes (GB)",
 				PlanModifiers: []planmodifier.Int32{
 					int32planmodifier.RequiresReplaceIfConfigured(),
+				},
+				Validators: []validator.Int32{
+					int32validator.Between(10, 6000),
 				},
 			},
 			//
@@ -232,7 +248,69 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 		)
 		return
 	}
+	tflog.Debug(ctx, fmt.Sprintf("Response Header:%s", createResp.HTTPResponse.Header))
 	tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", createResp.Body))
+	// As of 20250324 the errorResponse is an application/xml error object, it will not be mapped to json"
+	if createResp.StatusCode() == 400 {
+		var errMsg string
+		if createResp.JSON400 == nil {
+			errMsg = parseErrorDTO(createResp.Body)
+		} else {
+			errMsg := *(createResp.JSON400.Message)
+			if createResp.JSON400.ValidationDetails != nil {
+				errMsg = errMsg + fmt.Sprintf("\nValidation Error: %v", *(createResp.JSON400.ValidationDetails))
+			}
+		}
+		resp.Diagnostics.AddError(
+			"Error creating broker service",
+			errMsg,
+		)
+		return
+	}
+	if createResp.StatusCode() == 401 {
+		var errMsg string
+		if createResp.JSON401 == nil {
+			errMsg = parseErrorDTO(createResp.Body)
+		} else {
+			errMsg = *(createResp.JSON401.Message)
+		}
+		resp.Diagnostics.AddError(
+			"Error creating broker service",
+			errMsg,
+		)
+		return
+	}
+
+	if createResp.StatusCode() == 403 {
+		var errMsg string
+		if createResp.JSON403 == nil {
+			errMsg = parseErrorDTO(createResp.Body)
+		} else {
+			errMsg = *(createResp.JSON403.Message)
+		}
+		resp.Diagnostics.AddError(
+			"Error creating broker service",
+			errMsg,
+		)
+		return
+	}
+	if createResp.StatusCode() == 503 {
+		var errMsg string
+		if createResp.JSON503 == nil {
+			errMsg = parseErrorDTO(createResp.Body)
+		} else {
+			errMsg := *(createResp.JSON503.Message)
+			if createResp.JSON503.ValidationDetails != nil {
+				errMsg = errMsg + fmt.Sprintf("\nValidation Error: %v", *(createResp.JSON503.ValidationDetails))
+			}
+		}
+		resp.Diagnostics.AddError(
+			"Error creating broker service",
+			errMsg,
+		)
+		return
+	}
+
 	if createResp.StatusCode() != 202 {
 		resp.Diagnostics.AddError(
 			"Error creating broker service",
@@ -520,4 +598,17 @@ func nullIfEmptyInt32Ptr(v basetypes.Int32Value) *int32 {
 		return nil
 	}
 	return v.ValueInt32Pointer()
+}
+
+// extract error infos from ErrorDTO
+func parseErrorDTO(body []byte) string {
+	m, err := mxj.NewMapXml(body)
+	if err != nil {
+		// just return the full response
+		return string(body)
+	}
+	return fmt.Sprintf("Message: %s\nValidationDetails: %s\n",
+		m["ErrorDTO"].(map[string]interface{})["message"],
+		m["ErrorDTO"].(map[string]interface{})["validationDetails"])
+
 }

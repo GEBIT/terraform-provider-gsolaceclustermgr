@@ -26,7 +26,7 @@ Event Broker Resource. Note that *name* is the only attribute you can update wit
 - `cluster_name` (String)
 - `custom_router_name` (String)
 - `event_broker_version` (String)
-- `max_spool_usage` (Number)
+- `max_spool_usage` (Number) The message spool size, in gigabytes (GB)
 - `msg_vpn_name` (String)
 
 ### Read-Only

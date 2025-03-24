@@ -37,8 +37,17 @@ func TestAccBrokerResource(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
+			// validation errors
 			{
-				Config: testResourceConfig("test", "ocs-prov-test", true),
+				Config:      testResourceConfigAll("test", "ocs-prov-test", "invalid-router!", 23),
+				ExpectError: regexp.MustCompile("Invalid Attribute Value Length"),
+			},
+			{
+				Config:      testResourceConfigAll("test", "ocs-prov-test", "ocsrouter", 1),
+				ExpectError: regexp.MustCompile("Invalid Attribute Value"),
+			},
+			{
+				Config: testResourceConfigAll("test", "ocs-prov-test", "ocsrouter", 23),
 				ConfigStateChecks: []statecheck.StateCheck{
 					// verify attributes
 					statecheck.ExpectKnownValue(
@@ -70,7 +79,7 @@ func TestAccBrokerResource(t *testing.T) {
 					statecheck.ExpectKnownValue(
 						"gsolaceclustermgr_broker.test",
 						tfjsonpath.New("custom_router_name"),
-						knownvalue.StringExact("ocs-router"),
+						knownvalue.StringExact("ocsrouter"),
 					),
 					statecheck.ExpectKnownValue(
 						"gsolaceclustermgr_broker.test",
@@ -132,7 +141,7 @@ func TestAccBrokerResource(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Create and Read testing (optionals not set)
 			{
-				Config: testResourceConfig("test2", "ocs-prov-test2", false),
+				Config: testResourceConfig("test2", "ocs-prov-test2"),
 				ConfigStateChecks: []statecheck.StateCheck{
 					// verify attributes
 					statecheck.ExpectKnownValue(
@@ -164,7 +173,7 @@ func TestAccBrokerResource(t *testing.T) {
 					statecheck.ExpectKnownValue(
 						"gsolaceclustermgr_broker.test2",
 						tfjsonpath.New("custom_router_name"),
-						knownvalue.StringExact("test-router1"),
+						knownvalue.StringExact("testrouter1"),
 					),
 					statecheck.ExpectKnownValue(
 						"gsolaceclustermgr_broker.test2",
@@ -220,7 +229,7 @@ func TestAccBrokerResource(t *testing.T) {
 			},
 			// Update and Read testing   (think about this again)
 			{
-				Config: testResourceConfig("test2", "ocs-prov-test-changed", false),
+				Config: testResourceConfig("test2", "ocs-prov-test-changed"),
 				//ExpectNonEmptyPlan: true,
 				ConfigStateChecks: []statecheck.StateCheck{
 					statecheck.ExpectKnownValue(
@@ -286,7 +295,7 @@ func TestAccBrokerDataSource(t *testing.T) {
 					statecheck.ExpectKnownValue(
 						"data.gsolaceclustermgr_broker.test3ds",
 						tfjsonpath.New("custom_router_name"),
-						knownvalue.StringExact("ocs-router"),
+						knownvalue.StringExact("ocsrouter"),
 					),
 					statecheck.ExpectKnownValue(
 						"data.gsolaceclustermgr_broker.test3ds",
@@ -337,21 +346,28 @@ func TestAccBrokerDataSource(t *testing.T) {
 	})
 }
 
-func testResourceConfig(rname string, name string, allValues bool) string {
-	var optionals = ""
-	if allValues {
-		optionals = `msg_vpn_name    = "ocs-msgvpn"
-					cluster_name    = "gwc-aks-ocs"
-					custom_router_name = "ocs-router"
-					event_broker_version = "1.2.3"
-					max_spool_usage = 23`
-	}
+func testResourceConfigAll(rname string, name string, routerName string, spoolSize int) string {
+
+	optionals := `msg_vpn_name    = "ocs-msgvpn"
+		cluster_name    = "gwc-aks-ocs"
+		custom_router_name = "` + routerName + `"
+		event_broker_version = "1.2.3"
+		max_spool_usage = ` + fmt.Sprint(spoolSize)
 	return providerConfig + `
 	resource "gsolaceclustermgr_broker" "` + rname + `" {
 		serviceclass_id = "ENTERPRISE_250_STANDALONE"
 		name            = "` + name + `"
 		datacenter_id   = "aks-germanywestcentral"
-	    ` + optionals + `		
+		` + optionals + `		
+	}
+	`
+}
+func testResourceConfig(rname string, name string) string {
+	return providerConfig + `
+	resource "gsolaceclustermgr_broker" "` + rname + `" {
+		serviceclass_id = "ENTERPRISE_250_STANDALONE"
+		name            = "` + name + `"
+		datacenter_id   = "aks-germanywestcentral"
 	}
 	`
 }
@@ -365,7 +381,7 @@ func testDataSourceConfig(rname string, id string) string {
 }
 
 func testResoureAndDataSourceConfig(rname string) string {
-	return testResourceConfig(rname, "foo", true) + `
+	return testResourceConfigAll(rname, "foo", "ocsrouter", 23) + `
 	data "gsolaceclustermgr_broker" "` + rname + `" {
 		id            = gsolaceclustermgr_broker.` + rname + `.id
 	}
