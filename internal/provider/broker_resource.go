@@ -256,7 +256,7 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 		if createResp.JSON400 == nil {
 			errMsg = parseErrorDTO(createResp.Body)
 		} else {
-			errMsg := *(createResp.JSON400.Message)
+			errMsg = *(createResp.JSON400.Message)
 			if createResp.JSON400.ValidationDetails != nil {
 				errMsg = errMsg + fmt.Sprintf("\nValidation Error: %v", *(createResp.JSON400.ValidationDetails))
 			}
@@ -299,7 +299,7 @@ func (r *brokerResource) Create(ctx context.Context, req resource.CreateRequest,
 		if createResp.JSON503 == nil {
 			errMsg = parseErrorDTO(createResp.Body)
 		} else {
-			errMsg := *(createResp.JSON503.Message)
+			errMsg = *(createResp.JSON503.Message)
 			if createResp.JSON503.ValidationDetails != nil {
 				errMsg = errMsg + fmt.Sprintf("\nValidation Error: %v", *(createResp.JSON503.ValidationDetails))
 			}
