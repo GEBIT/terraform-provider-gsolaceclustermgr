@@ -536,8 +536,36 @@ func (r *brokerResource) fullGet(ctx context.Context, id string, model *brokerRe
 				return
 			}
 		}
+		if getResp.StatusCode() == 401 {
+			var errMsg string
+			if getResp.JSON401 == nil {
+				errMsg = parseErrorDTO(getResp.Body)
+			} else {
+				errMsg = *(getResp.JSON401.Message)
+			}
+			diagnostics.AddError(
+				"Error getting broker service",
+				errMsg,
+			)
+			return
+		}
+
+		if getResp.StatusCode() == 403 {
+			var errMsg string
+			if getResp.JSON403 == nil {
+				errMsg = parseErrorDTO(getResp.Body)
+			} else {
+				errMsg = *(getResp.JSON403.Message)
+			}
+			diagnostics.AddError(
+				"Error getting broker service",
+				errMsg,
+			)
+			return
+		}
+
 		diagnostics.AddError(
-			"Error creating broker service",
+			"Error geting broker service",
 			fmt.Sprintf("Unexpected response code: %v", getResp.StatusCode()),
 		)
 		return

@@ -162,16 +162,41 @@ func (d *brokerDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 		)
 		return
 	}
-	if getResp.StatusCode() != 200 {
-		tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", getResp.Body))
-
-		if getResp.StatusCode() == 404 {
-			resp.Diagnostics.AddError(
-				"Error getting broker service info",
-				fmt.Sprintf("Could not find broker service for id %s", queryID),
-			)
-			return
+	tflog.Debug(ctx, fmt.Sprintf("Response Body:%s", getResp.Body))
+	if getResp.StatusCode() == 401 {
+		var errMsg string
+		if getResp.JSON401 == nil {
+			errMsg = parseErrorDTO(getResp.Body)
+		} else {
+			errMsg = *(getResp.JSON401.Message)
 		}
+		resp.Diagnostics.AddError(
+			"Error getting broker service",
+			errMsg,
+		)
+		return
+	}
+	if getResp.StatusCode() == 403 {
+		var errMsg string
+		if getResp.JSON403 == nil {
+			errMsg = parseErrorDTO(getResp.Body)
+		} else {
+			errMsg = *(getResp.JSON403.Message)
+		}
+		resp.Diagnostics.AddError(
+			"Error getting broker service",
+			errMsg,
+		)
+		return
+	}
+	if getResp.StatusCode() == 404 {
+		resp.Diagnostics.AddError(
+			"Error getting broker service",
+			fmt.Sprintf("Could not find broker service for id %s", queryID),
+		)
+		return
+	}
+	if getResp.StatusCode() != 200 {
 		resp.Diagnostics.AddError(
 			"Error getting broker service info",
 			fmt.Sprintf("Unexpected response code: %v", getResp.StatusCode()),
