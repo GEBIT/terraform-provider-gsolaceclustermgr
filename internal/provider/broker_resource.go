@@ -565,7 +565,7 @@ func (r *brokerResource) fullGet(ctx context.Context, id string, model *brokerRe
 		}
 
 		diagnostics.AddError(
-			"Error geting broker service",
+			"Error getting broker service",
 			fmt.Sprintf("Unexpected response code: %v", getResp.StatusCode()),
 		)
 		return
