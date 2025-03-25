@@ -92,7 +92,8 @@ func (d *brokerDataSource) Schema(_ context.Context, _ datasource.SchemaRequest,
 				Computed: true,
 			},
 			"custom_router_name": schema.StringAttribute{
-				Computed: true,
+				MarkdownDescription: "The full router name (including primary/primarycn suffix)",
+				Computed:            true,
 			},
 			"event_broker_version": schema.StringAttribute{
 				Computed: true,

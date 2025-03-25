@@ -19,7 +19,7 @@ description: |-
 
 - `cluster_name` (String)
 - `created` (String)
-- `custom_router_name` (String)
+- `custom_router_name` (String) The full router name (including primary/primarycn suffix)
 - `datacenter_id` (String)
 - `event_broker_version` (String)
 - `hostnames` (List of String)

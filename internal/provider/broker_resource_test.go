@@ -295,7 +295,7 @@ func TestAccBrokerDataSource(t *testing.T) {
 					statecheck.ExpectKnownValue(
 						"data.gsolaceclustermgr_broker.test3ds",
 						tfjsonpath.New("custom_router_name"),
-						knownvalue.StringExact("ocsrouter"),
+						knownvalue.StringExact("ocsrouterprimarycn"),
 					),
 					statecheck.ExpectKnownValue(
 						"data.gsolaceclustermgr_broker.test3ds",

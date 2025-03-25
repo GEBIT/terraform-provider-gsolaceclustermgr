@@ -173,6 +173,13 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 		return
 	}
 
+	// missioncontrol behaviour: when router is given add "primarycn" as suffix, otherwise generate name with "primary" suffix
+	var customRouterName string
+	if jObj["customRouterName"] != nil && jObj["customRouterName"].(string) != "" {
+		customRouterName = jObj["customRouterName"].(string) + "primarycn"
+	} else {
+		customRouterName = "testrouter1primary"
+	}
 	// parse and store obj
 	sInfo := ServiceInfo{
 		ID:                          sid,
@@ -183,7 +190,7 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 		ClusterName:                 orDefault(jObj["clusterName"], "test-cluster1"),
 		MsgVpnName:                  orDefault(jObj["msgVpnName"], "test-vpn1"),
 		EventBrokerVersion:          orDefault(jObj["eventBrokerVersion"], "1.0.0"),
-		CustomRouterName:            orDefault(jObj["customRouterName"], "testrouter1"),
+		CustomRouterName:            customRouterName,
 		MaxSpoolUsage:               orDefaultInt32(jObj["maxSpoolUsage"], 20),
 		Created:                     time.Now(),
 		MissionControlUserName:      "mc-user",
@@ -193,7 +200,7 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 	}
 	svr.objects[sid] = sInfo
 	if svr.debug {
-		log.Printf("fakeserver: Created Info: %v)", sInfo)
+		log.Printf("fakeserver: Created Info: %v", sInfo)
 	}
 	// return created obj
 	result := map[string]interface{}{

@@ -10,7 +10,6 @@ import (
 	"terraform-provider-gsolaceclustermgr/internal/missioncontrol"
 	"time"
 
-	"github.com/clbanning/mxj/v2"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int32validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -22,7 +21,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 )
 
@@ -142,8 +140,9 @@ func (r *brokerResource) Schema(ctx context.Context, _ resource.SchemaRequest, r
 				},
 			},
 			"custom_router_name": schema.StringAttribute{
-				Computed: true,
-				Optional: true,
+				MarkdownDescription: "Custom Router Name prefix (the actual routername will be suffixed with primary (if generated) or primarycn",
+				Computed:            true,
+				Optional:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
@@ -564,8 +563,8 @@ func (r *brokerResource) fullGet(ctx context.Context, id string, model *brokerRe
 		model.Status = types.StringValue(string(*(getResp.JSON200.Data.CreationState)))
 		model.Name = types.StringPointerValue(getResp.JSON200.Data.Name)
 		model.ClusterName = types.StringPointerValue(getResp.JSON200.Data.Broker.Cluster.Name)
-		routerPrefix, _ := strings.CutSuffix(*(getResp.JSON200.Data.Broker.Cluster.PrimaryRouterName), "primary")
-		model.CustomRouterName = types.StringValue(routerPrefix)
+
+		model.CustomRouterName = types.StringValue(getRouterPrefix(*(getResp.JSON200.Data.Broker.Cluster.PrimaryRouterName)))
 		model.MsgVpnName = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MsgVpnName)
 		model.MaxSpoolUsage = types.Int32PointerValue(getResp.JSON200.Data.Broker.MaxSpoolUsage)
 		model.MissionControlUserName = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MissionControlManagerLoginCredential.Username)
@@ -581,34 +580,5 @@ func (r *brokerResource) fullGet(ctx context.Context, id string, model *brokerRe
 
 		tflog.Debug(ctx, fmt.Sprintf("Read Broker state %s %s %s %v", model.ID, model.Name, model.Status.ValueString(), model.LastUpdated))
 	}
-
-}
-
-/** helper for handling defaults, returns nil instead of ponter to "" for empty strings */
-func nullIfEmptyStringPtr(s basetypes.StringValue) *string {
-	if s.ValueString() != "" {
-		return s.ValueStringPointer()
-	}
-	return nil
-}
-
-// TODO nullIfEmptyINt32Pointer
-func nullIfEmptyInt32Ptr(v basetypes.Int32Value) *int32 {
-	if v.IsUnknown() {
-		return nil
-	}
-	return v.ValueInt32Pointer()
-}
-
-// extract error infos from ErrorDTO
-func parseErrorDTO(body []byte) string {
-	m, err := mxj.NewMapXml(body)
-	if err != nil {
-		// just return the full response
-		return string(body)
-	}
-	return fmt.Sprintf("Message: %s\nValidationDetails: %s\n",
-		m["ErrorDTO"].(map[string]interface{})["message"],
-		m["ErrorDTO"].(map[string]interface{})["validationDetails"])
 
 }
