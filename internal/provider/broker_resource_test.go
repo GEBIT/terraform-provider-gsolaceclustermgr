@@ -265,7 +265,7 @@ func TestAccBrokerDataSource(t *testing.T) {
 			// Read fail testing
 			{
 				Config:      testDataSourceConfig("test3dsFail", "NotExisting1"),
-				ExpectError: regexp.MustCompile("Error getting broker service info"),
+				ExpectError: regexp.MustCompile("Could not find broker service for id \"NotExisting1\""),
 			},
 			// Read testing
 			{
