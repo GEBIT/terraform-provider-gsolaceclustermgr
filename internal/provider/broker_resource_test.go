@@ -120,6 +120,17 @@ func TestAccBrokerResource(t *testing.T) {
 						tfjsonpath.New("missioncontrol_password"),
 						knownvalue.StringExact("mc-passwd"),
 					),
+					statecheck.ExpectKnownValue(
+						"gsolaceclustermgr_broker.test",
+						tfjsonpath.New("admin_username"),
+						knownvalue.StringExact("ma-user"),
+					),
+					statecheck.ExpectKnownValue(
+						"gsolaceclustermgr_broker.test",
+						tfjsonpath.New("admin_password"),
+						knownvalue.StringExact("ma-passwd"),
+					),
+
 					// Verify dynamic values have any value set in the state.
 					statecheck.ExpectKnownValue(
 						"gsolaceclustermgr_broker.test",
@@ -207,6 +218,16 @@ func TestAccBrokerResource(t *testing.T) {
 						"gsolaceclustermgr_broker.test2",
 						tfjsonpath.New("missioncontrol_password"),
 						knownvalue.StringExact("mc-passwd"),
+					),
+					statecheck.ExpectKnownValue(
+						"gsolaceclustermgr_broker.test2",
+						tfjsonpath.New("admin_username"),
+						knownvalue.StringExact("ma-user"),
+					),
+					statecheck.ExpectKnownValue(
+						"gsolaceclustermgr_broker.test2",
+						tfjsonpath.New("admin_password"),
+						knownvalue.StringExact("ma-passwd"),
 					),
 					// Verify Computed attributes
 					statecheck.ExpectKnownValue(
@@ -339,6 +360,16 @@ func TestAccBrokerDataSource(t *testing.T) {
 						"data.gsolaceclustermgr_broker.test3ds",
 						tfjsonpath.New("missioncontrol_password"),
 						knownvalue.StringExact("mc-passwd"),
+					),
+					statecheck.ExpectKnownValue(
+						"data.gsolaceclustermgr_broker.test3ds",
+						tfjsonpath.New("admin_username"),
+						knownvalue.StringExact("ma-user"),
+					),
+					statecheck.ExpectKnownValue(
+						"data.gsolaceclustermgr_broker.test3ds",
+						tfjsonpath.New("admin_password"),
+						knownvalue.StringExact("ma-passwd"),
 					),
 				},
 			},

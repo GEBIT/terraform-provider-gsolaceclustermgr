@@ -44,6 +44,8 @@ type ServiceInfo struct {
 	MissionControlUserName      string
 	MissionControlPassword      string
 	MissionControlToken         string
+	MgmtAdminUserName           string
+	MgmtAdminPassword           string
 	ServiceConnectionEndpointId string
 	hostnames                   []string
 }
@@ -195,6 +197,8 @@ func (svr *Fakeserver) handleCreate(w http.ResponseWriter, body []byte) {
 		Created:                     time.Now(),
 		MissionControlUserName:      "mc-user",
 		MissionControlPassword:      "mc-passwd",
+		MgmtAdminUserName:           "ma-user",
+		MgmtAdminPassword:           "ma-passwd",
 		ServiceConnectionEndpointId: "test-endpoint",
 		hostnames:                   []string{"test-host1", "test-host2"},
 	}
@@ -268,6 +272,10 @@ func (svr *Fakeserver) handleGet(w http.ResponseWriter, sInfo *ServiceInfo, id s
 							"username": sInfo.MissionControlUserName,
 							"password": sInfo.MissionControlPassword,
 							"token":    sInfo.MissionControlToken,
+						},
+						"managementAdminLoginCredential": map[string]interface{}{
+							"username": sInfo.MgmtAdminUserName,
+							"password": sInfo.MgmtAdminPassword,
 						},
 					},
 				},
@@ -353,6 +361,10 @@ func (svr *Fakeserver) handlePatch(w http.ResponseWriter, sInfo *ServiceInfo, id
 							"username": sInfo.MissionControlUserName,
 							"password": sInfo.MissionControlPassword,
 							"token":    sInfo.MissionControlToken,
+						},
+						"managementAdminLoginCredential": map[string]interface{}{
+							"username": sInfo.MgmtAdminUserName,
+							"password": sInfo.MgmtAdminPassword,
 						},
 					},
 				},

@@ -40,6 +40,8 @@ type brokerResourceModel struct {
 	MaxSpoolUsage          types.Int32  `tfsdk:"max_spool_usage"`
 	MissionControlUserName types.String `tfsdk:"missioncontrol_username"`
 	MissionControlPassword types.String `tfsdk:"missioncontrol_password"`
+	MgmtAdminUserName      types.String `tfsdk:"admin_username"`
+	MgmtAdminPassword      types.String `tfsdk:"admin_password"`
 	HostNames              types.List   `tfsdk:"hostnames"`
 	ServiceEndpointId      types.String `tfsdk:"service_endpoint_id"`
 }
@@ -207,6 +209,16 @@ func (r *brokerResource) Schema(ctx context.Context, _ resource.SchemaRequest, r
 			"missioncontrol_password": schema.StringAttribute{
 				Computed:  true,
 				Sensitive: true,
+			},
+			"admin_username": schema.StringAttribute{
+				MarkdownDescription: "MsgVPN ManagementAdmin Username",
+				Computed:            true,
+				Sensitive:           true,
+			},
+			"admin_password": schema.StringAttribute{
+				MarkdownDescription: "MsgVPN ManagementAdmin Password",
+				Computed:            true,
+				Sensitive:           true,
 			},
 		},
 	}
@@ -597,6 +609,9 @@ func (r *brokerResource) fullGet(ctx context.Context, id string, model *brokerRe
 		model.MaxSpoolUsage = types.Int32PointerValue(getResp.JSON200.Data.Broker.MaxSpoolUsage)
 		model.MissionControlUserName = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MissionControlManagerLoginCredential.Username)
 		model.MissionControlPassword = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MissionControlManagerLoginCredential.Password)
+		model.MgmtAdminUserName = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].ManagementAdminLoginCredential.Username)
+		model.MgmtAdminPassword = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].ManagementAdminLoginCredential.Password)
+
 		model.ServiceEndpointId = types.StringPointerValue((*getResp.JSON200.Data.ServiceConnectionEndpoints)[0].Id)
 		hostNames := (*getResp.JSON200.Data.ServiceConnectionEndpoints)[0].HostNames
 

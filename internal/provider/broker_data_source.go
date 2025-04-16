@@ -31,6 +31,8 @@ type brokerDataSourceModel struct {
 	MaxSpoolUsage          types.Int32  `tfsdk:"max_spool_usage"`
 	MissionControlUserName types.String `tfsdk:"missioncontrol_username"`
 	MissionControlPassword types.String `tfsdk:"missioncontrol_password"`
+	MgmtAdminUserName      types.String `tfsdk:"admin_username"`
+	MgmtAdminPassword      types.String `tfsdk:"admin_password"`
 	HostNames              types.List   `tfsdk:"hostnames"`
 	ServiceEndpointId      types.String `tfsdk:"service_endpoint_id"`
 }
@@ -126,6 +128,16 @@ func (d *brokerDataSource) Schema(_ context.Context, _ datasource.SchemaRequest,
 			"missioncontrol_password": schema.StringAttribute{
 				Computed:  true,
 				Sensitive: true,
+			},
+			"admin_username": schema.StringAttribute{
+				MarkdownDescription: "MsgVPN ManagementAdmin Username",
+				Computed:            true,
+				Sensitive:           true,
+			},
+			"admin_password": schema.StringAttribute{
+				MarkdownDescription: "MsgVPN ManagementAdmin Password",
+				Computed:            true,
+				Sensitive:           true,
 			},
 		},
 	}
@@ -229,6 +241,9 @@ func (d *brokerDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	currentState.MaxSpoolUsage = types.Int32PointerValue(getResp.JSON200.Data.Broker.MaxSpoolUsage)
 	currentState.MissionControlUserName = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MissionControlManagerLoginCredential.Username)
 	currentState.MissionControlPassword = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].MissionControlManagerLoginCredential.Password)
+	currentState.MgmtAdminUserName = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].ManagementAdminLoginCredential.Username)
+	currentState.MgmtAdminPassword = types.StringPointerValue((*(getResp.JSON200.Data.Broker.MsgVpns))[0].ManagementAdminLoginCredential.Password)
+
 	currentState.ServiceEndpointId = types.StringPointerValue((*getResp.JSON200.Data.ServiceConnectionEndpoints)[0].Id)
 	hostNames := (*getResp.JSON200.Data.ServiceConnectionEndpoints)[0].HostNames
 	currentState.HostNames, diags = types.ListValueFrom(ctx, types.StringType, hostNames)
