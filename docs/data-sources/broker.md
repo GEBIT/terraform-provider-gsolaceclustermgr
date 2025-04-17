@@ -17,6 +17,8 @@ description: |-
 
 ### Read-Only
 
+- `admin_password` (String, Sensitive) MsgVPN ManagementAdmin Password
+- `admin_username` (String, Sensitive) MsgVPN ManagementAdmin Username
 - `cluster_name` (String)
 - `created` (String)
 - `custom_router_name` (String) The full router name (including primary/primarycn suffix)

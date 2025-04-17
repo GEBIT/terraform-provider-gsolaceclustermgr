@@ -31,6 +31,8 @@ Event Broker Resource. Note that *name* is the only attribute you can update wit
 
 ### Read-Only
 
+- `admin_password` (String, Sensitive) MsgVPN ManagementAdmin Password
+- `admin_username` (String, Sensitive) MsgVPN ManagementAdmin Username
 - `created` (String)
 - `hostnames` (List of String)
 - `id` (String) The ID of this resource.
