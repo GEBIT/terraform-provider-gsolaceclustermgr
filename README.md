@@ -24,6 +24,8 @@ This provider is based on the [HashiCorp Developer Tutorial](https://developer.h
 
 
 
+To setup required tooling we recommend to use *mise* or *asdf*. A `.tool-versions` file is provided.
+
 ### Building The Provider
 
 1. Clone the repository
@@ -56,6 +58,8 @@ The REST client to access the API is generated using [oapi-codegen] (https://git
 For CI testing the provider without actually calling the productive solace API, a fakeserver is included.
 
 ### Developing the Provider
+
+
 
 If you wish to work on the provider, you'll first need [Go](http://www.golang.org) installed on your machine (see [Requirements](#requirements) above).
 
