@@ -12,6 +12,11 @@ Diagnose and fix a failing dependabot pull request for this Terraform provider.
 
 ## Context
 
+> **Toolchain:** Tool versions (`go`, `gh`, `oapi-codegen`) are managed by mise. Activate before running commands:
+> ```powershell
+> mise activate pwsh | Out-String | Invoke-Expression
+> ```
+
 - Repo is `terraform-provider-gsolaceclustermgr`
 - Tests require `TF_ACC=1` to run acceptance tests
 - `internal/missioncontrol/client.go` is **generated** — never hand-edit it; use `go generate ./...`

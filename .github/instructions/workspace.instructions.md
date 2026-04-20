@@ -10,7 +10,7 @@ This is a **Terraform provider** (`terraform-provider-gsolaceclustermgr`) that m
 
 - The upstream REST API is large; only the subset required by this provider is used.
 - The REST client code (`internal/missioncontrol/`) is **generated** using [oapi-codegen](https://github.com/oapi-codegen/oapi-codegen) from the OpenAPI spec in `api/missioncontrol_api_v2.json`. Do **not** hand-edit generated files.
-- A **mock server** (`internal/fakeserver/`) is a hardcoded stub implementation of the relevant Solace Cloud API endpoints. It exists so that acceptance tests can run without real cloud credentials or broker quota. Tests should target the fake server, not the live API.
+- A **mock server** (`internal/fakeserver/`) is a hardcoded stub implementation of the relevant Solace Cloud API endpoints. It exists so that acceptance tests can run without real cloud credentials or broker quota. Tests must target the fake server, not the live API.
 
 ---
 
@@ -82,6 +82,7 @@ docs/                # Generated provider documentation
 - Do **not** use `terraform-plugin-sdk` — this provider uses `terraform-plugin-framework` exclusively.
 - Do **not** add Terraform features that are unavailable in Terraform 1.5.x or current OpenTofu.
 - Do **not** call the real Solace Cloud API in tests unless explicitly asked for.
+- Do **not** delete a solace live broker, really never.
 
 ---
 

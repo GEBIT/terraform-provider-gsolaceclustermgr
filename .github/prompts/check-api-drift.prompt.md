@@ -3,7 +3,7 @@ name: check-api-drift
 description: Download the latest Solace Mission Control API spec and compare it against the version stored in the repo. Identifies what needs changing in the provider.
 argument-hint: Leave blank to auto-download the latest spec. Or provide a local path to a spec file to use instead.
 agent: agent
-tools: ["read_file", "grep_search", "file_search", "run_in_terminal"]
+tools: ["read_file", "grep_search", "file_search", "run_in_terminal", "fetch_webpage"]
 ---
 
 # Check API Drift
@@ -11,7 +11,18 @@ tools: ["read_file", "grep_search", "file_search", "run_in_terminal"]
 Download the latest Solace Mission Control OpenAPI spec and compare it against the version stored in the repository.
 Identify what impact any changes have on this Terraform provider.
 
+## Related prompts
+
+- `/regen-client` — regenerate the REST client after updating the spec
+- `/update-dependency` — update oapi-codegen or other dependencies
+- `/fix-dependabot-pr` — if drift was discovered while fixing a dependabot PR
+
 ## Context
+
+> **Toolchain:** Tool versions (`go`, `gh`, `oapi-codegen`) are managed by mise. Activate before running commands:
+> ```powershell
+> mise activate pwsh | Out-String | Invoke-Expression
+> ```
 
 - Current spec (in repo): `api/missioncontrol_api_v2.json`
 - Spec listing page (source of truth for the download link): `https://api.solace.dev/cloud/page/openapi-specifications`
