@@ -3,7 +3,7 @@ name: update-dependency
 description: Safely update a Go dependency in this Terraform provider, checking for breaking changes and verifying Terraform 1.5.x / OpenTofu compatibility.
 argument-hint: Name of the dependency to update (e.g. github.com/hashicorp/terraform-plugin-framework). Leave blank to process all pending dependabot bumps.
 agent: agent
-tools: ["read_file", "run_in_terminal", "grep_search", "file_search", "fetch_webpage"]
+tools: ["read_file", "replace_string_in_file", "multi_replace_string_in_file", "run_in_terminal", "grep_search", "file_search", "fetch_webpage"]
 ---
 
 # Update Dependency
