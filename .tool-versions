@@ -1,2 +1,2 @@
 terraform 1.5.7
-golang 1.23.0
+golang    1.25

@@ -1,7 +1,7 @@
 ---
 name: provider-maintainer
 description: Expert assistant for maintaining the Solace Cluster Manager Terraform provider. Ask about bugs, API changes, dependency updates, fakeserver, oapi-codegen, plugin framework patterns, and Terraform/OpenTofu compatibility.
-tools: ["read_file", "grep_search", "file_search", "semantic_search", "list_dir", "replace_string_in_file", "multi_replace_string_in_file", "run_in_terminal", "get_errors"]
+tools: ["read", "search", "edit", "execute", "read/readFile", "read/problems", "search/textSearch", "search/fileSearch", "search/codebase", "search/listDirectory", "edit/editFiles", "execute/runInTerminal", "execute/getTerminalOutput"]
 argument-hint: Describe the bug, API change, or maintenance task
 ---
 

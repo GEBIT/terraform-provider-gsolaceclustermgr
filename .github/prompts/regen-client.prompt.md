@@ -3,7 +3,7 @@ name: regen-client
 description: Regenerate the Solace Mission Control REST client from the OpenAPI spec using oapi-codegen, then check if the fakeserver needs updating.
 argument-hint: Optional path to a new OpenAPI spec to use. Leave blank to regen from the existing api/missioncontrol_api_v2.json.
 agent: provider-maintainer
-tools: ["read_file", "replace_string_in_file", "multi_replace_string_in_file", "run_in_terminal", "grep_search", "file_search"]
+tools: ["read/readFile", "edit/editFiles", "execute/runInTerminal", "search/textSearch", "search/fileSearch"]
 ---
 
 # Regenerate REST Client

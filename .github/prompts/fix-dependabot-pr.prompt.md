@@ -3,7 +3,7 @@ name: fix-dependabot-pr
 description: Checkout a failing dependabot PR, diagnose the failure from CI logs, plan a fix, and apply it after confirmation.
 argument-hint: PR number to fix (e.g. 42). Leave blank to list open dependabot PRs and pick the oldest.
 agent: provider-maintainer
-tools: ["read_file", "replace_string_in_file", "multi_replace_string_in_file", "grep_search", "file_search", "run_in_terminal", "get_errors"]
+tools: ["read/readFile", "edit/editFiles", "execute/runInTerminal", "search/textSearch", "search/fileSearch", "read/problems"]
 ---
 
 # Fix Dependabot PR
