@@ -88,9 +88,13 @@ docs/                # Generated provider documentation
 
 ## Local Development Toolchain
 
-Tool versions (Go, Terraform, `gh` CLI, etc.) are managed via **[mise](https://mise.jdx.dev/)** and declared in `.tool-versions` at the repo root.
+Some Tool versions (Go, Terraform, etc.) are managed via **[mise](https://mise.jdx.dev/)** and declared in `.tool-versions` at the repo root.
 
-`mise` is **not** automatically activated in non-login shells on this machine. Before running any terminal commands that require managed tools (`go`, `terraform`, `gh`, `oapi-codegen`, etc.), activate mise first:
+Tools like azure cli, copilot cli or gh are static prerequirements, however.
+
+
+
+`mise` is **not** automatically activated in non-login shells on this machine. Before running any terminal commands that require managed tools (`go`, `terraform`, , `oapi-codegen`, etc.), activate mise first:
 
 ```bash
 eval "$(mise activate bash)"
@@ -122,3 +126,11 @@ To list org repos explicitly:
 ```bash
 gh repo list GEBIT
 ```
+
+
+
+### Terminal Patterns — Do and Don't
+
+- **Never** use `while` polling loops to wait for CI. They risk runaway execution if tools aren't on PATH.
+- `gh run watch` opens an alternate buffer (TUI) that the VS Code terminal tool can't capture. Instead, use `gh api` to check run status once or twice manually, or ask the user to check.
+- Always reuse the terminal session that already has `mise activate` — never assume a new terminal has tools on PATH.

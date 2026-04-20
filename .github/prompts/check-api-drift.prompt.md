@@ -2,7 +2,7 @@
 name: check-api-drift
 description: Download the latest Solace Mission Control API spec and compare it against the version stored in the repo. Identifies what needs changing in the provider.
 argument-hint: Leave blank to auto-download the latest spec. Or provide a local path to a spec file to use instead.
-agent: agent
+agent: provider-maintainer
 tools: ["read_file", "grep_search", "file_search", "run_in_terminal", "fetch_webpage"]
 ---
 
