@@ -3,3 +3,5 @@ generate:
   client: true
   models: true
 output: internal\missioncontrol\client.go
+output-options:
+  response-type-suffix: Resp

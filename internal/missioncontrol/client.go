@@ -57,6 +57,27 @@ func (e CertificateType) Valid() bool {
 	}
 }
 
+// Defines values for ConnectionEndpointK8sServiceType.
+const (
+	ConnectionEndpointK8sServiceTypeCLUSTERIP    ConnectionEndpointK8sServiceType = "CLUSTERIP"
+	ConnectionEndpointK8sServiceTypeLOADBALANCER ConnectionEndpointK8sServiceType = "LOADBALANCER"
+	ConnectionEndpointK8sServiceTypeNODEPORT     ConnectionEndpointK8sServiceType = "NODEPORT"
+)
+
+// Valid indicates whether the value is a known member of the ConnectionEndpointK8sServiceType enum.
+func (e ConnectionEndpointK8sServiceType) Valid() bool {
+	switch e {
+	case ConnectionEndpointK8sServiceTypeCLUSTERIP:
+		return true
+	case ConnectionEndpointK8sServiceTypeLOADBALANCER:
+		return true
+	case ConnectionEndpointK8sServiceTypeNODEPORT:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ConnectionEndpointAccessType.
 const (
 	PRIVATE ConnectionEndpointAccessType = "PRIVATE"
@@ -75,21 +96,48 @@ func (e ConnectionEndpointAccessType) Valid() bool {
 	}
 }
 
-// Defines values for ConnectionEndpointK8sServiceType.
+// Defines values for CreateConnectionEndpointK8sServiceType.
 const (
-	ConnectionEndpointK8sServiceTypeCLUSTERIP    ConnectionEndpointK8sServiceType = "CLUSTERIP"
-	ConnectionEndpointK8sServiceTypeLOADBALANCER ConnectionEndpointK8sServiceType = "LOADBALANCER"
-	ConnectionEndpointK8sServiceTypeNODEPORT     ConnectionEndpointK8sServiceType = "NODEPORT"
+	CreateConnectionEndpointK8sServiceTypeCLUSTERIP    CreateConnectionEndpointK8sServiceType = "CLUSTERIP"
+	CreateConnectionEndpointK8sServiceTypeLOADBALANCER CreateConnectionEndpointK8sServiceType = "LOADBALANCER"
+	CreateConnectionEndpointK8sServiceTypeNODEPORT     CreateConnectionEndpointK8sServiceType = "NODEPORT"
 )
 
-// Valid indicates whether the value is a known member of the ConnectionEndpointK8sServiceType enum.
-func (e ConnectionEndpointK8sServiceType) Valid() bool {
+// Valid indicates whether the value is a known member of the CreateConnectionEndpointK8sServiceType enum.
+func (e CreateConnectionEndpointK8sServiceType) Valid() bool {
 	switch e {
-	case ConnectionEndpointK8sServiceTypeCLUSTERIP:
+	case CreateConnectionEndpointK8sServiceTypeCLUSTERIP:
 		return true
-	case ConnectionEndpointK8sServiceTypeLOADBALANCER:
+	case CreateConnectionEndpointK8sServiceTypeLOADBALANCER:
 		return true
-	case ConnectionEndpointK8sServiceTypeNODEPORT:
+	case CreateConnectionEndpointK8sServiceTypeNODEPORT:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for CreationState.
+const (
+	Completed  CreationState = "completed"
+	Failed     CreationState = "failed"
+	InProgress CreationState = "inProgress"
+	Migrating  CreationState = "migrating"
+	Pending    CreationState = "pending"
+)
+
+// Valid indicates whether the value is a known member of the CreationState enum.
+func (e CreationState) Valid() bool {
+	switch e {
+	case Completed:
+		return true
+	case Failed:
+		return true
+	case InProgress:
+		return true
+	case Migrating:
+		return true
+	case Pending:
 		return true
 	default:
 		return false
@@ -114,6 +162,24 @@ func (e DatacenterK8sServiceType) Valid() bool {
 	}
 }
 
+// Defines values for DnsNameDomainType.
+const (
+	CustomerManaged DnsNameDomainType = "CustomerManaged"
+	SolaceManaged   DnsNameDomainType = "SolaceManaged"
+)
+
+// Valid indicates whether the value is a known member of the DnsNameDomainType enum.
+func (e DnsNameDomainType) Valid() bool {
+	switch e {
+	case CustomerManaged:
+		return true
+	case SolaceManaged:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for EventBrokerServiceVersionDetailsReleaseStatus.
 const (
 	REVOKED EventBrokerServiceVersionDetailsReleaseStatus = "REVOKED"
@@ -123,6 +189,552 @@ const (
 func (e EventBrokerServiceVersionDetailsReleaseStatus) Valid() bool {
 	switch e {
 	case REVOKED:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetConnectionEndpointK8sServiceType.
+const (
+	GetConnectionEndpointK8sServiceTypeCLUSTERIP    GetConnectionEndpointK8sServiceType = "CLUSTERIP"
+	GetConnectionEndpointK8sServiceTypeLOADBALANCER GetConnectionEndpointK8sServiceType = "LOADBALANCER"
+	GetConnectionEndpointK8sServiceTypeNODEPORT     GetConnectionEndpointK8sServiceType = "NODEPORT"
+)
+
+// Valid indicates whether the value is a known member of the GetConnectionEndpointK8sServiceType enum.
+func (e GetConnectionEndpointK8sServiceType) Valid() bool {
+	switch e {
+	case GetConnectionEndpointK8sServiceTypeCLUSTERIP:
+		return true
+	case GetConnectionEndpointK8sServiceTypeLOADBALANCER:
+		return true
+	case GetConnectionEndpointK8sServiceTypeNODEPORT:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MCAHealthCheckStatus.
+const (
+	MCAHealthCheckStatusHEALTHY   MCAHealthCheckStatus = "HEALTHY"
+	MCAHealthCheckStatusUNHEALTHY MCAHealthCheckStatus = "UNHEALTHY"
+	MCAHealthCheckStatusUNKNOWN   MCAHealthCheckStatus = "UNKNOWN"
+)
+
+// Valid indicates whether the value is a known member of the MCAHealthCheckStatus enum.
+func (e MCAHealthCheckStatus) Valid() bool {
+	switch e {
+	case MCAHealthCheckStatusHEALTHY:
+		return true
+	case MCAHealthCheckStatusUNHEALTHY:
+		return true
+	case MCAHealthCheckStatusUNKNOWN:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MCAHealthSummaryStatus.
+const (
+	MCAHealthSummaryStatusHEALTHY   MCAHealthSummaryStatus = "HEALTHY"
+	MCAHealthSummaryStatusUNHEALTHY MCAHealthSummaryStatus = "UNHEALTHY"
+	MCAHealthSummaryStatusUNKNOWN   MCAHealthSummaryStatus = "UNKNOWN"
+)
+
+// Valid indicates whether the value is a known member of the MCAHealthSummaryStatus enum.
+func (e MCAHealthSummaryStatus) Valid() bool {
+	switch e {
+	case MCAHealthSummaryStatusHEALTHY:
+		return true
+	case MCAHealthSummaryStatusUNHEALTHY:
+		return true
+	case MCAHealthSummaryStatusUNKNOWN:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceActivityActivityType.
+const (
+	SERVICESCALEUP MaintenanceActivityActivityType = "SERVICE_SCALE_UP"
+	SERVICEUPGRADE MaintenanceActivityActivityType = "SERVICE_UPGRADE"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceActivityActivityType enum.
+func (e MaintenanceActivityActivityType) Valid() bool {
+	switch e {
+	case SERVICESCALEUP:
+		return true
+	case SERVICEUPGRADE:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceActivityMaintenanceActivityStatus.
+const (
+	MaintenanceActivityMaintenanceActivityStatusCANCELLED  MaintenanceActivityMaintenanceActivityStatus = "CANCELLED"
+	MaintenanceActivityMaintenanceActivityStatusCOMPLETED  MaintenanceActivityMaintenanceActivityStatus = "COMPLETED"
+	MaintenanceActivityMaintenanceActivityStatusFAILED     MaintenanceActivityMaintenanceActivityStatus = "FAILED"
+	MaintenanceActivityMaintenanceActivityStatusINPROGRESS MaintenanceActivityMaintenanceActivityStatus = "IN_PROGRESS"
+	MaintenanceActivityMaintenanceActivityStatusPAUSED     MaintenanceActivityMaintenanceActivityStatus = "PAUSED"
+	MaintenanceActivityMaintenanceActivityStatusRESOLVED   MaintenanceActivityMaintenanceActivityStatus = "RESOLVED"
+	MaintenanceActivityMaintenanceActivityStatusSCHEDULED  MaintenanceActivityMaintenanceActivityStatus = "SCHEDULED"
+	MaintenanceActivityMaintenanceActivityStatusSKIPPED    MaintenanceActivityMaintenanceActivityStatus = "SKIPPED"
+	MaintenanceActivityMaintenanceActivityStatusWARNING    MaintenanceActivityMaintenanceActivityStatus = "WARNING"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceActivityMaintenanceActivityStatus enum.
+func (e MaintenanceActivityMaintenanceActivityStatus) Valid() bool {
+	switch e {
+	case MaintenanceActivityMaintenanceActivityStatusCANCELLED:
+		return true
+	case MaintenanceActivityMaintenanceActivityStatusCOMPLETED:
+		return true
+	case MaintenanceActivityMaintenanceActivityStatusFAILED:
+		return true
+	case MaintenanceActivityMaintenanceActivityStatusINPROGRESS:
+		return true
+	case MaintenanceActivityMaintenanceActivityStatusPAUSED:
+		return true
+	case MaintenanceActivityMaintenanceActivityStatusRESOLVED:
+		return true
+	case MaintenanceActivityMaintenanceActivityStatusSCHEDULED:
+		return true
+	case MaintenanceActivityMaintenanceActivityStatusSKIPPED:
+		return true
+	case MaintenanceActivityMaintenanceActivityStatusWARNING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceActivityMaintenanceType.
+const (
+	MaintenanceActivityMaintenanceTypeCONTROLPLANE MaintenanceActivityMaintenanceType = "CONTROL_PLANE"
+	MaintenanceActivityMaintenanceTypeDATAPATH     MaintenanceActivityMaintenanceType = "DATA_PATH"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceActivityMaintenanceType enum.
+func (e MaintenanceActivityMaintenanceType) Valid() bool {
+	switch e {
+	case MaintenanceActivityMaintenanceTypeCONTROLPLANE:
+		return true
+	case MaintenanceActivityMaintenanceTypeDATAPATH:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceActivityOperationStatus.
+const (
+	MaintenanceActivityOperationStatusCANCELLED  MaintenanceActivityOperationStatus = "CANCELLED"
+	MaintenanceActivityOperationStatusCOMPLETED  MaintenanceActivityOperationStatus = "COMPLETED"
+	MaintenanceActivityOperationStatusFAILED     MaintenanceActivityOperationStatus = "FAILED"
+	MaintenanceActivityOperationStatusINPROGRESS MaintenanceActivityOperationStatus = "IN_PROGRESS"
+	MaintenanceActivityOperationStatusPAUSED     MaintenanceActivityOperationStatus = "PAUSED"
+	MaintenanceActivityOperationStatusRESOLVED   MaintenanceActivityOperationStatus = "RESOLVED"
+	MaintenanceActivityOperationStatusSCHEDULED  MaintenanceActivityOperationStatus = "SCHEDULED"
+	MaintenanceActivityOperationStatusSKIPPED    MaintenanceActivityOperationStatus = "SKIPPED"
+	MaintenanceActivityOperationStatusWARNING    MaintenanceActivityOperationStatus = "WARNING"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceActivityOperationStatus enum.
+func (e MaintenanceActivityOperationStatus) Valid() bool {
+	switch e {
+	case MaintenanceActivityOperationStatusCANCELLED:
+		return true
+	case MaintenanceActivityOperationStatusCOMPLETED:
+		return true
+	case MaintenanceActivityOperationStatusFAILED:
+		return true
+	case MaintenanceActivityOperationStatusINPROGRESS:
+		return true
+	case MaintenanceActivityOperationStatusPAUSED:
+		return true
+	case MaintenanceActivityOperationStatusRESOLVED:
+		return true
+	case MaintenanceActivityOperationStatusSCHEDULED:
+		return true
+	case MaintenanceActivityOperationStatusSKIPPED:
+		return true
+	case MaintenanceActivityOperationStatusWARNING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceActivityPostMaintenanceValidationStatus.
+const (
+	MaintenanceActivityPostMaintenanceValidationStatusCANCELLED  MaintenanceActivityPostMaintenanceValidationStatus = "CANCELLED"
+	MaintenanceActivityPostMaintenanceValidationStatusCOMPLETED  MaintenanceActivityPostMaintenanceValidationStatus = "COMPLETED"
+	MaintenanceActivityPostMaintenanceValidationStatusFAILED     MaintenanceActivityPostMaintenanceValidationStatus = "FAILED"
+	MaintenanceActivityPostMaintenanceValidationStatusINPROGRESS MaintenanceActivityPostMaintenanceValidationStatus = "IN_PROGRESS"
+	MaintenanceActivityPostMaintenanceValidationStatusPAUSED     MaintenanceActivityPostMaintenanceValidationStatus = "PAUSED"
+	MaintenanceActivityPostMaintenanceValidationStatusRESOLVED   MaintenanceActivityPostMaintenanceValidationStatus = "RESOLVED"
+	MaintenanceActivityPostMaintenanceValidationStatusSCHEDULED  MaintenanceActivityPostMaintenanceValidationStatus = "SCHEDULED"
+	MaintenanceActivityPostMaintenanceValidationStatusSKIPPED    MaintenanceActivityPostMaintenanceValidationStatus = "SKIPPED"
+	MaintenanceActivityPostMaintenanceValidationStatusWARNING    MaintenanceActivityPostMaintenanceValidationStatus = "WARNING"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceActivityPostMaintenanceValidationStatus enum.
+func (e MaintenanceActivityPostMaintenanceValidationStatus) Valid() bool {
+	switch e {
+	case MaintenanceActivityPostMaintenanceValidationStatusCANCELLED:
+		return true
+	case MaintenanceActivityPostMaintenanceValidationStatusCOMPLETED:
+		return true
+	case MaintenanceActivityPostMaintenanceValidationStatusFAILED:
+		return true
+	case MaintenanceActivityPostMaintenanceValidationStatusINPROGRESS:
+		return true
+	case MaintenanceActivityPostMaintenanceValidationStatusPAUSED:
+		return true
+	case MaintenanceActivityPostMaintenanceValidationStatusRESOLVED:
+		return true
+	case MaintenanceActivityPostMaintenanceValidationStatusSCHEDULED:
+		return true
+	case MaintenanceActivityPostMaintenanceValidationStatusSKIPPED:
+		return true
+	case MaintenanceActivityPostMaintenanceValidationStatusWARNING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceActivityPreMaintenanceValidationStatus.
+const (
+	MaintenanceActivityPreMaintenanceValidationStatusCANCELLED  MaintenanceActivityPreMaintenanceValidationStatus = "CANCELLED"
+	MaintenanceActivityPreMaintenanceValidationStatusCOMPLETED  MaintenanceActivityPreMaintenanceValidationStatus = "COMPLETED"
+	MaintenanceActivityPreMaintenanceValidationStatusFAILED     MaintenanceActivityPreMaintenanceValidationStatus = "FAILED"
+	MaintenanceActivityPreMaintenanceValidationStatusINPROGRESS MaintenanceActivityPreMaintenanceValidationStatus = "IN_PROGRESS"
+	MaintenanceActivityPreMaintenanceValidationStatusPAUSED     MaintenanceActivityPreMaintenanceValidationStatus = "PAUSED"
+	MaintenanceActivityPreMaintenanceValidationStatusRESOLVED   MaintenanceActivityPreMaintenanceValidationStatus = "RESOLVED"
+	MaintenanceActivityPreMaintenanceValidationStatusSCHEDULED  MaintenanceActivityPreMaintenanceValidationStatus = "SCHEDULED"
+	MaintenanceActivityPreMaintenanceValidationStatusSKIPPED    MaintenanceActivityPreMaintenanceValidationStatus = "SKIPPED"
+	MaintenanceActivityPreMaintenanceValidationStatusWARNING    MaintenanceActivityPreMaintenanceValidationStatus = "WARNING"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceActivityPreMaintenanceValidationStatus enum.
+func (e MaintenanceActivityPreMaintenanceValidationStatus) Valid() bool {
+	switch e {
+	case MaintenanceActivityPreMaintenanceValidationStatusCANCELLED:
+		return true
+	case MaintenanceActivityPreMaintenanceValidationStatusCOMPLETED:
+		return true
+	case MaintenanceActivityPreMaintenanceValidationStatusFAILED:
+		return true
+	case MaintenanceActivityPreMaintenanceValidationStatusINPROGRESS:
+		return true
+	case MaintenanceActivityPreMaintenanceValidationStatusPAUSED:
+		return true
+	case MaintenanceActivityPreMaintenanceValidationStatusRESOLVED:
+		return true
+	case MaintenanceActivityPreMaintenanceValidationStatusSCHEDULED:
+		return true
+	case MaintenanceActivityPreMaintenanceValidationStatusSKIPPED:
+		return true
+	case MaintenanceActivityPreMaintenanceValidationStatusWARNING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceActivityResourceType.
+const (
+	MaintenanceActivityResourceTypeDATADOGAGENT        MaintenanceActivityResourceType = "DATADOG_AGENT"
+	MaintenanceActivityResourceTypeMISSIONCONTROLAGENT MaintenanceActivityResourceType = "MISSION_CONTROL_AGENT"
+	MaintenanceActivityResourceTypeSOLACEEVENTBROKER   MaintenanceActivityResourceType = "SOLACE_EVENT_BROKER"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceActivityResourceType enum.
+func (e MaintenanceActivityResourceType) Valid() bool {
+	switch e {
+	case MaintenanceActivityResourceTypeDATADOGAGENT:
+		return true
+	case MaintenanceActivityResourceTypeMISSIONCONTROLAGENT:
+		return true
+	case MaintenanceActivityResourceTypeSOLACEEVENTBROKER:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceScheduleMaintenanceType.
+const (
+	MaintenanceScheduleMaintenanceTypeCONTROLPLANE MaintenanceScheduleMaintenanceType = "CONTROL_PLANE"
+	MaintenanceScheduleMaintenanceTypeDATAPATH     MaintenanceScheduleMaintenanceType = "DATA_PATH"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceScheduleMaintenanceType enum.
+func (e MaintenanceScheduleMaintenanceType) Valid() bool {
+	switch e {
+	case MaintenanceScheduleMaintenanceTypeCONTROLPLANE:
+		return true
+	case MaintenanceScheduleMaintenanceTypeDATAPATH:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceScheduleRequestMaintenanceType.
+const (
+	MaintenanceScheduleRequestMaintenanceTypeCONTROLPLANE MaintenanceScheduleRequestMaintenanceType = "CONTROL_PLANE"
+	MaintenanceScheduleRequestMaintenanceTypeDATAPATH     MaintenanceScheduleRequestMaintenanceType = "DATA_PATH"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceScheduleRequestMaintenanceType enum.
+func (e MaintenanceScheduleRequestMaintenanceType) Valid() bool {
+	switch e {
+	case MaintenanceScheduleRequestMaintenanceTypeCONTROLPLANE:
+		return true
+	case MaintenanceScheduleRequestMaintenanceTypeDATAPATH:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceWindowMaintenanceType.
+const (
+	MaintenanceWindowMaintenanceTypeCONTROLPLANE MaintenanceWindowMaintenanceType = "CONTROL_PLANE"
+	MaintenanceWindowMaintenanceTypeDATAPATH     MaintenanceWindowMaintenanceType = "DATA_PATH"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceWindowMaintenanceType enum.
+func (e MaintenanceWindowMaintenanceType) Valid() bool {
+	switch e {
+	case MaintenanceWindowMaintenanceTypeCONTROLPLANE:
+		return true
+	case MaintenanceWindowMaintenanceTypeDATAPATH:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceWindowMaintenanceWindowScope.
+const (
+	ENVIRONMENT MaintenanceWindowMaintenanceWindowScope = "ENVIRONMENT"
+	SYSTEM      MaintenanceWindowMaintenanceWindowScope = "SYSTEM"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceWindowMaintenanceWindowScope enum.
+func (e MaintenanceWindowMaintenanceWindowScope) Valid() bool {
+	switch e {
+	case ENVIRONMENT:
+		return true
+	case SYSTEM:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceWindowRecurrenceDayOfWeek.
+const (
+	MaintenanceWindowRecurrenceDayOfWeekFRIDAY    MaintenanceWindowRecurrenceDayOfWeek = "FRIDAY"
+	MaintenanceWindowRecurrenceDayOfWeekMONDAY    MaintenanceWindowRecurrenceDayOfWeek = "MONDAY"
+	MaintenanceWindowRecurrenceDayOfWeekSATURDAY  MaintenanceWindowRecurrenceDayOfWeek = "SATURDAY"
+	MaintenanceWindowRecurrenceDayOfWeekSUNDAY    MaintenanceWindowRecurrenceDayOfWeek = "SUNDAY"
+	MaintenanceWindowRecurrenceDayOfWeekTHURSDAY  MaintenanceWindowRecurrenceDayOfWeek = "THURSDAY"
+	MaintenanceWindowRecurrenceDayOfWeekTUESDAY   MaintenanceWindowRecurrenceDayOfWeek = "TUESDAY"
+	MaintenanceWindowRecurrenceDayOfWeekWEDNESDAY MaintenanceWindowRecurrenceDayOfWeek = "WEDNESDAY"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceWindowRecurrenceDayOfWeek enum.
+func (e MaintenanceWindowRecurrenceDayOfWeek) Valid() bool {
+	switch e {
+	case MaintenanceWindowRecurrenceDayOfWeekFRIDAY:
+		return true
+	case MaintenanceWindowRecurrenceDayOfWeekMONDAY:
+		return true
+	case MaintenanceWindowRecurrenceDayOfWeekSATURDAY:
+		return true
+	case MaintenanceWindowRecurrenceDayOfWeekSUNDAY:
+		return true
+	case MaintenanceWindowRecurrenceDayOfWeekTHURSDAY:
+		return true
+	case MaintenanceWindowRecurrenceDayOfWeekTUESDAY:
+		return true
+	case MaintenanceWindowRecurrenceDayOfWeekWEDNESDAY:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceWindowRecurrenceDayOfWeekMonthly.
+const (
+	MaintenanceWindowRecurrenceDayOfWeekMonthlyFIRST  MaintenanceWindowRecurrenceDayOfWeekMonthly = "FIRST"
+	MaintenanceWindowRecurrenceDayOfWeekMonthlyLAST   MaintenanceWindowRecurrenceDayOfWeekMonthly = "LAST"
+	MaintenanceWindowRecurrenceDayOfWeekMonthlySECOND MaintenanceWindowRecurrenceDayOfWeekMonthly = "SECOND"
+	MaintenanceWindowRecurrenceDayOfWeekMonthlyTHIRD  MaintenanceWindowRecurrenceDayOfWeekMonthly = "THIRD"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceWindowRecurrenceDayOfWeekMonthly enum.
+func (e MaintenanceWindowRecurrenceDayOfWeekMonthly) Valid() bool {
+	switch e {
+	case MaintenanceWindowRecurrenceDayOfWeekMonthlyFIRST:
+		return true
+	case MaintenanceWindowRecurrenceDayOfWeekMonthlyLAST:
+		return true
+	case MaintenanceWindowRecurrenceDayOfWeekMonthlySECOND:
+		return true
+	case MaintenanceWindowRecurrenceDayOfWeekMonthlyTHIRD:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceWindowRecurrenceDayWeekly.
+const (
+	MaintenanceWindowRecurrenceDayWeeklyEVERY      MaintenanceWindowRecurrenceDayWeekly = "EVERY"
+	MaintenanceWindowRecurrenceDayWeeklyEVERYFOUR  MaintenanceWindowRecurrenceDayWeekly = "EVERY_FOUR"
+	MaintenanceWindowRecurrenceDayWeeklyEVERYOTHER MaintenanceWindowRecurrenceDayWeekly = "EVERY_OTHER"
+	MaintenanceWindowRecurrenceDayWeeklyEVERYTHREE MaintenanceWindowRecurrenceDayWeekly = "EVERY_THREE"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceWindowRecurrenceDayWeekly enum.
+func (e MaintenanceWindowRecurrenceDayWeekly) Valid() bool {
+	switch e {
+	case MaintenanceWindowRecurrenceDayWeeklyEVERY:
+		return true
+	case MaintenanceWindowRecurrenceDayWeeklyEVERYFOUR:
+		return true
+	case MaintenanceWindowRecurrenceDayWeeklyEVERYOTHER:
+		return true
+	case MaintenanceWindowRecurrenceDayWeeklyEVERYTHREE:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceWindowRecurrenceFrequency.
+const (
+	MaintenanceWindowRecurrenceFrequencyMONTHLY MaintenanceWindowRecurrenceFrequency = "MONTHLY"
+	MaintenanceWindowRecurrenceFrequencyWEEKLY  MaintenanceWindowRecurrenceFrequency = "WEEKLY"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceWindowRecurrenceFrequency enum.
+func (e MaintenanceWindowRecurrenceFrequency) Valid() bool {
+	switch e {
+	case MaintenanceWindowRecurrenceFrequencyMONTHLY:
+		return true
+	case MaintenanceWindowRecurrenceFrequencyWEEKLY:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceWindowRequestRecurrenceDayOfWeek.
+const (
+	MaintenanceWindowRequestRecurrenceDayOfWeekFRIDAY    MaintenanceWindowRequestRecurrenceDayOfWeek = "FRIDAY"
+	MaintenanceWindowRequestRecurrenceDayOfWeekMONDAY    MaintenanceWindowRequestRecurrenceDayOfWeek = "MONDAY"
+	MaintenanceWindowRequestRecurrenceDayOfWeekSATURDAY  MaintenanceWindowRequestRecurrenceDayOfWeek = "SATURDAY"
+	MaintenanceWindowRequestRecurrenceDayOfWeekSUNDAY    MaintenanceWindowRequestRecurrenceDayOfWeek = "SUNDAY"
+	MaintenanceWindowRequestRecurrenceDayOfWeekTHURSDAY  MaintenanceWindowRequestRecurrenceDayOfWeek = "THURSDAY"
+	MaintenanceWindowRequestRecurrenceDayOfWeekTUESDAY   MaintenanceWindowRequestRecurrenceDayOfWeek = "TUESDAY"
+	MaintenanceWindowRequestRecurrenceDayOfWeekWEDNESDAY MaintenanceWindowRequestRecurrenceDayOfWeek = "WEDNESDAY"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceWindowRequestRecurrenceDayOfWeek enum.
+func (e MaintenanceWindowRequestRecurrenceDayOfWeek) Valid() bool {
+	switch e {
+	case MaintenanceWindowRequestRecurrenceDayOfWeekFRIDAY:
+		return true
+	case MaintenanceWindowRequestRecurrenceDayOfWeekMONDAY:
+		return true
+	case MaintenanceWindowRequestRecurrenceDayOfWeekSATURDAY:
+		return true
+	case MaintenanceWindowRequestRecurrenceDayOfWeekSUNDAY:
+		return true
+	case MaintenanceWindowRequestRecurrenceDayOfWeekTHURSDAY:
+		return true
+	case MaintenanceWindowRequestRecurrenceDayOfWeekTUESDAY:
+		return true
+	case MaintenanceWindowRequestRecurrenceDayOfWeekWEDNESDAY:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceWindowRequestRecurrenceDayOfWeekMonthly.
+const (
+	MaintenanceWindowRequestRecurrenceDayOfWeekMonthlyFIRST  MaintenanceWindowRequestRecurrenceDayOfWeekMonthly = "FIRST"
+	MaintenanceWindowRequestRecurrenceDayOfWeekMonthlyLAST   MaintenanceWindowRequestRecurrenceDayOfWeekMonthly = "LAST"
+	MaintenanceWindowRequestRecurrenceDayOfWeekMonthlySECOND MaintenanceWindowRequestRecurrenceDayOfWeekMonthly = "SECOND"
+	MaintenanceWindowRequestRecurrenceDayOfWeekMonthlyTHIRD  MaintenanceWindowRequestRecurrenceDayOfWeekMonthly = "THIRD"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceWindowRequestRecurrenceDayOfWeekMonthly enum.
+func (e MaintenanceWindowRequestRecurrenceDayOfWeekMonthly) Valid() bool {
+	switch e {
+	case MaintenanceWindowRequestRecurrenceDayOfWeekMonthlyFIRST:
+		return true
+	case MaintenanceWindowRequestRecurrenceDayOfWeekMonthlyLAST:
+		return true
+	case MaintenanceWindowRequestRecurrenceDayOfWeekMonthlySECOND:
+		return true
+	case MaintenanceWindowRequestRecurrenceDayOfWeekMonthlyTHIRD:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceWindowRequestRecurrenceDayWeekly.
+const (
+	MaintenanceWindowRequestRecurrenceDayWeeklyEVERY      MaintenanceWindowRequestRecurrenceDayWeekly = "EVERY"
+	MaintenanceWindowRequestRecurrenceDayWeeklyEVERYFOUR  MaintenanceWindowRequestRecurrenceDayWeekly = "EVERY_FOUR"
+	MaintenanceWindowRequestRecurrenceDayWeeklyEVERYOTHER MaintenanceWindowRequestRecurrenceDayWeekly = "EVERY_OTHER"
+	MaintenanceWindowRequestRecurrenceDayWeeklyEVERYTHREE MaintenanceWindowRequestRecurrenceDayWeekly = "EVERY_THREE"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceWindowRequestRecurrenceDayWeekly enum.
+func (e MaintenanceWindowRequestRecurrenceDayWeekly) Valid() bool {
+	switch e {
+	case MaintenanceWindowRequestRecurrenceDayWeeklyEVERY:
+		return true
+	case MaintenanceWindowRequestRecurrenceDayWeeklyEVERYFOUR:
+		return true
+	case MaintenanceWindowRequestRecurrenceDayWeeklyEVERYOTHER:
+		return true
+	case MaintenanceWindowRequestRecurrenceDayWeeklyEVERYTHREE:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MaintenanceWindowRequestRecurrenceFrequency.
+const (
+	MaintenanceWindowRequestRecurrenceFrequencyMONTHLY MaintenanceWindowRequestRecurrenceFrequency = "MONTHLY"
+	MaintenanceWindowRequestRecurrenceFrequencyWEEKLY  MaintenanceWindowRequestRecurrenceFrequency = "WEEKLY"
+)
+
+// Valid indicates whether the value is a known member of the MaintenanceWindowRequestRecurrenceFrequency enum.
+func (e MaintenanceWindowRequestRecurrenceFrequency) Valid() bool {
+	switch e {
+	case MaintenanceWindowRequestRecurrenceFrequencyMONTHLY:
+		return true
+	case MaintenanceWindowRequestRecurrenceFrequencyWEEKLY:
 		return true
 	default:
 		return false
@@ -153,48 +765,24 @@ func (e MsgVpnAuthenticationBasicType) Valid() bool {
 	}
 }
 
-// Defines values for OperationOperationType.
+// Defines values for MultiResourceOperationStatus.
 const (
-	OperationOperationTypeCloneService          OperationOperationType = "cloneService"
-	OperationOperationTypeCreateClientProfile   OperationOperationType = "createClientProfile"
-	OperationOperationTypeCreateService         OperationOperationType = "createService"
-	OperationOperationTypeDatacenterRequest     OperationOperationType = "datacenterRequest"
-	OperationOperationTypeDeleteCertificate     OperationOperationType = "deleteCertificate"
-	OperationOperationTypeDeleteClientProfile   OperationOperationType = "deleteClientProfile"
-	OperationOperationTypeDeleteService         OperationOperationType = "deleteService"
-	OperationOperationTypeInfrastructureRequest OperationOperationType = "infrastructureRequest"
-	OperationOperationTypeInstallCertificate    OperationOperationType = "installCertificate"
-	OperationOperationTypeServiceRequest        OperationOperationType = "serviceRequest"
-	OperationOperationTypeUpdateClientProfile   OperationOperationType = "updateClientProfile"
-	OperationOperationTypeUploadCertificate     OperationOperationType = "uploadCertificate"
+	MultiResourceOperationStatusFAILED     MultiResourceOperationStatus = "FAILED"
+	MultiResourceOperationStatusINPROGRESS MultiResourceOperationStatus = "INPROGRESS"
+	MultiResourceOperationStatusPENDING    MultiResourceOperationStatus = "PENDING"
+	MultiResourceOperationStatusSUCCEEDED  MultiResourceOperationStatus = "SUCCEEDED"
 )
 
-// Valid indicates whether the value is a known member of the OperationOperationType enum.
-func (e OperationOperationType) Valid() bool {
+// Valid indicates whether the value is a known member of the MultiResourceOperationStatus enum.
+func (e MultiResourceOperationStatus) Valid() bool {
 	switch e {
-	case OperationOperationTypeCloneService:
+	case MultiResourceOperationStatusFAILED:
 		return true
-	case OperationOperationTypeCreateClientProfile:
+	case MultiResourceOperationStatusINPROGRESS:
 		return true
-	case OperationOperationTypeCreateService:
+	case MultiResourceOperationStatusPENDING:
 		return true
-	case OperationOperationTypeDatacenterRequest:
-		return true
-	case OperationOperationTypeDeleteCertificate:
-		return true
-	case OperationOperationTypeDeleteClientProfile:
-		return true
-	case OperationOperationTypeDeleteService:
-		return true
-	case OperationOperationTypeInfrastructureRequest:
-		return true
-	case OperationOperationTypeInstallCertificate:
-		return true
-	case OperationOperationTypeServiceRequest:
-		return true
-	case OperationOperationTypeUpdateClientProfile:
-		return true
-	case OperationOperationTypeUploadCertificate:
+	case MultiResourceOperationStatusSUCCEEDED:
 		return true
 	default:
 		return false
@@ -225,24 +813,84 @@ func (e OperationStatus) Valid() bool {
 	}
 }
 
+// Defines values for RedundancyActiveNode.
+const (
+	BACKUP  RedundancyActiveNode = "BACKUP"
+	PRIMARY RedundancyActiveNode = "PRIMARY"
+)
+
+// Valid indicates whether the value is a known member of the RedundancyActiveNode enum.
+func (e RedundancyActiveNode) Valid() bool {
+	switch e {
+	case BACKUP:
+		return true
+	case PRIMARY:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for RedundancyConfigSync.
+const (
+	RedundancyConfigSyncDOWN RedundancyConfigSync = "DOWN"
+	RedundancyConfigSyncUP   RedundancyConfigSync = "UP"
+)
+
+// Valid indicates whether the value is a known member of the RedundancyConfigSync enum.
+func (e RedundancyConfigSync) Valid() bool {
+	switch e {
+	case RedundancyConfigSyncDOWN:
+		return true
+	case RedundancyConfigSyncUP:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for RedundancyRedundancy.
+const (
+	RedundancyRedundancyDOWN RedundancyRedundancy = "DOWN"
+	RedundancyRedundancyUP   RedundancyRedundancy = "UP"
+)
+
+// Valid indicates whether the value is a known member of the RedundancyRedundancy enum.
+func (e RedundancyRedundancy) Valid() bool {
+	switch e {
+	case RedundancyRedundancyDOWN:
+		return true
+	case RedundancyRedundancyUP:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ReleaseChannel.
 const (
-	DECLINED      ReleaseChannel = "DECLINED"
-	PREVIEW       ReleaseChannel = "PREVIEW"
-	PRODUCTION    ReleaseChannel = "PRODUCTION"
-	PRODUCTIONLTS ReleaseChannel = "PRODUCTION_LTS"
+	ReleaseChannelDECLINED      ReleaseChannel = "DECLINED"
+	ReleaseChannelLTS           ReleaseChannel = "LTS"
+	ReleaseChannelPREVIEW       ReleaseChannel = "PREVIEW"
+	ReleaseChannelPRODUCTION    ReleaseChannel = "PRODUCTION"
+	ReleaseChannelPRODUCTIONLTS ReleaseChannel = "PRODUCTION_LTS"
+	ReleaseChannelROLLING       ReleaseChannel = "ROLLING"
 )
 
 // Valid indicates whether the value is a known member of the ReleaseChannel enum.
 func (e ReleaseChannel) Valid() bool {
 	switch e {
-	case DECLINED:
+	case ReleaseChannelDECLINED:
 		return true
-	case PREVIEW:
+	case ReleaseChannelLTS:
 		return true
-	case PRODUCTION:
+	case ReleaseChannelPREVIEW:
 		return true
-	case PRODUCTIONLTS:
+	case ReleaseChannelPRODUCTION:
+		return true
+	case ReleaseChannelPRODUCTIONLTS:
+		return true
+	case ReleaseChannelROLLING:
 		return true
 	default:
 		return false
@@ -282,6 +930,8 @@ const (
 	ServiceClassIdENTERPRISE10KSTANDALONE        ServiceClassId = "ENTERPRISE_10K_STANDALONE"
 	ServiceClassIdENTERPRISE1KHIGHAVAILABILITY   ServiceClassId = "ENTERPRISE_1K_HIGHAVAILABILITY"
 	ServiceClassIdENTERPRISE1KSTANDALONE         ServiceClassId = "ENTERPRISE_1K_STANDALONE"
+	ServiceClassIdENTERPRISE200KHIGHAVAILABILITY ServiceClassId = "ENTERPRISE_200K_HIGHAVAILABILITY"
+	ServiceClassIdENTERPRISE200KSTANDALONE       ServiceClassId = "ENTERPRISE_200K_STANDALONE"
 	ServiceClassIdENTERPRISE250HIGHAVAILABILITY  ServiceClassId = "ENTERPRISE_250_HIGHAVAILABILITY"
 	ServiceClassIdENTERPRISE250STANDALONE        ServiceClassId = "ENTERPRISE_250_STANDALONE"
 	ServiceClassIdENTERPRISE50KHIGHAVAILABILITY  ServiceClassId = "ENTERPRISE_50K_HIGHAVAILABILITY"
@@ -306,6 +956,10 @@ func (e ServiceClassId) Valid() bool {
 	case ServiceClassIdENTERPRISE1KHIGHAVAILABILITY:
 		return true
 	case ServiceClassIdENTERPRISE1KSTANDALONE:
+		return true
+	case ServiceClassIdENTERPRISE200KHIGHAVAILABILITY:
+		return true
+	case ServiceClassIdENTERPRISE200KSTANDALONE:
 		return true
 	case ServiceClassIdENTERPRISE250HIGHAVAILABILITY:
 		return true
@@ -426,6 +1080,138 @@ func (e ServiceCreationState) Valid() bool {
 	}
 }
 
+// Defines values for UpdateConnectionEndpointK8sServiceType.
+const (
+	CLUSTERIP    UpdateConnectionEndpointK8sServiceType = "CLUSTERIP"
+	LOADBALANCER UpdateConnectionEndpointK8sServiceType = "LOADBALANCER"
+	NODEPORT     UpdateConnectionEndpointK8sServiceType = "NODEPORT"
+)
+
+// Valid indicates whether the value is a known member of the UpdateConnectionEndpointK8sServiceType enum.
+func (e UpdateConnectionEndpointK8sServiceType) Valid() bool {
+	switch e {
+	case CLUSTERIP:
+		return true
+	case LOADBALANCER:
+		return true
+	case NODEPORT:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for UpgradeReadinessStatus.
+const (
+	OK          UpgradeReadinessStatus = "OK"
+	UNAVAILABLE UpgradeReadinessStatus = "UNAVAILABLE"
+)
+
+// Valid indicates whether the value is a known member of the UpgradeReadinessStatus enum.
+func (e UpgradeReadinessStatus) Valid() bool {
+	switch e {
+	case OK:
+		return true
+	case UNAVAILABLE:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for JobOperationTypes.
+const (
+	JobOperationTypesCloneService             JobOperationTypes = "cloneService"
+	JobOperationTypesCreateClientProfile      JobOperationTypes = "createClientProfile"
+	JobOperationTypesCreateConnectionEndpoint JobOperationTypes = "createConnectionEndpoint"
+	JobOperationTypesCreateDnsName            JobOperationTypes = "createDnsName"
+	JobOperationTypesCreateService            JobOperationTypes = "createService"
+	JobOperationTypesDatacenterRequest        JobOperationTypes = "datacenterRequest"
+	JobOperationTypesDeleteCertificate        JobOperationTypes = "deleteCertificate"
+	JobOperationTypesDeleteClientProfile      JobOperationTypes = "deleteClientProfile"
+	JobOperationTypesDeleteConnectionEndpoint JobOperationTypes = "deleteConnectionEndpoint"
+	JobOperationTypesDeleteDnsName            JobOperationTypes = "deleteDnsName"
+	JobOperationTypesDeleteService            JobOperationTypes = "deleteService"
+	JobOperationTypesHaSwitchover             JobOperationTypes = "haSwitchover"
+	JobOperationTypesInfrastructureRequest    JobOperationTypes = "infrastructureRequest"
+	JobOperationTypesInstallCertificate       JobOperationTypes = "installCertificate"
+	JobOperationTypesMoveDnsName              JobOperationTypes = "moveDnsName"
+	JobOperationTypesRotateReplicationPSK     JobOperationTypes = "rotateReplicationPSK"
+	JobOperationTypesServiceRequest           JobOperationTypes = "serviceRequest"
+	JobOperationTypesServiceScaleUp           JobOperationTypes = "serviceScaleUp"
+	JobOperationTypesServiceUpgrade           JobOperationTypes = "serviceUpgrade"
+	JobOperationTypesUpdateClientProfile      JobOperationTypes = "updateClientProfile"
+	JobOperationTypesUpdateConnectionEndpoint JobOperationTypes = "updateConnectionEndpoint"
+	JobOperationTypesUploadCertificate        JobOperationTypes = "uploadCertificate"
+)
+
+// Valid indicates whether the value is a known member of the JobOperationTypes enum.
+func (e JobOperationTypes) Valid() bool {
+	switch e {
+	case JobOperationTypesCloneService:
+		return true
+	case JobOperationTypesCreateClientProfile:
+		return true
+	case JobOperationTypesCreateConnectionEndpoint:
+		return true
+	case JobOperationTypesCreateDnsName:
+		return true
+	case JobOperationTypesCreateService:
+		return true
+	case JobOperationTypesDatacenterRequest:
+		return true
+	case JobOperationTypesDeleteCertificate:
+		return true
+	case JobOperationTypesDeleteClientProfile:
+		return true
+	case JobOperationTypesDeleteConnectionEndpoint:
+		return true
+	case JobOperationTypesDeleteDnsName:
+		return true
+	case JobOperationTypesDeleteService:
+		return true
+	case JobOperationTypesHaSwitchover:
+		return true
+	case JobOperationTypesInfrastructureRequest:
+		return true
+	case JobOperationTypesInstallCertificate:
+		return true
+	case JobOperationTypesMoveDnsName:
+		return true
+	case JobOperationTypesRotateReplicationPSK:
+		return true
+	case JobOperationTypesServiceRequest:
+		return true
+	case JobOperationTypesServiceScaleUp:
+		return true
+	case JobOperationTypesServiceUpgrade:
+		return true
+	case JobOperationTypesUpdateClientProfile:
+		return true
+	case JobOperationTypesUpdateConnectionEndpoint:
+		return true
+	case JobOperationTypesUploadCertificate:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for OperationTypesFilter.
+const (
+	OperationTypesFilterHaSwitchover OperationTypesFilter = "haSwitchover"
+)
+
+// Valid indicates whether the value is a known member of the OperationTypesFilter enum.
+func (e OperationTypesFilter) Valid() bool {
+	switch e {
+	case OperationTypesFilterHaSwitchover:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for GetDatacentersParamsDatacenterType.
 const (
 	CustomerCloud   GetDatacentersParamsDatacenterType = "CustomerCloud"
@@ -483,6 +1269,36 @@ func (e GetDatacentersParamsProvider) Valid() bool {
 	}
 }
 
+// Defines values for GetEventBrokerServiceVersionsParamsReleaseChannel.
+const (
+	GetEventBrokerServiceVersionsParamsReleaseChannelDECLINED      GetEventBrokerServiceVersionsParamsReleaseChannel = "DECLINED"
+	GetEventBrokerServiceVersionsParamsReleaseChannelLTS           GetEventBrokerServiceVersionsParamsReleaseChannel = "LTS"
+	GetEventBrokerServiceVersionsParamsReleaseChannelPREVIEW       GetEventBrokerServiceVersionsParamsReleaseChannel = "PREVIEW"
+	GetEventBrokerServiceVersionsParamsReleaseChannelPRODUCTION    GetEventBrokerServiceVersionsParamsReleaseChannel = "PRODUCTION"
+	GetEventBrokerServiceVersionsParamsReleaseChannelPRODUCTIONLTS GetEventBrokerServiceVersionsParamsReleaseChannel = "PRODUCTION_LTS"
+	GetEventBrokerServiceVersionsParamsReleaseChannelROLLING       GetEventBrokerServiceVersionsParamsReleaseChannel = "ROLLING"
+)
+
+// Valid indicates whether the value is a known member of the GetEventBrokerServiceVersionsParamsReleaseChannel enum.
+func (e GetEventBrokerServiceVersionsParamsReleaseChannel) Valid() bool {
+	switch e {
+	case GetEventBrokerServiceVersionsParamsReleaseChannelDECLINED:
+		return true
+	case GetEventBrokerServiceVersionsParamsReleaseChannelLTS:
+		return true
+	case GetEventBrokerServiceVersionsParamsReleaseChannelPREVIEW:
+		return true
+	case GetEventBrokerServiceVersionsParamsReleaseChannelPRODUCTION:
+		return true
+	case GetEventBrokerServiceVersionsParamsReleaseChannelPRODUCTIONLTS:
+		return true
+	case GetEventBrokerServiceVersionsParamsReleaseChannelROLLING:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for GetServiceParamsExpand.
 const (
 	GetServiceParamsExpandAllowedActions             GetServiceParamsExpand = "allowedActions"
@@ -501,6 +1317,339 @@ func (e GetServiceParamsExpand) Valid() bool {
 	case GetServiceParamsExpandMessageSpoolDetails:
 		return true
 	case GetServiceParamsExpandServiceConnectionEndpoints:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetEventBrokerServiceUpgradesParamsOperationStatus.
+const (
+	GetEventBrokerServiceUpgradesParamsOperationStatusCANCELLED  GetEventBrokerServiceUpgradesParamsOperationStatus = "CANCELLED"
+	GetEventBrokerServiceUpgradesParamsOperationStatusCOMPLETED  GetEventBrokerServiceUpgradesParamsOperationStatus = "COMPLETED"
+	GetEventBrokerServiceUpgradesParamsOperationStatusFAILED     GetEventBrokerServiceUpgradesParamsOperationStatus = "FAILED"
+	GetEventBrokerServiceUpgradesParamsOperationStatusINPROGRESS GetEventBrokerServiceUpgradesParamsOperationStatus = "IN_PROGRESS"
+	GetEventBrokerServiceUpgradesParamsOperationStatusPAUSED     GetEventBrokerServiceUpgradesParamsOperationStatus = "PAUSED"
+	GetEventBrokerServiceUpgradesParamsOperationStatusRESOLVED   GetEventBrokerServiceUpgradesParamsOperationStatus = "RESOLVED"
+	GetEventBrokerServiceUpgradesParamsOperationStatusSCHEDULED  GetEventBrokerServiceUpgradesParamsOperationStatus = "SCHEDULED"
+	GetEventBrokerServiceUpgradesParamsOperationStatusSKIPPED    GetEventBrokerServiceUpgradesParamsOperationStatus = "SKIPPED"
+	GetEventBrokerServiceUpgradesParamsOperationStatusWARNING    GetEventBrokerServiceUpgradesParamsOperationStatus = "WARNING"
+)
+
+// Valid indicates whether the value is a known member of the GetEventBrokerServiceUpgradesParamsOperationStatus enum.
+func (e GetEventBrokerServiceUpgradesParamsOperationStatus) Valid() bool {
+	switch e {
+	case GetEventBrokerServiceUpgradesParamsOperationStatusCANCELLED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsOperationStatusCOMPLETED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsOperationStatusFAILED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsOperationStatusINPROGRESS:
+		return true
+	case GetEventBrokerServiceUpgradesParamsOperationStatusPAUSED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsOperationStatusRESOLVED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsOperationStatusSCHEDULED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsOperationStatusSKIPPED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsOperationStatusWARNING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatus.
+const (
+	GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusCANCELLED  GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatus = "CANCELLED"
+	GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusCOMPLETED  GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatus = "COMPLETED"
+	GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusFAILED     GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatus = "FAILED"
+	GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusINPROGRESS GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatus = "IN_PROGRESS"
+	GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusPAUSED     GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatus = "PAUSED"
+	GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusRESOLVED   GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatus = "RESOLVED"
+	GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusSCHEDULED  GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatus = "SCHEDULED"
+	GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusSKIPPED    GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatus = "SKIPPED"
+	GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusWARNING    GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatus = "WARNING"
+)
+
+// Valid indicates whether the value is a known member of the GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatus enum.
+func (e GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatus) Valid() bool {
+	switch e {
+	case GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusCANCELLED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusCOMPLETED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusFAILED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusINPROGRESS:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusPAUSED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusRESOLVED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusSCHEDULED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusSKIPPED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatusWARNING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatus.
+const (
+	GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusCANCELLED  GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatus = "CANCELLED"
+	GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusCOMPLETED  GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatus = "COMPLETED"
+	GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusFAILED     GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatus = "FAILED"
+	GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusINPROGRESS GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatus = "IN_PROGRESS"
+	GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusPAUSED     GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatus = "PAUSED"
+	GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusRESOLVED   GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatus = "RESOLVED"
+	GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusSCHEDULED  GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatus = "SCHEDULED"
+	GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusSKIPPED    GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatus = "SKIPPED"
+	GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusWARNING    GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatus = "WARNING"
+)
+
+// Valid indicates whether the value is a known member of the GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatus enum.
+func (e GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatus) Valid() bool {
+	switch e {
+	case GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusCANCELLED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusCOMPLETED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusFAILED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusINPROGRESS:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusPAUSED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusRESOLVED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusSCHEDULED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusSKIPPED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatusWARNING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatus.
+const (
+	GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusCANCELLED  GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatus = "CANCELLED"
+	GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusCOMPLETED  GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatus = "COMPLETED"
+	GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusFAILED     GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatus = "FAILED"
+	GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusINPROGRESS GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatus = "IN_PROGRESS"
+	GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusPAUSED     GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatus = "PAUSED"
+	GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusRESOLVED   GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatus = "RESOLVED"
+	GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusSCHEDULED  GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatus = "SCHEDULED"
+	GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusSKIPPED    GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatus = "SKIPPED"
+	GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusWARNING    GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatus = "WARNING"
+)
+
+// Valid indicates whether the value is a known member of the GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatus enum.
+func (e GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatus) Valid() bool {
+	switch e {
+	case GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusCANCELLED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusCOMPLETED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusFAILED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusINPROGRESS:
+		return true
+	case GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusPAUSED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusRESOLVED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusSCHEDULED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusSKIPPED:
+		return true
+	case GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatusWARNING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetMaintenanceActivitiesParamsOperationStatus.
+const (
+	GetMaintenanceActivitiesParamsOperationStatusCANCELLED  GetMaintenanceActivitiesParamsOperationStatus = "CANCELLED"
+	GetMaintenanceActivitiesParamsOperationStatusCOMPLETED  GetMaintenanceActivitiesParamsOperationStatus = "COMPLETED"
+	GetMaintenanceActivitiesParamsOperationStatusFAILED     GetMaintenanceActivitiesParamsOperationStatus = "FAILED"
+	GetMaintenanceActivitiesParamsOperationStatusINPROGRESS GetMaintenanceActivitiesParamsOperationStatus = "IN_PROGRESS"
+	GetMaintenanceActivitiesParamsOperationStatusPAUSED     GetMaintenanceActivitiesParamsOperationStatus = "PAUSED"
+	GetMaintenanceActivitiesParamsOperationStatusRESOLVED   GetMaintenanceActivitiesParamsOperationStatus = "RESOLVED"
+	GetMaintenanceActivitiesParamsOperationStatusSCHEDULED  GetMaintenanceActivitiesParamsOperationStatus = "SCHEDULED"
+	GetMaintenanceActivitiesParamsOperationStatusSKIPPED    GetMaintenanceActivitiesParamsOperationStatus = "SKIPPED"
+	GetMaintenanceActivitiesParamsOperationStatusWARNING    GetMaintenanceActivitiesParamsOperationStatus = "WARNING"
+)
+
+// Valid indicates whether the value is a known member of the GetMaintenanceActivitiesParamsOperationStatus enum.
+func (e GetMaintenanceActivitiesParamsOperationStatus) Valid() bool {
+	switch e {
+	case GetMaintenanceActivitiesParamsOperationStatusCANCELLED:
+		return true
+	case GetMaintenanceActivitiesParamsOperationStatusCOMPLETED:
+		return true
+	case GetMaintenanceActivitiesParamsOperationStatusFAILED:
+		return true
+	case GetMaintenanceActivitiesParamsOperationStatusINPROGRESS:
+		return true
+	case GetMaintenanceActivitiesParamsOperationStatusPAUSED:
+		return true
+	case GetMaintenanceActivitiesParamsOperationStatusRESOLVED:
+		return true
+	case GetMaintenanceActivitiesParamsOperationStatusSCHEDULED:
+		return true
+	case GetMaintenanceActivitiesParamsOperationStatusSKIPPED:
+		return true
+	case GetMaintenanceActivitiesParamsOperationStatusWARNING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetMaintenanceActivitiesParamsResourceType.
+const (
+	GetMaintenanceActivitiesParamsResourceTypeDATADOGAGENT        GetMaintenanceActivitiesParamsResourceType = "DATADOG_AGENT"
+	GetMaintenanceActivitiesParamsResourceTypeMISSIONCONTROLAGENT GetMaintenanceActivitiesParamsResourceType = "MISSION_CONTROL_AGENT"
+	GetMaintenanceActivitiesParamsResourceTypeSOLACEEVENTBROKER   GetMaintenanceActivitiesParamsResourceType = "SOLACE_EVENT_BROKER"
+)
+
+// Valid indicates whether the value is a known member of the GetMaintenanceActivitiesParamsResourceType enum.
+func (e GetMaintenanceActivitiesParamsResourceType) Valid() bool {
+	switch e {
+	case GetMaintenanceActivitiesParamsResourceTypeDATADOGAGENT:
+		return true
+	case GetMaintenanceActivitiesParamsResourceTypeMISSIONCONTROLAGENT:
+		return true
+	case GetMaintenanceActivitiesParamsResourceTypeSOLACEEVENTBROKER:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetMaintenanceActivitiesParamsPreMaintenanceValidationStatus.
+const (
+	GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusCANCELLED  GetMaintenanceActivitiesParamsPreMaintenanceValidationStatus = "CANCELLED"
+	GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusCOMPLETED  GetMaintenanceActivitiesParamsPreMaintenanceValidationStatus = "COMPLETED"
+	GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusFAILED     GetMaintenanceActivitiesParamsPreMaintenanceValidationStatus = "FAILED"
+	GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusINPROGRESS GetMaintenanceActivitiesParamsPreMaintenanceValidationStatus = "IN_PROGRESS"
+	GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusPAUSED     GetMaintenanceActivitiesParamsPreMaintenanceValidationStatus = "PAUSED"
+	GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusRESOLVED   GetMaintenanceActivitiesParamsPreMaintenanceValidationStatus = "RESOLVED"
+	GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusSCHEDULED  GetMaintenanceActivitiesParamsPreMaintenanceValidationStatus = "SCHEDULED"
+	GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusSKIPPED    GetMaintenanceActivitiesParamsPreMaintenanceValidationStatus = "SKIPPED"
+	GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusWARNING    GetMaintenanceActivitiesParamsPreMaintenanceValidationStatus = "WARNING"
+)
+
+// Valid indicates whether the value is a known member of the GetMaintenanceActivitiesParamsPreMaintenanceValidationStatus enum.
+func (e GetMaintenanceActivitiesParamsPreMaintenanceValidationStatus) Valid() bool {
+	switch e {
+	case GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusCANCELLED:
+		return true
+	case GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusCOMPLETED:
+		return true
+	case GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusFAILED:
+		return true
+	case GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusINPROGRESS:
+		return true
+	case GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusPAUSED:
+		return true
+	case GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusRESOLVED:
+		return true
+	case GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusSCHEDULED:
+		return true
+	case GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusSKIPPED:
+		return true
+	case GetMaintenanceActivitiesParamsPreMaintenanceValidationStatusWARNING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetMaintenanceActivitiesParamsPostMaintenanceValidationStatus.
+const (
+	GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusCANCELLED  GetMaintenanceActivitiesParamsPostMaintenanceValidationStatus = "CANCELLED"
+	GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusCOMPLETED  GetMaintenanceActivitiesParamsPostMaintenanceValidationStatus = "COMPLETED"
+	GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusFAILED     GetMaintenanceActivitiesParamsPostMaintenanceValidationStatus = "FAILED"
+	GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusINPROGRESS GetMaintenanceActivitiesParamsPostMaintenanceValidationStatus = "IN_PROGRESS"
+	GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusPAUSED     GetMaintenanceActivitiesParamsPostMaintenanceValidationStatus = "PAUSED"
+	GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusRESOLVED   GetMaintenanceActivitiesParamsPostMaintenanceValidationStatus = "RESOLVED"
+	GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusSCHEDULED  GetMaintenanceActivitiesParamsPostMaintenanceValidationStatus = "SCHEDULED"
+	GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusSKIPPED    GetMaintenanceActivitiesParamsPostMaintenanceValidationStatus = "SKIPPED"
+	GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusWARNING    GetMaintenanceActivitiesParamsPostMaintenanceValidationStatus = "WARNING"
+)
+
+// Valid indicates whether the value is a known member of the GetMaintenanceActivitiesParamsPostMaintenanceValidationStatus enum.
+func (e GetMaintenanceActivitiesParamsPostMaintenanceValidationStatus) Valid() bool {
+	switch e {
+	case GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusCANCELLED:
+		return true
+	case GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusCOMPLETED:
+		return true
+	case GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusFAILED:
+		return true
+	case GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusINPROGRESS:
+		return true
+	case GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusPAUSED:
+		return true
+	case GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusRESOLVED:
+		return true
+	case GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusSCHEDULED:
+		return true
+	case GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusSKIPPED:
+		return true
+	case GetMaintenanceActivitiesParamsPostMaintenanceValidationStatusWARNING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetMaintenanceActivitiesParamsMaintenanceActivityStatus.
+const (
+	CANCELLED  GetMaintenanceActivitiesParamsMaintenanceActivityStatus = "CANCELLED"
+	COMPLETED  GetMaintenanceActivitiesParamsMaintenanceActivityStatus = "COMPLETED"
+	FAILED     GetMaintenanceActivitiesParamsMaintenanceActivityStatus = "FAILED"
+	INPROGRESS GetMaintenanceActivitiesParamsMaintenanceActivityStatus = "IN_PROGRESS"
+	PAUSED     GetMaintenanceActivitiesParamsMaintenanceActivityStatus = "PAUSED"
+	RESOLVED   GetMaintenanceActivitiesParamsMaintenanceActivityStatus = "RESOLVED"
+	SCHEDULED  GetMaintenanceActivitiesParamsMaintenanceActivityStatus = "SCHEDULED"
+	SKIPPED    GetMaintenanceActivitiesParamsMaintenanceActivityStatus = "SKIPPED"
+	WARNING    GetMaintenanceActivitiesParamsMaintenanceActivityStatus = "WARNING"
+)
+
+// Valid indicates whether the value is a known member of the GetMaintenanceActivitiesParamsMaintenanceActivityStatus enum.
+func (e GetMaintenanceActivitiesParamsMaintenanceActivityStatus) Valid() bool {
+	switch e {
+	case CANCELLED:
+		return true
+	case COMPLETED:
+		return true
+	case FAILED:
+		return true
+	case INPROGRESS:
+		return true
+	case PAUSED:
+		return true
+	case RESOLVED:
+		return true
+	case SCHEDULED:
+		return true
+	case SKIPPED:
+		return true
+	case WARNING:
 		return true
 	default:
 		return false
@@ -582,7 +1731,7 @@ type Broker struct {
 	// Cluster The DMR cluster details.
 	Cluster *Cluster `json:"cluster,omitempty"`
 
-	// ConfigSyncSslEnabled Enable or disable Config-Sync encryption (SSL). The default value is true, and the valid values are: <p><ul><li>'true' - enabled</li><li>'false' - disabled</li></ul></p>
+	// ConfigSyncSslEnabled Indicates whether Config-Sync encryption (SSL) is enabled. The valid values are: <p><ul><li>'true' - enabled</li><li>'false' - disabled</li></ul></p>
 	ConfigSyncSslEnabled *bool `json:"configSyncSslEnabled,omitempty"`
 
 	// DiskSize The disk size for the message spool, in gigabytes (GB).
@@ -600,16 +1749,22 @@ type Broker struct {
 	// MaxSpoolUsage The maximum message spool usage allowed on the event broker service, in gigabytes (GB).
 	MaxSpoolUsage *int32 `json:"maxSpoolUsage,omitempty"`
 
+	// MonitoringAgentEnabled Indicates whether the Datadog monitoring agent is enabled. The valid values are: <p><ul><li>'true' - enabled</li><li>'false' - disabled</li></ul></p>
+	MonitoringAgentEnabled *bool `json:"monitoringAgentEnabled,omitempty"`
+
 	// MonitoringMode The monitoring mode. This can be 'BASIC' or 'ADVANCED'. The value of BASIC is default monitoring and ADVANCED means that monitoring of the event broker is enabled.
 	MonitoringMode *BrokerMonitoringMode `json:"monitoringMode,omitempty"`
 
 	// MsgVpns The list of Message VPNs configured on the event broker service.
 	MsgVpns *[]MsgVpn `json:"msgVpns,omitempty"`
 
-	// RedundancyGroupSslEnabled Enable or disable SSL for the redundancy group (for mate-link encryption).  The default value is false and the valid values are: <p><ul><li>'true' - enabled</li><li>'false' - disabled</li></ul></p>
+	// RedundancyGroupSslEnabled Indicates whether SSL is enabled for the mate-link encryption for the redundancy group.  The valid values are: <p><ul><li>'true' - enabled</li><li>'false' - disabled</li></ul></p>
 	RedundancyGroupSslEnabled *bool `json:"redundancyGroupSslEnabled,omitempty"`
 
-	// TlsStandardDomainCertificateAuthoritiesEnabled Whether TLS Standard Domain Certificate Authorities is enabled.
+	// SolaceDatadogAgentImage The name of the Datadog agent image.
+	SolaceDatadogAgentImage *string `json:"solaceDatadogAgentImage,omitempty"`
+
+	// TlsStandardDomainCertificateAuthoritiesEnabled Indicates whether TLS Standard Domain Certificate Authorities is enabled.
 	TlsStandardDomainCertificateAuthoritiesEnabled *bool `json:"tlsStandardDomainCertificateAuthoritiesEnabled,omitempty"`
 
 	// Version The version number for the event broker service.
@@ -633,6 +1788,26 @@ type BrokerSempProxyErrorMeta struct {
 	Error        *SempError   `json:"error,omitempty"`
 	Request      *SempRequest `json:"request,omitempty"`
 	ResponseCode *int32       `json:"responseCode,omitempty"`
+}
+
+// BrokerState defines model for BrokerState.
+type BrokerState struct {
+	Id *string `json:"id,omitempty"`
+
+	// IsHighAvailability Indicates whether the service is deployed as part of a high-availability group.
+	IsHighAvailability *bool `json:"isHighAvailability,omitempty"`
+
+	// Redundancy The redundancy status of the event broker service, including the high-availability status, redundancy state, active messaging node name, and config-sync status.
+	Redundancy *Redundancy `json:"redundancy,omitempty"`
+
+	// Type The type of object for informational purposes.
+	Type *string `json:"type,omitempty"`
+}
+
+// BrokerStateResponse defines model for BrokerStateResponse.
+type BrokerStateResponse struct {
+	Data BrokerState                       `json:"data"`
+	Meta map[string]map[string]interface{} `json:"meta"`
 }
 
 // CertificateAuthority The certificate authority.
@@ -1082,10 +2257,13 @@ type Cluster struct {
 	SupportedAuthenticationMode *[]string `json:"supportedAuthenticationMode,omitempty"`
 }
 
-// ConnectionEndpoint The connection endpoint.
+// ConnectionEndpoint A collection of networking protocol and port configurations that permit applications to connect to the event broker service.
 type ConnectionEndpoint struct {
-	// AccessType The connectivity for the connection endpoint. This can be through private IP addresses (PRIVATE) or public Internet (PUBLIC).
+	// AccessType The connectivity for the connection endpoint. This can be through private IP addresses (PRIVATE) or public internet (PUBLIC).
 	AccessType ConnectionEndpointAccessType `json:"accessType"`
+
+	// CreationState The creation state of the connection endpoint.
+	CreationState *CreationState `json:"creationState,omitempty"`
 
 	// Description The description for the connection endpoint.
 	Description *string `json:"description,omitempty"`
@@ -1105,13 +2283,15 @@ type ConnectionEndpoint struct {
 	// Name The name of the connection endpoint.
 	Name string `json:"name"`
 
-	// Ports <p>The protocols and port numbers of the connection endpoint. All messaging and management protocols along with the port numbers must be specified in the request.</p>
+	// Ports <p>The protocols and port numbers of the connection endpoint. The serviceManagementTlsListenPort and serviceSmfTlsListenPort protocols
+	// along with the port numbers must be specified in the request.</p>
 	// <p>Connection specific protocols. </p>
 	// <ul>
 	// <li><b>Solace Messaging</b> </li>
 	// <ul>
 	// <li>'serviceSmfPlainTextListenPort'-Use SMF Host (plain-text) over TCP to connect and exchange messages with the event broker service.</li>
-	// <li>'serviceSmfCompressedListenPort'-Use SMF (plain-text) in a compressed format over TCP to connect and exchange messages with the event broker service.</li>
+	// <li>'serviceSmfCompressedListenPort'-Use SMF (plain-text) in a compressed format over TCP to connect and exchange messages with
+	// the event broker service.</li>
 	// <li>'serviceSmfTlsListenPort'-Use secure SMF using TLS over TCP.</li>
 	// </ul>
 	// <br>
@@ -1143,8 +2323,10 @@ type ConnectionEndpoint struct {
 	// <br>
 	// <li><b>Management</b></li>
 	// <ul>
-	// <li>'serviceManagementTlsListenPort'-Use the secured management connection, which uses SEMP to manage the event broker. This port must be enabled on at least one of the service connection endpoints on the event broker service.</li>
-	// <li>'managementSshTlsListenPort'-Use a secure port to connect to the event broker service to issue Solace Command Line Interface (CLI). This port provides you with scope-restricted access to the event broker service.</li>
+	// <li>'serviceManagementTlsListenPort'-Use the secured management connection, which uses SEMP to manage the event broker. This port
+	// must be enabled on at least one of the service connection endpoints on the event broker service.</li>
+	// <li>'managementSshTlsListenPort'-Use a secure port to connect to the event broker service to issue Solace Command Line Interface
+	// (CLI). This port provides you with scope-restricted access to the event broker service.</li>
 	// </ul>
 	// <ul>
 	Ports []ServiceConnectionEndpointPort `json:"ports"`
@@ -1153,11 +2335,95 @@ type ConnectionEndpoint struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// ConnectionEndpointAccessType The connectivity for the connection endpoint. This can be through private IP addresses (PRIVATE) or public Internet (PUBLIC).
-type ConnectionEndpointAccessType string
-
 // ConnectionEndpointK8sServiceType The connectivity configuration that is used in the Kubernetes cluster.
 type ConnectionEndpointK8sServiceType string
+
+// ConnectionEndpointAccessType The connectivity for the connection endpoint. This can be through private IP addresses (PRIVATE) or public internet (PUBLIC).
+type ConnectionEndpointAccessType string
+
+// ConnectionEndpointList The connection endpoint.
+type ConnectionEndpointList struct {
+	Data []GetConnectionEndpoint           `json:"data"`
+	Meta map[string]map[string]interface{} `json:"meta"`
+}
+
+// CreateConnectionEndpoint A collection of networking protocol and port configurations that permit applications to connect to the event broker service.
+type CreateConnectionEndpoint struct {
+	// AccessType The connectivity for the connection endpoint. This can be through private IP addresses (PRIVATE) or public internet (PUBLIC).
+	AccessType ConnectionEndpointAccessType `json:"accessType"`
+
+	// CreationState The creation state of the connection endpoint.
+	CreationState *CreationState `json:"creationState,omitempty"`
+
+	// Description The description for the connection endpoint.
+	Description *string `json:"description,omitempty"`
+
+	// Id The identifier of the connection endpoint.
+	Id *string `json:"id,omitempty"`
+
+	// K8sServiceId The identifier for the Kubernetes service.
+	K8sServiceId *string `json:"k8sServiceId,omitempty"`
+
+	// K8sServiceType The connectivity configuration that is used in the Kubernetes cluster.
+	K8sServiceType *CreateConnectionEndpointK8sServiceType `json:"k8sServiceType,omitempty"`
+
+	// Name The name of the connection endpoint.
+	Name string `json:"name"`
+
+	// Ports <p>The protocols and port numbers of the connection endpoint. The serviceManagementTlsListenPort and serviceSmfTlsListenPort protocols
+	// along with the port numbers must be specified in the request.</p>
+	// <p>Connection specific protocols. </p>
+	// <ul>
+	// <li><b>Solace Messaging</b> </li>
+	// <ul>
+	// <li>'serviceSmfPlainTextListenPort'-Use SMF Host (plain-text) over TCP to connect and exchange messages with the event broker service.</li>
+	// <li>'serviceSmfCompressedListenPort'-Use SMF (plain-text) in a compressed format over TCP to connect and exchange messages with
+	// the event broker service.</li>
+	// <li>'serviceSmfTlsListenPort'-Use secure SMF using TLS over TCP.</li>
+	// </ul>
+	// <br>
+	// <li><b>Solace Web Messaging</b></li>
+	// <ul>
+	// <li>'serviceWebPlainTextListenPort'-Use WebSocket over HTTP (plain-text).</li>
+	// <li>'serviceWebTlsListenPort'-Use WebSocket over secured HTTP.</li>
+	// </ul>
+	// <br>
+	// <li><b>AMQP</b></li>
+	// <ul>
+	// <li>'serviceAmqpPlainTextListenPort'-Use AMQP (plain-text).</li>
+	// <li>'serviceAmqpTlsListenPort'-Use AMQP over a secure TCP connection.</li>
+	// </ul>
+	// <br>
+	// <li><b>MQTT</b></li>
+	// <ul>
+	// <li>'serviceMqttPlainTextListenPort'-Use MQTT (plain-text).</li>
+	// <li>'serviceMqttWebSocketListenPort'-Use MQTT WebSocket (plain-text).</li>
+	// <li>'serviceMqttTlsListenPort'-Use secure MQTT.</li>
+	// <li>'serviceMqttTlsWebSocketListenPort'-Use WebSocket secured MQTT.</li>
+	// </ul>
+	// <br>
+	// <li><b>REST</b></li>
+	// <ul>
+	// <li>'serviceRestIncomingPlainTextListenPort'-Use REST messaging (plain-text).</li>
+	// <li>'serviceRestIncomingTlsListenPort'-Use secure REST messaging.</li>
+	// </ul>
+	// <br>
+	// <li><b>Management</b></li>
+	// <ul>
+	// <li>'serviceManagementTlsListenPort'-Use the secured management connection, which uses SEMP to manage the event broker. This port
+	// must be enabled on at least one of the service connection endpoints on the event broker service.</li>
+	// <li>'managementSshTlsListenPort'-Use a secure port to connect to the event broker service to issue Solace Command Line Interface
+	// (CLI). This port provides you with scope-restricted access to the event broker service.</li>
+	// </ul>
+	// <ul>
+	Ports []ServiceConnectionEndpointPort `json:"ports"`
+
+	// Type The type of object for informational purposes.
+	Type *string `json:"type,omitempty"`
+}
+
+// CreateConnectionEndpointK8sServiceType The connectivity configuration that is used in the Kubernetes cluster.
+type CreateConnectionEndpointK8sServiceType string
 
 // CreateServiceRequest defines model for CreateServiceRequest.
 type CreateServiceRequest struct {
@@ -1208,9 +2474,97 @@ type CreateServiceRequest struct {
 	Type *string `json:"type,omitempty"`
 }
 
+// CreationState The creation state of the connection endpoint.
+type CreationState string
+
+// CustomerControlledCluster defines model for CustomerControlledCluster.
+type CustomerControlledCluster struct {
+	// BackupNodeSelectors The node selectors to apply to the backup pod.
+	BackupNodeSelectors *map[string]string `json:"backupNodeSelectors,omitempty"`
+
+	// BackupPodLabels The labels to apply to the backup pod.
+	BackupPodLabels *map[string]string `json:"backupPodLabels,omitempty"`
+
+	// BackupTolerations The tolerations to apply to the backup pod.
+	BackupTolerations *[]map[string]string `json:"backupTolerations,omitempty"`
+
+	// CloudAgentNodeSelectors The node selectors to apply to the Mission Control Agent pod.
+	CloudAgentNodeSelectors *map[string]string `json:"cloudAgentNodeSelectors,omitempty"`
+
+	// CloudAgentPodLabels The labels to apply to the Mission Control Agent pod.
+	CloudAgentPodLabels *map[string]string `json:"cloudAgentPodLabels,omitempty"`
+
+	// CloudAgentTolerations The tolerations to apply to the Mission Control Agent pod.
+	CloudAgentTolerations *[]map[string]string `json:"cloudAgentTolerations,omitempty"`
+
+	// EnvironmentId The environment for the customer-controlled cluster.
+	EnvironmentId *string `json:"environmentId,omitempty"`
+
+	// ExternalServiceAnnotations The annotations on Kubernetes services for public connections endpoints of Solace event brokers.
+	ExternalServiceAnnotations *[]struct {
+		Key   *string `json:"key,omitempty"`
+		Value *string `json:"value,omitempty"`
+	} `json:"externalServiceAnnotations,omitempty"`
+
+	// Id The unique identifier of the datacenter for the customer-controlled cluster.
+	Id *string `json:"id,omitempty"`
+
+	// ImagePullSecretName The name of the Kubernetes secret that contains the container registry credentials.
+	ImagePullSecretName *string `json:"imagePullSecretName,omitempty"`
+
+	// ImageRepository The container registry to use for downloading Mission Control Agent and event broker images.
+	ImageRepository *string `json:"imageRepository,omitempty"`
+
+	// InternalServiceAnnotations The annotations on Kubernetes services for private connection endpoints of Solace event brokers.
+	InternalServiceAnnotations *[]struct {
+		Key   *string `json:"key,omitempty"`
+		Value *string `json:"value,omitempty"`
+	} `json:"internalServiceAnnotations,omitempty"`
+
+	// MonitorNodeSelectors The node selectors to apply to the monitoring pod.
+	MonitorNodeSelectors *map[string]string `json:"monitorNodeSelectors,omitempty"`
+
+	// MonitorPodLabels The labels to apply to the monitoring pod.
+	MonitorPodLabels *map[string]string `json:"monitorPodLabels,omitempty"`
+
+	// MonitorTolerations The tolerations to apply to the monitoring pod.
+	MonitorTolerations *[]map[string]string `json:"monitorTolerations,omitempty"`
+
+	// Name The name of the customer-controlled cluster.
+	Name string `json:"name"`
+
+	// PrimaryNodeSelectors The node selectors to apply to the primary pod.
+	PrimaryNodeSelectors *map[string]string `json:"primaryNodeSelectors,omitempty"`
+
+	// PrimaryPodLabels The labels to apply to the primary pod.
+	PrimaryPodLabels *map[string]string `json:"primaryPodLabels,omitempty"`
+
+	// PrimaryTolerations The tolerations to apply to the primary pod.
+	PrimaryTolerations *[]map[string]string `json:"primaryTolerations,omitempty"`
+
+	// Provider The cloud provider of the customer-controlled cluster.
+	Provider string `json:"provider"`
+
+	// RegionId The cloud region of the customer-controlled cluster.
+	RegionId string `json:"regionId"`
+
+	// ServiceAnnotations The annotations on Kubernetes services for legacy load balancers.
+	ServiceAnnotations *[]struct {
+		Key   *string `json:"key,omitempty"`
+		Value *string `json:"value,omitempty"`
+	} `json:"serviceAnnotations,omitempty"`
+
+	// StorageClass The name of the Kubernetes storage class used for broker persistent volumes.
+	StorageClass *string `json:"storageClass,omitempty"`
+	Type         *string `json:"type,omitempty"`
+
+	// UseServiceClassSelectors Whether to use service class node selectors.
+	UseServiceClassSelectors *bool `json:"useServiceClassSelectors,omitempty"`
+}
+
 // Datacenter defines model for Datacenter.
 type Datacenter struct {
-	// Available Whether the datacenter is available.
+	// Available Indicates whether the datacenter is available.
 	Available bool `json:"available"`
 
 	// CloudAgentVersion The version of the Mission Control Agent.
@@ -1254,7 +2608,15 @@ type Datacenter struct {
 	Provider string `json:"provider"`
 
 	// RegionId The unique identifier for the datacenter region.
-	RegionId                   *string                     `json:"regionId,omitempty"`
+	RegionId *string `json:"regionId,omitempty"`
+
+	// SelfServeEventBrokerUpgradesEnabled Indicates whether this datacenter allows self-serve upgrades for the services it hosts. The valid values are 'true' (enabled) or 'false' (disabled).
+	SelfServeEventBrokerUpgradesEnabled *bool `json:"selfServeEventBrokerUpgradesEnabled,omitempty"`
+
+	// SpoolScaleUpCapabilityInfo <p>Deprecation Date: 2025-02-01</p>
+	// <p>Removal Date: 2025-04-01</p>
+	// <p>Reason: Spool scale-up tests are no longer required, as all Kubernetes-based datacenters provide this capability.</p>
+	// Deprecated: this property has been marked as deprecated upstream, but no `x-deprecated-reason` was set
 	SpoolScaleUpCapabilityInfo *SpoolScaleUpCapabilityInfo `json:"spoolScaleUpCapabilityInfo,omitempty"`
 
 	// SupportedServiceClasses The list of supported service classes in the datacenter.
@@ -1269,7 +2631,7 @@ type Datacenter struct {
 	// UpdatedTime The time of the last update was performed on the datacenter, in ISO 8601 date/time format.
 	UpdatedTime *time.Time `json:"updatedTime,omitempty"`
 
-	// Visible Whether the datacenter is visible.
+	// Visible Indicates whether the datacenter is visible.
 	Visible bool `json:"visible"`
 }
 
@@ -1292,6 +2654,42 @@ type DatacenterResponse struct {
 type DatacentersResponse struct {
 	Data []Datacenter                      `json:"data"`
 	Meta map[string]map[string]interface{} `json:"meta"`
+}
+
+// DnsName Connection endpoint DNS name
+type DnsName struct {
+	// DnsName The DNS name(fully qualified domain name)
+	DnsName *string `json:"dnsName,omitempty"`
+
+	// DnsRecordType The DNS record type
+	DnsRecordType *string `json:"dnsRecordType,omitempty"`
+
+	// DomainType The domain type
+	DomainType *DnsNameDomainType `json:"domainType,omitempty"`
+
+	// Id The DNS name identifier
+	Id *string `json:"id,omitempty"`
+
+	// Type The resource type
+	Type *string `json:"type,omitempty"`
+}
+
+// DnsNameDomainType The domain type
+type DnsNameDomainType string
+
+// DnsNameMoveRequest DNS name move request
+type DnsNameMoveRequest struct {
+	// Id The DNS name identifier
+	Id *string `json:"id,omitempty"`
+
+	// TargetConnectionEndpointId The unique identifier of the event broker service connection endpoint you want to move the DNS name to. If you don’t specify a value, the value defaults to the target service’s only connection endpoint.
+	TargetConnectionEndpointId *string `json:"targetConnectionEndpointId,omitempty"`
+
+	// TargetServiceId The unique identifier of the event broker service you want to move the DNS connection endpoint name to. If you don’t specify a value, the value defaults to the service id hosting the target connection endpoint.
+	TargetServiceId *string `json:"targetServiceId,omitempty"`
+
+	// Type The type of object for informational purposes.
+	Type *string `json:"type,omitempty"`
 }
 
 // Environment defines model for Environment.
@@ -1318,23 +2716,16 @@ type EnvironmentResponse struct {
 	Meta map[string]map[string]interface{} `json:"meta"`
 }
 
-// Error defines model for Error.
-type Error struct {
-	// ErrorId A universally unique identifier (UUID) is useful for debugging. You can provide this code as part of the information you send to our support team.
-	ErrorId *string `json:"errorId,omitempty"`
-
-	// Message A user-friendly message describing the reason for the error or what went wrong.
-	Message *string `json:"message,omitempty"`
-}
-
 // ErrorResponse defines model for ErrorResponse.
 type ErrorResponse struct {
 	// ErrorId The UUID (Universally Unique Identifier) that is logged with an appropriate stack trace for a WARN or ERROR log that allows support to better determine what cause the error.
 	ErrorId *string `json:"errorId,omitempty"`
 
 	// Message A user-friendly message that describes the error.
-	Message *string                            `json:"message,omitempty"`
-	Meta    *map[string]map[string]interface{} `json:"meta,omitempty"`
+	Message *string `json:"message,omitempty"`
+
+	// Meta The metadata about the error. This provides additional information about the error that occurred.
+	Meta *map[string]map[string]interface{} `json:"meta,omitempty"`
 
 	// ValidationDetails When applicable, these are the details of issues with the fields provided for the REST call.
 	ValidationDetails *map[string][]string `json:"validationDetails,omitempty"`
@@ -1347,6 +2738,9 @@ type EventBrokerServiceVersion struct {
 
 	// ContainerImageTag The container image tag that will be pulled when creating the event broker.
 	ContainerImageTag string `json:"containerImageTag"`
+
+	// CurrentMcaVersion The current Mission Control Agent version.
+	CurrentMcaVersion *string `json:"currentMcaVersion,omitempty"`
 
 	// EndOfFullSupport The date full support for the event broker version ends in ISO 8601 date/time format.
 	EndOfFullSupport time.Time `json:"endOfFullSupport"`
@@ -1362,6 +2756,9 @@ type EventBrokerServiceVersion struct {
 
 	// MinimumMcaVersion The minimum Mission Control Agent version required to deploy this event broker version.
 	MinimumMcaVersion string `json:"minimumMcaVersion"`
+
+	// Recommended Indicates if the version is recommended.
+	Recommended *bool `json:"recommended,omitempty"`
 
 	// ReleaseChannel "The release channel indicates the type of release, either Production or Preview. The release types offer differing support and upgrade paths. See the documentation for more information.
 	ReleaseChannel ReleaseChannel `json:"releaseChannel"`
@@ -1400,6 +2797,18 @@ type EventBrokerServiceVersionsResponse struct {
 	Meta map[string]map[string]interface{} `json:"meta"`
 }
 
+// EventBrokerUpgradeRequest defines model for EventBrokerUpgradeRequest.
+type EventBrokerUpgradeRequest struct {
+	// MaintenanceTimeOrdinal The ordinal identifying the maintenance time from the maintenance window the upgrade will be scheduled in.
+	MaintenanceTimeOrdinal *int32 `json:"maintenanceTimeOrdinal,omitempty"`
+
+	// MaintenanceWindowId The unique identifier of the maintenance window the upgrade will be scheduled in.
+	MaintenanceWindowId *string `json:"maintenanceWindowId,omitempty"`
+
+	// TargetVersion The event broker version to upgrade to.
+	TargetVersion string `json:"targetVersion"`
+}
+
 // EventBrokerVersions defines model for EventBrokerVersions.
 type EventBrokerVersions struct {
 	DefaultEventBrokerVersion   *string `json:"defaultEventBrokerVersion,omitempty"`
@@ -1411,6 +2820,97 @@ type EventBrokerVersions struct {
 // EventBrokerVersionsResponse defines model for EventBrokerVersionsResponse.
 type EventBrokerVersionsResponse struct {
 	Data EventBrokerVersions               `json:"data"`
+	Meta map[string]map[string]interface{} `json:"meta"`
+}
+
+// GetAllConnectionEndpointDnsNamesResponse Response containing a list of connection endpoint DNS names
+type GetAllConnectionEndpointDnsNamesResponse struct {
+	Data []DnsName                         `json:"data"`
+	Meta map[string]map[string]interface{} `json:"meta"`
+}
+
+// GetConnectionEndpoint A collection of networking protocol and port configurations that permit applications to connect to the event broker service.
+type GetConnectionEndpoint struct {
+	// AccessType The connectivity for the connection endpoint. This can be through private IP addresses (PRIVATE) or public internet (PUBLIC).
+	AccessType ConnectionEndpointAccessType `json:"accessType"`
+
+	// CreationState The creation state of the connection endpoint.
+	CreationState *CreationState `json:"creationState,omitempty"`
+
+	// Description The description for the connection endpoint.
+	Description *string `json:"description,omitempty"`
+
+	// Id The identifier of the connection endpoint.
+	Id *string `json:"id,omitempty"`
+
+	// K8sServiceId The identifier for the Kubernetes service.
+	K8sServiceId *string `json:"k8sServiceId,omitempty"`
+
+	// K8sServiceType The connectivity configuration that is used in the Kubernetes cluster.
+	K8sServiceType *GetConnectionEndpointK8sServiceType `json:"k8sServiceType,omitempty"`
+
+	// Name The name of the connection endpoint.
+	Name string `json:"name"`
+
+	// Ports <p>The protocols and port numbers of the connection endpoint. The serviceManagementTlsListenPort and serviceSmfTlsListenPort protocols
+	// along with the port numbers must be specified in the request.</p>
+	// <p>Connection specific protocols. </p>
+	// <ul>
+	// <li><b>Solace Messaging</b> </li>
+	// <ul>
+	// <li>'serviceSmfPlainTextListenPort'-Use SMF Host (plain-text) over TCP to connect and exchange messages with the event broker service.</li>
+	// <li>'serviceSmfCompressedListenPort'-Use SMF (plain-text) in a compressed format over TCP to connect and exchange messages with
+	// the event broker service.</li>
+	// <li>'serviceSmfTlsListenPort'-Use secure SMF using TLS over TCP.</li>
+	// </ul>
+	// <br>
+	// <li><b>Solace Web Messaging</b></li>
+	// <ul>
+	// <li>'serviceWebPlainTextListenPort'-Use WebSocket over HTTP (plain-text).</li>
+	// <li>'serviceWebTlsListenPort'-Use WebSocket over secured HTTP.</li>
+	// </ul>
+	// <br>
+	// <li><b>AMQP</b></li>
+	// <ul>
+	// <li>'serviceAmqpPlainTextListenPort'-Use AMQP (plain-text).</li>
+	// <li>'serviceAmqpTlsListenPort'-Use AMQP over a secure TCP connection.</li>
+	// </ul>
+	// <br>
+	// <li><b>MQTT</b></li>
+	// <ul>
+	// <li>'serviceMqttPlainTextListenPort'-Use MQTT (plain-text).</li>
+	// <li>'serviceMqttWebSocketListenPort'-Use MQTT WebSocket (plain-text).</li>
+	// <li>'serviceMqttTlsListenPort'-Use secure MQTT.</li>
+	// <li>'serviceMqttTlsWebSocketListenPort'-Use WebSocket secured MQTT.</li>
+	// </ul>
+	// <br>
+	// <li><b>REST</b></li>
+	// <ul>
+	// <li>'serviceRestIncomingPlainTextListenPort'-Use REST messaging (plain-text).</li>
+	// <li>'serviceRestIncomingTlsListenPort'-Use secure REST messaging.</li>
+	// </ul>
+	// <br>
+	// <li><b>Management</b></li>
+	// <ul>
+	// <li>'serviceManagementTlsListenPort'-Use the secured management connection, which uses SEMP to manage the event broker. This port
+	// must be enabled on at least one of the service connection endpoints on the event broker service.</li>
+	// <li>'managementSshTlsListenPort'-Use a secure port to connect to the event broker service to issue Solace Command Line Interface
+	// (CLI). This port provides you with scope-restricted access to the event broker service.</li>
+	// </ul>
+	// <ul>
+	Ports []ServiceConnectionEndpointPort `json:"ports"`
+
+	// Type The type of object for informational purposes.
+	Type *string `json:"type,omitempty"`
+}
+
+// GetConnectionEndpointK8sServiceType The connectivity configuration that is used in the Kubernetes cluster.
+type GetConnectionEndpointK8sServiceType string
+
+// GetConnectionEndpointResponse defines model for GetConnectionEndpointResponse.
+type GetConnectionEndpointResponse struct {
+	// Data A collection of networking protocol and port configurations that permit applications to connect to the event broker service.
+	Data GetConnectionEndpoint             `json:"data"`
 	Meta map[string]map[string]interface{} `json:"meta"`
 }
 
@@ -1465,6 +2965,404 @@ type LoginCredential struct {
 
 	// Username The username to log into the event broker service.
 	Username *string `json:"username,omitempty"`
+}
+
+// MCAHealthCheck The list of health checks performed on the Mission Control Agent.
+type MCAHealthCheck struct {
+	// HealthCheckName The name of the Mission Control Agent health check.
+	HealthCheckName string `json:"healthCheckName"`
+
+	// Message The details of the Mission Control Agent health check result.
+	Message string `json:"message"`
+
+	// Status The status of the Mission Control Agent health check. The values can be 'healthy', 'unhealthy' or 'unknown'.
+	Status MCAHealthCheckStatus `json:"status"`
+}
+
+// MCAHealthCheckStatus The status of the Mission Control Agent health check. The values can be 'healthy', 'unhealthy' or 'unknown'.
+type MCAHealthCheckStatus string
+
+// MCAHealthResponse defines model for MCAHealthResponse.
+type MCAHealthResponse struct {
+	Data MCAHealthSummary                  `json:"data"`
+	Meta map[string]map[string]interface{} `json:"meta"`
+}
+
+// MCAHealthSummary defines model for MCAHealthSummary.
+type MCAHealthSummary struct {
+	// Error Shows a message describing any errors the Mission Control Agent encountered while performing health checks.
+	Error *string `json:"error,omitempty"`
+
+	// HealthChecks The list of health checks performed on the Mission Control Agent.
+	HealthChecks []MCAHealthCheck `json:"healthChecks"`
+
+	// Id The unique identifier of the datacenter hosting the Mission Control Agent.
+	Id string `json:"id"`
+
+	// Status The status of the Mission Control Agent. The values can be <code>'HEALTHY'</code> or <code>'UNHEALTHY'</code>.
+	Status MCAHealthSummaryStatus `json:"status"`
+	Type   *string                `json:"type,omitempty"`
+}
+
+// MCAHealthSummaryStatus The status of the Mission Control Agent. The values can be <code>'HEALTHY'</code> or <code>'UNHEALTHY'</code>.
+type MCAHealthSummaryStatus string
+
+// MaintenanceActivity defines model for MaintenanceActivity.
+type MaintenanceActivity struct {
+	// ActivityType The type of activity being performed (for example, SERVICE_UPGRADE, SERVICE_SCALE_UP).
+	ActivityType *MaintenanceActivityActivityType `json:"activityType,omitempty"`
+
+	// CreatedBy The user who created the maintenance activity.
+	CreatedBy *string `json:"createdBy,omitempty"`
+
+	// CreatedTime When the maintenance activity was created.
+	CreatedTime *time.Time `json:"createdTime,omitempty"`
+
+	// Critical Indicates whether the maintenance activity is critical. Critical activities may not be cancelled, only rescheduled.
+	Critical *bool `json:"critical,omitempty"`
+
+	// Description The description of the maintenance activity.
+	Description *string `json:"description,omitempty"`
+
+	// Details Additional information about the maintenance activity.
+	Details *string `json:"details,omitempty"`
+
+	// EndTime The actual time when the maintenance activity ended.
+	EndTime *time.Time `json:"endTime,omitempty"`
+
+	// EnvironmentId The identifier of the environment the maintenance activity belongs to.
+	EnvironmentId *string `json:"environmentId,omitempty"`
+
+	// Id The unique identifier of the maintenance activity.
+	Id *string `json:"id,omitempty"`
+
+	// MaintenanceActivityStatus The combined status of preMaintenanceValidationStatus, operationStatus and postMaintenanceValidationStatus (for example, SCHEDULED, IN_PROGRESS, COMPLETED, FAILED).
+	MaintenanceActivityStatus *MaintenanceActivityMaintenanceActivityStatus `json:"maintenanceActivityStatus,omitempty"`
+
+	// MaintenanceLogs Maintenance logs associated with the activity.
+	MaintenanceLogs *[]string `json:"maintenanceLogs,omitempty"`
+
+	// MaintenanceType The type of maintenance schedule. <ul>
+	//
+	// <li>DATA_PATH: Maintenance affecting resources responsible for data operations, such as event broker services.</li>
+	//
+	// <li>CONTROL_PLANE: Maintenance affecting resources responsible for environment operations, such as the Mission Control Agent.</li>
+	//
+	// </ul>
+	MaintenanceType *MaintenanceActivityMaintenanceType `json:"maintenanceType,omitempty"`
+
+	// MaintenanceWindowId The identifier of the maintenance window the activity is associated with.
+	MaintenanceWindowId *string `json:"maintenanceWindowId,omitempty"`
+
+	// OperationStatus The current status of the maintenance operation (for example, SCHEDULED, IN_PROGRESS, COMPLETED, FAILED).
+	OperationStatus *MaintenanceActivityOperationStatus `json:"operationStatus,omitempty"`
+
+	// OrgId The organization identifier associated with the maintenance activity.
+	OrgId *string `json:"orgId,omitempty"`
+
+	// PostMaintenanceValidationResults Post-maintenance validation results associated with the activity.
+	PostMaintenanceValidationResults *[]string `json:"postMaintenanceValidationResults,omitempty"`
+
+	// PostMaintenanceValidationStatus The current status of the post-maintenance operation (for example, SCHEDULED, IN_PROGRESS, COMPLETED, FAILED).
+	PostMaintenanceValidationStatus *MaintenanceActivityPostMaintenanceValidationStatus `json:"postMaintenanceValidationStatus,omitempty"`
+
+	// PreMaintenanceValidationResults Pre-maintenance validation results associated with the activity.
+	PreMaintenanceValidationResults *[]string `json:"preMaintenanceValidationResults,omitempty"`
+
+	// PreMaintenanceValidationStatus The current status of the pre-maintenance operation (for example, SCHEDULED, IN_PROGRESS, COMPLETED, FAILED).
+	PreMaintenanceValidationStatus *MaintenanceActivityPreMaintenanceValidationStatus `json:"preMaintenanceValidationStatus,omitempty"`
+
+	// ResourceId The identifier of the resource being maintained.
+	ResourceId *string `json:"resourceId,omitempty"`
+
+	// ResourceName The name of the resource being maintained.
+	ResourceName *string `json:"resourceName,omitempty"`
+
+	// ResourceType The type of resource being maintained (for example, SOLACE_EVENT_BROKER, DATADOG_AGENT, MISSION_CONTROL_AGENT).
+	ResourceType *MaintenanceActivityResourceType `json:"resourceType,omitempty"`
+
+	// ScheduledEndTime The planned end time for the maintenance activity.
+	ScheduledEndTime *time.Time `json:"scheduledEndTime,omitempty"`
+
+	// ScheduledStartTime The planned start time for the maintenance activity.
+	ScheduledStartTime *time.Time `json:"scheduledStartTime,omitempty"`
+
+	// StartTime The actual time when the maintenance activity started.
+	StartTime *time.Time `json:"startTime,omitempty"`
+
+	// Type The type of object for informational purposes.
+	Type *string `json:"type,omitempty"`
+
+	// UpdatedBy The user who last updated the maintenance activity.
+	UpdatedBy *string `json:"updatedBy,omitempty"`
+
+	// UpdatedTime The time when the maintenance activity was last updated.
+	UpdatedTime *time.Time `json:"updatedTime,omitempty"`
+}
+
+// MaintenanceActivityActivityType The type of activity being performed (for example, SERVICE_UPGRADE, SERVICE_SCALE_UP).
+type MaintenanceActivityActivityType string
+
+// MaintenanceActivityMaintenanceActivityStatus The combined status of preMaintenanceValidationStatus, operationStatus and postMaintenanceValidationStatus (for example, SCHEDULED, IN_PROGRESS, COMPLETED, FAILED).
+type MaintenanceActivityMaintenanceActivityStatus string
+
+// MaintenanceActivityMaintenanceType The type of maintenance schedule. <ul>
+//
+// <li>DATA_PATH: Maintenance affecting resources responsible for data operations, such as event broker services.</li>
+//
+// <li>CONTROL_PLANE: Maintenance affecting resources responsible for environment operations, such as the Mission Control Agent.</li>
+//
+// </ul>
+type MaintenanceActivityMaintenanceType string
+
+// MaintenanceActivityOperationStatus The current status of the maintenance operation (for example, SCHEDULED, IN_PROGRESS, COMPLETED, FAILED).
+type MaintenanceActivityOperationStatus string
+
+// MaintenanceActivityPostMaintenanceValidationStatus The current status of the post-maintenance operation (for example, SCHEDULED, IN_PROGRESS, COMPLETED, FAILED).
+type MaintenanceActivityPostMaintenanceValidationStatus string
+
+// MaintenanceActivityPreMaintenanceValidationStatus The current status of the pre-maintenance operation (for example, SCHEDULED, IN_PROGRESS, COMPLETED, FAILED).
+type MaintenanceActivityPreMaintenanceValidationStatus string
+
+// MaintenanceActivityResourceType The type of resource being maintained (for example, SOLACE_EVENT_BROKER, DATADOG_AGENT, MISSION_CONTROL_AGENT).
+type MaintenanceActivityResourceType string
+
+// MaintenanceActivityResponseDTO defines model for MaintenanceActivityResponseDTO.
+type MaintenanceActivityResponseDTO struct {
+	Data *MaintenanceActivity `json:"data,omitempty"`
+}
+
+// MaintenanceActivityResponseList defines model for MaintenanceActivityResponseList.
+type MaintenanceActivityResponseList struct {
+	Data *[]MaintenanceActivity             `json:"data,omitempty"`
+	Meta *map[string]map[string]interface{} `json:"meta,omitempty"`
+}
+
+// MaintenanceSchedule defines model for MaintenanceSchedule.
+type MaintenanceSchedule struct {
+	// CreatedBy The identifier of the user who created the maintenance schedule.
+	CreatedBy *string `json:"createdBy,omitempty"`
+
+	// CreatedTime When the maintenance schedule was created.
+	CreatedTime *time.Time `json:"createdTime,omitempty"`
+
+	// EnvironmentId The identifier of the environment the maintenance schedule belongs to.
+	EnvironmentId *string `json:"environmentId,omitempty"`
+
+	// Id The unique identifier of the maintenance schedule.
+	Id *string `json:"id,omitempty"`
+
+	// MaintenanceType The type of maintenance schedule. <ul>
+	//
+	// <li>DATA_PATH: Maintenance affecting resources responsible for data operations, such as event broker services.</li>
+	//
+	// <li>CONTROL_PLANE: Maintenance affecting resources responsible for environment operations, such as the Mission Control Agent.</li>
+	//
+	// </ul>
+	MaintenanceType *MaintenanceScheduleMaintenanceType `json:"maintenanceType,omitempty"`
+
+	// OrganizationId The identifier of the organization the maintenance schedule belongs to.
+	OrganizationId *string `json:"organizationId,omitempty"`
+
+	// Type The type of object for informational purposes.
+	Type *string `json:"type,omitempty"`
+}
+
+// MaintenanceScheduleMaintenanceType The type of maintenance schedule. <ul>
+//
+// <li>DATA_PATH: Maintenance affecting resources responsible for data operations, such as event broker services.</li>
+//
+// <li>CONTROL_PLANE: Maintenance affecting resources responsible for environment operations, such as the Mission Control Agent.</li>
+//
+// </ul>
+type MaintenanceScheduleMaintenanceType string
+
+// MaintenanceScheduleRequest defines model for MaintenanceScheduleRequest.
+type MaintenanceScheduleRequest struct {
+	// EnvironmentId The identifier of the environment the maintenance schedule will apply to.
+	EnvironmentId string `json:"environmentId"`
+
+	// MaintenanceType The type of maintenance schedule. <ul>
+	//
+	// <li>DATA_PATH: Maintenance affecting resources responsible for data operations, such as event broker services.</li>
+	//
+	// <li>CONTROL_PLANE: Maintenance affecting resources responsible for environment operations, such as the Mission Control Agent.</li>
+	//
+	// </ul>
+	MaintenanceType MaintenanceScheduleRequestMaintenanceType `json:"maintenanceType"`
+}
+
+// MaintenanceScheduleRequestMaintenanceType The type of maintenance schedule. <ul>
+//
+// <li>DATA_PATH: Maintenance affecting resources responsible for data operations, such as event broker services.</li>
+//
+// <li>CONTROL_PLANE: Maintenance affecting resources responsible for environment operations, such as the Mission Control Agent.</li>
+//
+// </ul>
+type MaintenanceScheduleRequestMaintenanceType string
+
+// MaintenanceScheduleResponse defines model for MaintenanceScheduleResponse.
+type MaintenanceScheduleResponse struct {
+	Data     *MaintenanceSchedule      `json:"data,omitempty"`
+	Included *[]map[string]interface{} `json:"included,omitempty"`
+
+	// Meta <p>The metadata about the response, which can include:</p><ul><li>Pagination data, such as page number, page size, etc. for GET operations that return large amount of response data. For more information, see <a href="./pagination">Pagination</a>.</li><li>Timestamp information, such as current time, or the time create or update operation occurred for CREATE, PUT, POST operations.</li></ul>
+	Meta *map[string]map[string]interface{} `json:"meta,omitempty"`
+}
+
+// MaintenanceScheduleResponseList defines model for MaintenanceScheduleResponseList.
+type MaintenanceScheduleResponseList struct {
+	Data []MaintenanceSchedule             `json:"data"`
+	Meta map[string]map[string]interface{} `json:"meta"`
+}
+
+// MaintenanceWindow defines model for MaintenanceWindow.
+type MaintenanceWindow struct {
+	// CreatedBy The identifier of the user who created the maintenance window.
+	CreatedBy *string `json:"createdBy,omitempty"`
+
+	// CreatedTime The timestamp when the maintenance window was created.
+	CreatedTime *time.Time `json:"createdTime,omitempty"`
+
+	// DurationInHours The duration of the maintenance window in hours.
+	DurationInHours *int32 `json:"durationInHours,omitempty"`
+
+	// EnvironmentId The unique identifier of the environment the maintenance window belongs to.
+	EnvironmentId *string `json:"environmentId,omitempty"`
+
+	// Id The unique identifier of the maintenance window.
+	Id *string `json:"id,omitempty"`
+
+	// MaintenanceScheduleId The unique identifier of the maintenance schedule the maintenance window belongs to.
+	MaintenanceScheduleId *string `json:"maintenanceScheduleId,omitempty"`
+
+	// MaintenanceType The type of maintenance schedule. <ul>
+	//
+	// <li>DATA_PATH: Maintenance affecting resources responsible for data operations, such as event broker services.</li>
+	//
+	// <li>CONTROL_PLANE: Maintenance affecting resources responsible for environment operations, such as the Mission Control Agent.</li>
+	//
+	// </ul>
+	MaintenanceType *MaintenanceWindowMaintenanceType `json:"maintenanceType,omitempty"`
+
+	// MaintenanceWindowScope The scope of the maintenance window. ENVIRONMENT indicates environment-specific maintenance, SYSTEM indicates system-wide maintenance.
+	MaintenanceWindowScope *MaintenanceWindowMaintenanceWindowScope `json:"maintenanceWindowScope,omitempty"`
+
+	// Name The name of the maintenance window.
+	Name *string `json:"name,omitempty"`
+
+	// OrganizationId The unique identifier of the organization the maintenance window belongs to.
+	OrganizationId *string `json:"organizationId,omitempty"`
+
+	// RecurrenceDayOfWeek The day of the week when maintenance will occur.
+	RecurrenceDayOfWeek *MaintenanceWindowRecurrenceDayOfWeek `json:"recurrenceDayOfWeek,omitempty"`
+
+	// RecurrenceDayOfWeekMonthly Indicates the specific day within a month for the occurrence. This value only applies when recurrenceFrequency is set to monthly.
+	// For example, if the recurrenceDayOfWeek returns Tuesday, and recurrenceDayOfWeekMonthly returns SECOND,
+	// then upgrades are triggered on the second Tuesday of a month.
+	RecurrenceDayOfWeekMonthly *MaintenanceWindowRecurrenceDayOfWeekMonthly `json:"recurrenceDayOfWeekMonthly,omitempty"`
+
+	// RecurrenceDayWeekly Indicates the number of weeks between occurrences. This value only applies when recurrence frequency is set to weekly.
+	RecurrenceDayWeekly *MaintenanceWindowRecurrenceDayWeekly `json:"recurrenceDayWeekly,omitempty"`
+
+	// RecurrenceFrequency The frequency of maintenance recurrence.
+	RecurrenceFrequency *MaintenanceWindowRecurrenceFrequency `json:"recurrenceFrequency,omitempty"`
+
+	// StartTime The start time of the maintenance window.
+	StartTime *time.Time `json:"startTime,omitempty"`
+
+	// Type The type of object for informational purposes.
+	Type *string `json:"type,omitempty"`
+
+	// UpcomingMaintenanceTimes Shows a list of available times for the maintenance window.
+	UpcomingMaintenanceTimes *[]UpcomingMaintenanceTime `json:"upcomingMaintenanceTimes,omitempty"`
+
+	// UpdatedBy The identifier of the user who last updated the maintenance window.
+	UpdatedBy *string `json:"updatedBy,omitempty"`
+
+	// UpdatedTime The timestamp when the maintenance window was last updated.
+	UpdatedTime *time.Time `json:"updatedTime,omitempty"`
+}
+
+// MaintenanceWindowMaintenanceType The type of maintenance schedule. <ul>
+//
+// <li>DATA_PATH: Maintenance affecting resources responsible for data operations, such as event broker services.</li>
+//
+// <li>CONTROL_PLANE: Maintenance affecting resources responsible for environment operations, such as the Mission Control Agent.</li>
+//
+// </ul>
+type MaintenanceWindowMaintenanceType string
+
+// MaintenanceWindowMaintenanceWindowScope The scope of the maintenance window. ENVIRONMENT indicates environment-specific maintenance, SYSTEM indicates system-wide maintenance.
+type MaintenanceWindowMaintenanceWindowScope string
+
+// MaintenanceWindowRecurrenceDayOfWeek The day of the week when maintenance will occur.
+type MaintenanceWindowRecurrenceDayOfWeek string
+
+// MaintenanceWindowRecurrenceDayOfWeekMonthly Indicates the specific day within a month for the occurrence. This value only applies when recurrenceFrequency is set to monthly.
+// For example, if the recurrenceDayOfWeek returns Tuesday, and recurrenceDayOfWeekMonthly returns SECOND,
+// then upgrades are triggered on the second Tuesday of a month.
+type MaintenanceWindowRecurrenceDayOfWeekMonthly string
+
+// MaintenanceWindowRecurrenceDayWeekly Indicates the number of weeks between occurrences. This value only applies when recurrence frequency is set to weekly.
+type MaintenanceWindowRecurrenceDayWeekly string
+
+// MaintenanceWindowRecurrenceFrequency The frequency of maintenance recurrence.
+type MaintenanceWindowRecurrenceFrequency string
+
+// MaintenanceWindowRequest defines model for MaintenanceWindowRequest.
+type MaintenanceWindowRequest struct {
+	// DurationInHours The duration of the maintenance window in hours.
+	DurationInHours int32 `json:"durationInHours"`
+
+	// MaintenanceScheduleId The unique identifier of the maintenance schedule the maintenance window belongs to.
+	MaintenanceScheduleId string `json:"maintenanceScheduleId"`
+
+	// Name The name of the maintenance window.
+	Name *string `json:"name,omitempty"`
+
+	// RecurrenceDayOfWeek The day of the week when maintenance will occur.
+	RecurrenceDayOfWeek MaintenanceWindowRequestRecurrenceDayOfWeek `json:"recurrenceDayOfWeek"`
+
+	// RecurrenceDayOfWeekMonthly Indicates the specific day within a month for the occurrence. This value only applies when recurrenceFrequency is set to monthly.
+	// For example, if the recurrenceDayOfWeek returns Tuesday, and recurrenceDayOfWeekMonthly returns SECOND,
+	// then upgrades are triggered on the second Tuesday of a month.
+	RecurrenceDayOfWeekMonthly *MaintenanceWindowRequestRecurrenceDayOfWeekMonthly `json:"recurrenceDayOfWeekMonthly,omitempty"`
+
+	// RecurrenceDayWeekly Indicates the number of weeks between occurrences. This value only applies when recurrence frequency is set to weekly.
+	RecurrenceDayWeekly *MaintenanceWindowRequestRecurrenceDayWeekly `json:"recurrenceDayWeekly,omitempty"`
+
+	// RecurrenceFrequency The frequency of maintenance recurrence.
+	RecurrenceFrequency MaintenanceWindowRequestRecurrenceFrequency `json:"recurrenceFrequency"`
+
+	// StartTime The start time of the maintenance window.
+	StartTime time.Time `json:"startTime"`
+}
+
+// MaintenanceWindowRequestRecurrenceDayOfWeek The day of the week when maintenance will occur.
+type MaintenanceWindowRequestRecurrenceDayOfWeek string
+
+// MaintenanceWindowRequestRecurrenceDayOfWeekMonthly Indicates the specific day within a month for the occurrence. This value only applies when recurrenceFrequency is set to monthly.
+// For example, if the recurrenceDayOfWeek returns Tuesday, and recurrenceDayOfWeekMonthly returns SECOND,
+// then upgrades are triggered on the second Tuesday of a month.
+type MaintenanceWindowRequestRecurrenceDayOfWeekMonthly string
+
+// MaintenanceWindowRequestRecurrenceDayWeekly Indicates the number of weeks between occurrences. This value only applies when recurrence frequency is set to weekly.
+type MaintenanceWindowRequestRecurrenceDayWeekly string
+
+// MaintenanceWindowRequestRecurrenceFrequency The frequency of maintenance recurrence.
+type MaintenanceWindowRequestRecurrenceFrequency string
+
+// MaintenanceWindowResponse defines model for MaintenanceWindowResponse.
+type MaintenanceWindowResponse struct {
+	Data *MaintenanceWindow                 `json:"data,omitempty"`
+	Meta *map[string]map[string]interface{} `json:"meta,omitempty"`
+}
+
+// MaintenanceWindowResponseList defines model for MaintenanceWindowResponseList.
+type MaintenanceWindowResponseList struct {
+	Data []MaintenanceWindow               `json:"data"`
+	Meta map[string]map[string]interface{} `json:"meta"`
 }
 
 // ManagementLoginCredential The mission control manager login credentials
@@ -1534,19 +3432,30 @@ type MessageSpoolLimitUsage struct {
 
 // MsgVpn The list of Message VPNs configured on the event broker service.
 type MsgVpn struct {
-	// AuthenticationBasicEnabled Whether basic authentication is enabled.
+	// AuthenticationBasicEnabled Indicates whether basic authentication is enabled.
 	AuthenticationBasicEnabled *bool `json:"authenticationBasicEnabled,omitempty"`
 
 	// AuthenticationBasicType The authentication type.
 	AuthenticationBasicType *MsgVpnAuthenticationBasicType `json:"authenticationBasicType,omitempty"`
 
-	// AuthenticationClientCertEnabled Whether client certificate authentication is enabled.
+	// AuthenticationClientCertAllowApiProvidedUsernameEnabled <p>Indicates whether the service accepts API provided usernames instead of subject alternative names,
+	// or user identifiers from the certificate. The valid values are:</p>
+	// <ul>
+	//   <li>'true' - enabled</li>
+	//   <li>'false' - disabled</li>
+	// </ul>
+	AuthenticationClientCertAllowApiProvidedUsernameEnabled *bool `json:"authenticationClientCertAllowApiProvidedUsernameEnabled,omitempty"`
+
+	// AuthenticationClientCertEnabled Indicates whether client certificate authentication is enabled.
 	AuthenticationClientCertEnabled *bool `json:"authenticationClientCertEnabled,omitempty"`
 
-	// AuthenticationClientCertValidateDateEnabled Whether the validation of the 'Not Before' and 'Not After' dates in a client certificate is enabled.
+	// AuthenticationClientCertUsernameSource The authentication client certificate username configured on the Message VPN.
+	AuthenticationClientCertUsernameSource *string `json:"authenticationClientCertUsernameSource,omitempty"`
+
+	// AuthenticationClientCertValidateDateEnabled Indicates whether the validation of the 'Not Before' and 'Not After' dates in a client certificate is enabled.
 	AuthenticationClientCertValidateDateEnabled *bool `json:"authenticationClientCertValidateDateEnabled,omitempty"`
 
-	// AuthenticationOauthEnabled Whether OAuth authentication is enabled for the Message VPN.
+	// AuthenticationOauthEnabled Indicates whether OAuth authentication is enabled for the Message VPN. It is possible to have OAuth enabled for only the broker, and not the Message VPN.
 	AuthenticationOauthEnabled *bool `json:"authenticationOauthEnabled,omitempty"`
 
 	// ClientProfiles The client profiles configured on the Message VPN.
@@ -1591,7 +3500,7 @@ type MsgVpn struct {
 	// MsgVpnName The name of the Message VPN.
 	MsgVpnName *string `json:"msgVpnName,omitempty"`
 
-	// SempOverMessageBus Whether SEMP-Over-Message-Bus attributes is enabled.
+	// SempOverMessageBus Indicates whether SEMP-Over-Message-Bus attributes is enabled.
 	SempOverMessageBus *SEMPOverMsgBus `json:"sempOverMessageBus,omitempty"`
 
 	// ServiceLoginCredential The login credentials for the event broker service.
@@ -1607,6 +3516,40 @@ type MsgVpn struct {
 // MsgVpnAuthenticationBasicType The authentication type.
 type MsgVpnAuthenticationBasicType string
 
+// MultiResourceOperation defines model for MultiResourceOperation.
+type MultiResourceOperation struct {
+	// CompletedTime The completion time, whether it was successful or failed, in ISO 8601 date/time format.
+	CompletedTime *string `json:"completedTime,omitempty"`
+
+	// CreatedBy The unique identifier representing the user who created the operation.
+	CreatedBy *string `json:"createdBy,omitempty"`
+
+	// CreatedTime The time the operation was created, in ISO 8601 date/time format.
+	CreatedTime *string `json:"createdTime,omitempty"`
+
+	// Id Operations requiring time to complete provide an operation identifier so you can query their progress.
+	Id         *string      `json:"id,omitempty"`
+	Operations *[]Operation `json:"operations,omitempty"`
+
+	// OrgId The unique identifier representing the organization of the user who created the operation.
+	OrgId *string `json:"orgId,omitempty"`
+
+	// Status The status of the operation.
+	Status *MultiResourceOperationStatus `json:"status,omitempty"`
+
+	// Type The type of object for informational purposes.
+	Type *string `json:"type,omitempty"`
+}
+
+// MultiResourceOperationStatus The status of the operation.
+type MultiResourceOperationStatus string
+
+// MultiResourceOperationResponse defines model for MultiResourceOperationResponse.
+type MultiResourceOperationResponse struct {
+	Data MultiResourceOperation            `json:"data"`
+	Meta map[string]map[string]interface{} `json:"meta"`
+}
+
 // Operation defines model for Operation.
 type Operation struct {
 	// CompletedTime The completion time, whether it was successful or failed, in ISO 8601 date/time format.
@@ -1616,14 +3559,17 @@ type Operation struct {
 	CreatedBy *string `json:"createdBy,omitempty"`
 
 	// CreatedTime The time the operation was created, in ISO 8601 date/time format.
-	CreatedTime *string `json:"createdTime,omitempty"`
-	Error       *Error  `json:"error,omitempty"`
+	CreatedTime *string         `json:"createdTime,omitempty"`
+	Error       *OperationError `json:"error,omitempty"`
 
 	// Id Operations requiring time to complete provide an operation identifier so you can query their progress.
 	Id *string `json:"id,omitempty"`
 
 	// OperationType The type of operation against the resource.
-	OperationType *OperationOperationType `json:"operationType,omitempty"`
+	OperationType *JobOperationTypes `json:"operationType,omitempty"`
+
+	// ProgressLogs The progress logs for the operation, if available. Not all operations provide progress logs. If the operation provides progress logs, you will see them listed below.
+	ProgressLogs *[]OperationProgressLog `json:"progressLogs,omitempty"`
 
 	// ResourceId The resource ID that the operation belongs to.
 	ResourceId *string `json:"resourceId,omitempty"`
@@ -1638,15 +3584,42 @@ type Operation struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// OperationOperationType The type of operation against the resource.
-type OperationOperationType string
-
 // OperationStatus The status of the operation.
 type OperationStatus string
+
+// OperationError defines model for OperationError.
+type OperationError struct {
+	// ErrorId A universally unique identifier (UUID) is useful for debugging. You can provide this code as part of the information you send to our support team.
+	ErrorId *string `json:"errorId,omitempty"`
+
+	// Message A user-friendly message describing the reason for the error or what went wrong.
+	Message *string `json:"message,omitempty"`
+}
+
+// OperationProgressLog The progress logs for the operation, if available. Not all operations provide progress logs. If the operation provides progress logs, you will see them listed below.
+type OperationProgressLog struct {
+	Message   *string `json:"message,omitempty"`
+	Status    *string `json:"status,omitempty"`
+	Step      *string `json:"step,omitempty"`
+	StepId    *string `json:"stepId,omitempty"`
+	Timestamp *string `json:"timestamp,omitempty"`
+}
 
 // OperationResponse defines model for OperationResponse.
 type OperationResponse struct {
 	Data Operation                         `json:"data"`
+	Meta map[string]map[string]interface{} `json:"meta"`
+}
+
+// OperationsResponse defines model for OperationsResponse.
+type OperationsResponse struct {
+	Data []Operation                       `json:"data"`
+	Meta map[string]map[string]interface{} `json:"meta"`
+}
+
+// PrivateRegionResponse defines model for PrivateRegionResponse.
+type PrivateRegionResponse struct {
+	Data CustomerControlledCluster         `json:"data"`
 	Meta map[string]map[string]interface{} `json:"meta"`
 }
 
@@ -1659,10 +3632,50 @@ type ProvisionedEndpointSpoolUsageAlertThresholds struct {
 	SetPercent *int32 `json:"setPercent,omitempty"`
 }
 
+// RecommendedEventEventBrokerServiceVersionsResponse defines model for RecommendedEventEventBrokerServiceVersionsResponse.
+type RecommendedEventEventBrokerServiceVersionsResponse struct {
+	Data map[string]interface{}            `json:"data"`
+	Meta map[string]map[string]interface{} `json:"meta"`
+}
+
+// Redundancy The redundancy status of the event broker service, including the high-availability status, redundancy state, active messaging node name, and config-sync status.
+type Redundancy struct {
+	// ActiveNode The name of the currently active messaging node. The active node can be either Primary or Backup.
+	ActiveNode *RedundancyActiveNode `json:"activeNode,omitempty"`
+
+	// ConfigSync Indicates the Config-Sync status of the high-availability group.
+	ConfigSync *RedundancyConfigSync `json:"configSync,omitempty"`
+
+	// Redundancy Indicates the redundancy status of the high-availability group.Redundancy can be either Up or Down.
+	Redundancy *RedundancyRedundancy `json:"redundancy,omitempty"`
+}
+
+// RedundancyActiveNode The name of the currently active messaging node. The active node can be either Primary or Backup.
+type RedundancyActiveNode string
+
+// RedundancyConfigSync Indicates the Config-Sync status of the high-availability group.
+type RedundancyConfigSync string
+
+// RedundancyRedundancy Indicates the redundancy status of the high-availability group.Redundancy can be either Up or Down.
+type RedundancyRedundancy string
+
 // ReleaseChannel "The release channel indicates the type of release, either Production or Preview. The release types offer differing support and upgrade paths. See the documentation for more information.
 type ReleaseChannel string
 
-// SEMPOverMsgBus Whether SEMP-Over-Message-Bus attributes is enabled.
+// Replication defines model for Replication.
+type Replication struct {
+	// ActiveServiceId The identifier of the active event broker service in a replication pair.
+	ActiveServiceId string  `json:"activeServiceId"`
+	Id              *string `json:"id,omitempty"`
+
+	// StandbyServiceId The identifier of the standby event broker service in a replication pair.
+	StandbyServiceId string `json:"standbyServiceId"`
+
+	// Type The type of object for informational purposes
+	Type *string `json:"type,omitempty"`
+}
+
+// SEMPOverMsgBus Indicates whether SEMP-Over-Message-Bus attributes is enabled.
 type SEMPOverMsgBus struct {
 	// SempAccessToAdminCmdsEnabled Indicates if users with admin access can use SEMP commands. The default value is false and the valid values are:  <p><ul><li>'true' - can use SEMP commands</li><li>'false' - cannot use SEMP commands</li></ul></p>
 	SempAccessToAdminCmdsEnabled *bool `json:"sempAccessToAdminCmdsEnabled,omitempty"`
@@ -1670,13 +3683,13 @@ type SEMPOverMsgBus struct {
 	// SempAccessToCacheCmdsEnabled SEMP Access to Cache Commands Enabled
 	SempAccessToCacheCmdsEnabled *bool `json:"sempAccessToCacheCmdsEnabled,omitempty"`
 
-	// SempAccessToClientAdminCmdsEnabled Whether access to SEMP Client-Admin commands is enabled.
+	// SempAccessToClientAdminCmdsEnabled Indicates whether access to SEMP Client-Admin commands is enabled.
 	SempAccessToClientAdminCmdsEnabled *bool `json:"sempAccessToClientAdminCmdsEnabled,omitempty"`
 
 	// SempAccessToShowCmdsEnabled Indicates if users without admin access can see ‘show' commands in SEMP. The default value is false and the valid values are:  <p><ul><li>'true' - can see 'show' SEMP commands</li><li>'false' - cannot see 'show' SEMP commands</li></ul></p>
 	SempAccessToShowCmdsEnabled *bool `json:"sempAccessToShowCmdsEnabled,omitempty"`
 
-	// SempOverMsgBusEnabled Whether SEMP over Message Bus is enabled.  When enabled for a Message VPN, clients have access to a limited subset of the event broker management commands.
+	// SempOverMsgBusEnabled Indicates whether SEMP over Message Bus is enabled.  When enabled for a Message VPN, clients have access to a limited subset of the event broker management commands.
 	SempOverMsgBusEnabled *bool `json:"sempOverMsgBusEnabled,omitempty"`
 }
 
@@ -1779,8 +3792,17 @@ type Service struct {
 	// DefaultManagementHostname Default management hostname.
 	DefaultManagementHostname *string `json:"defaultManagementHostname,omitempty"`
 
+	// EndOfFullSupport The date when support ends for the event broker service version, in ISO 8601 format. This field is not present in a response if support date information is unavailable.
+	EndOfFullSupport *time.Time `json:"endOfFullSupport,omitempty"`
+
 	// EnvironmentId The unique identifier of the environment the service is associated with.
-	EnvironmentId             *string `json:"environmentId,omitempty"`
+	EnvironmentId *string `json:"environmentId,omitempty"`
+
+	// ErrorId The error ID if the event broker service creation failed.
+	ErrorId *string `json:"errorId,omitempty"`
+
+	// ErrorMessage The error message if the event broker service creation failed.
+	ErrorMessage              *string `json:"errorMessage,omitempty"`
 	EventBrokerServiceVersion string  `json:"eventBrokerServiceVersion"`
 
 	// EventBrokerServiceVersionDetails The event broker service version details.
@@ -1798,11 +3820,14 @@ type Service struct {
 	// InfrastructureId A unique identifier representing for the infrastructure of the event broker service.
 	InfrastructureId *string `json:"infrastructureId,omitempty"`
 
-	// Locked Whether the event broker service has deletion protection enabled. The valid values are 'true' (enabled) or 'false' (disabled).
+	// Locked Indicates whether the event broker service has deletion protection enabled. The valid values are 'true' (enabled) or 'false' (disabled).
 	Locked *bool `json:"locked,omitempty"`
 
 	// MessageSpoolDetails Message Spool details per service. Available on expand only.
 	MessageSpoolDetails *MessageSpoolDetails `json:"messageSpoolDetails,omitempty"`
+
+	// MsgVpnName The name of the event broker service Message VPN.
+	MsgVpnName *string `json:"msgVpnName,omitempty"`
 
 	// Name The name of the event broker service.
 	Name *string `json:"name,omitempty"`
@@ -1812,6 +3837,9 @@ type Service struct {
 
 	// OwnedBy The unique identifier representing the user who owns the event broker service.
 	OwnedBy *string `json:"ownedBy,omitempty"`
+
+	// SelfServeUpgradesEnabled Indicates whether the event broker service allows self-serve upgrades. The valid values are 'true' (enabled) or 'false' (disabled).
+	SelfServeUpgradesEnabled *bool `json:"selfServeUpgradesEnabled,omitempty"`
 
 	// ServiceClassId Supported service classes.
 	ServiceClassId *ServiceClassId `json:"serviceClassId,omitempty"`
@@ -1837,7 +3865,7 @@ type ServiceClass struct {
 	// BrokerScalingTier The underlying scaling tiers for the software event broker.
 	BrokerScalingTier *string `json:"brokerScalingTier,omitempty"`
 
-	// HighAvailabilityCapable Whether the service class supports High-Availability. A value of 'True' indicates that high-availability is supported.
+	// HighAvailabilityCapable Indicates whether the service class supports High-Availability. A value of 'True' indicates that high-availability is supported.
 	HighAvailabilityCapable *bool `json:"highAvailabilityCapable,omitempty"`
 
 	// Id Supported service classes.
@@ -1891,13 +3919,15 @@ type ServiceCloneAttributes struct {
 // ServiceCloneAttributesComponents defines model for ServiceCloneAttributes.Components.
 type ServiceCloneAttributesComponents string
 
-// ServiceConnectionEndpointPort <p>The protocols and port numbers of the connection endpoint. All messaging and management protocols along with the port numbers must be specified in the request.</p>
+// ServiceConnectionEndpointPort <p>The protocols and port numbers of the connection endpoint. The serviceManagementTlsListenPort and serviceSmfTlsListenPort protocols
+// along with the port numbers must be specified in the request.</p>
 // <p>Connection specific protocols. </p>
 // <ul>
 // <li><b>Solace Messaging</b> </li>
 // <ul>
 // <li>'serviceSmfPlainTextListenPort'-Use SMF Host (plain-text) over TCP to connect and exchange messages with the event broker service.</li>
-// <li>'serviceSmfCompressedListenPort'-Use SMF (plain-text) in a compressed format over TCP to connect and exchange messages with the event broker service.</li>
+// <li>'serviceSmfCompressedListenPort'-Use SMF (plain-text) in a compressed format over TCP to connect and exchange messages with
+// the event broker service.</li>
 // <li>'serviceSmfTlsListenPort'-Use secure SMF using TLS over TCP.</li>
 // </ul>
 // <br>
@@ -1929,8 +3959,10 @@ type ServiceCloneAttributesComponents string
 // <br>
 // <li><b>Management</b></li>
 // <ul>
-// <li>'serviceManagementTlsListenPort'-Use the secured management connection, which uses SEMP to manage the event broker. This port must be enabled on at least one of the service connection endpoints on the event broker service.</li>
-// <li>'managementSshTlsListenPort'-Use a secure port to connect to the event broker service to issue Solace Command Line Interface (CLI). This port provides you with scope-restricted access to the event broker service.</li>
+// <li>'serviceManagementTlsListenPort'-Use the secured management connection, which uses SEMP to manage the event broker. This port
+// must be enabled on at least one of the service connection endpoints on the event broker service.</li>
+// <li>'managementSshTlsListenPort'-Use a secure port to connect to the event broker service to issue Solace Command Line Interface
+// (CLI). This port provides you with scope-restricted access to the event broker service.</li>
 // </ul>
 // <ul>
 type ServiceConnectionEndpointPort struct {
@@ -1973,8 +4005,17 @@ type ServiceSummary struct {
 	// DatacenterId The identifier of the datacenter.
 	DatacenterId *string `json:"datacenterId,omitempty"`
 
+	// EndOfFullSupport The date when support ends for the event broker service version, in ISO 8601 format. This field is not present in a response if support date information is unavailable.
+	EndOfFullSupport *time.Time `json:"endOfFullSupport,omitempty"`
+
 	// EnvironmentId The unique identifier of the environment the service is associated with.
 	EnvironmentId *string `json:"environmentId,omitempty"`
+
+	// ErrorId The error ID if the event broker service creation failed.
+	ErrorId *string `json:"errorId,omitempty"`
+
+	// ErrorMessage The error message if the event broker service creation failed.
+	ErrorMessage *string `json:"errorMessage,omitempty"`
 
 	// EventBrokerServiceVersion Event broker service version.
 	EventBrokerServiceVersion *string `json:"eventBrokerServiceVersion,omitempty"`
@@ -1991,11 +4032,14 @@ type ServiceSummary struct {
 	// InfrastructureId A unique identifier representing for the infrastructure of the event broker service.
 	InfrastructureId *string `json:"infrastructureId,omitempty"`
 
-	// Locked Whether the event broker service has deletion protection enabled. The valid values are 'true' (enabled) or 'false' (disabled).
+	// Locked Indicates whether the event broker service has deletion protection enabled. The valid values are 'true' (enabled) or 'false' (disabled).
 	Locked *bool `json:"locked,omitempty"`
 
 	// MessageSpoolDetails Message Spool details per service. Available on expand only.
 	MessageSpoolDetails *MessageSpoolDetails `json:"messageSpoolDetails,omitempty"`
+
+	// MsgVpnName The name of the event broker service Message VPN.
+	MsgVpnName *string `json:"msgVpnName,omitempty"`
 
 	// Name The name of the event broker service.
 	Name *string `json:"name,omitempty"`
@@ -2005,6 +4049,9 @@ type ServiceSummary struct {
 
 	// OwnedBy The unique identifier representing the user who owns the event broker service.
 	OwnedBy *string `json:"ownedBy,omitempty"`
+
+	// SelfServeUpgradesEnabled Indicates whether the event broker service allows self-serve upgrades. The valid values are 'true' (enabled) or 'false' (disabled).
+	SelfServeUpgradesEnabled *bool `json:"selfServeUpgradesEnabled,omitempty"`
 
 	// ServiceClassId Supported service classes.
 	ServiceClassId *ServiceClassId `json:"serviceClassId,omitempty"`
@@ -2025,7 +4072,9 @@ type ServiceSummaryResponse struct {
 	Meta map[string]map[string]interface{} `json:"meta"`
 }
 
-// SpoolScaleUpCapabilityInfo defines model for SpoolScaleUpCapabilityInfo.
+// SpoolScaleUpCapabilityInfo <p>Deprecation Date: 2025-02-01</p>
+// <p>Removal Date: 2025-04-01</p>
+// <p>Reason: Spool scale-up tests are no longer required, as all Kubernetes-based datacenters provide this capability.</p>
 type SpoolScaleUpCapabilityInfo struct {
 	// SpoolScaleUpCapabilityState The current state of  the Scalable Message Spool Size feature. The values can be 'INPROGRESS', 'SUPPORTED', 'NOT SUPPORTED', or 'UNKNOWN'.
 	SpoolScaleUpCapabilityState *string `json:"spoolScaleUpCapabilityState,omitempty"`
@@ -2037,9 +4086,94 @@ type SpoolScaleUpCapabilityInfo struct {
 	SpoolScaleUpTestTimestamp *time.Time `json:"spoolScaleUpTestTimestamp,omitempty"`
 }
 
+// UpcomingMaintenanceTime Shows a list of available times for the maintenance window.
+type UpcomingMaintenanceTime struct {
+	EndTime   *time.Time `json:"endTime,omitempty"`
+	StartTime *time.Time `json:"startTime,omitempty"`
+}
+
+// UpdateConnectionEndpoint A collection of networking protocol and port configurations that permit applications to connect to the event broker service.
+type UpdateConnectionEndpoint struct {
+	// AccessType The connectivity for the connection endpoint. This can be through private IP addresses (PRIVATE) or public internet (PUBLIC).
+	AccessType *ConnectionEndpointAccessType `json:"accessType,omitempty"`
+
+	// CreationState The creation state of the connection endpoint.
+	CreationState *CreationState `json:"creationState,omitempty"`
+
+	// Description The description for the connection endpoint.
+	Description *string `json:"description,omitempty"`
+
+	// Id The identifier of the connection endpoint.
+	Id *string `json:"id,omitempty"`
+
+	// K8sServiceId The identifier for the Kubernetes service.
+	K8sServiceId *string `json:"k8sServiceId,omitempty"`
+
+	// K8sServiceType The connectivity configuration that is used in the Kubernetes cluster.
+	K8sServiceType *UpdateConnectionEndpointK8sServiceType `json:"k8sServiceType,omitempty"`
+
+	// Name The name of the connection endpoint. Optional for updates.
+	Name *string `json:"name,omitempty"`
+
+	// Ports <p>The protocols and port numbers of the connection endpoint. The serviceManagementTlsListenPort and serviceSmfTlsListenPort protocols
+	// along with the port numbers must be specified in the request.</p>
+	// <p>Connection specific protocols. </p>
+	// <ul>
+	// <li><b>Solace Messaging</b> </li>
+	// <ul>
+	// <li>'serviceSmfPlainTextListenPort'-Use SMF Host (plain-text) over TCP to connect and exchange messages with the event broker service.</li>
+	// <li>'serviceSmfCompressedListenPort'-Use SMF (plain-text) in a compressed format over TCP to connect and exchange messages with
+	// the event broker service.</li>
+	// <li>'serviceSmfTlsListenPort'-Use secure SMF using TLS over TCP.</li>
+	// </ul>
+	// <br>
+	// <li><b>Solace Web Messaging</b></li>
+	// <ul>
+	// <li>'serviceWebPlainTextListenPort'-Use WebSocket over HTTP (plain-text).</li>
+	// <li>'serviceWebTlsListenPort'-Use WebSocket over secured HTTP.</li>
+	// </ul>
+	// <br>
+	// <li><b>AMQP</b></li>
+	// <ul>
+	// <li>'serviceAmqpPlainTextListenPort'-Use AMQP (plain-text).</li>
+	// <li>'serviceAmqpTlsListenPort'-Use AMQP over a secure TCP connection.</li>
+	// </ul>
+	// <br>
+	// <li><b>MQTT</b></li>
+	// <ul>
+	// <li>'serviceMqttPlainTextListenPort'-Use MQTT (plain-text).</li>
+	// <li>'serviceMqttWebSocketListenPort'-Use MQTT WebSocket (plain-text).</li>
+	// <li>'serviceMqttTlsListenPort'-Use secure MQTT.</li>
+	// <li>'serviceMqttTlsWebSocketListenPort'-Use WebSocket secured MQTT.</li>
+	// </ul>
+	// <br>
+	// <li><b>REST</b></li>
+	// <ul>
+	// <li>'serviceRestIncomingPlainTextListenPort'-Use REST messaging (plain-text).</li>
+	// <li>'serviceRestIncomingTlsListenPort'-Use secure REST messaging.</li>
+	// </ul>
+	// <br>
+	// <li><b>Management</b></li>
+	// <ul>
+	// <li>'serviceManagementTlsListenPort'-Use the secured management connection, which uses SEMP to manage the event broker. This port
+	// must be enabled on at least one of the service connection endpoints on the event broker service.</li>
+	// <li>'managementSshTlsListenPort'-Use a secure port to connect to the event broker service to issue Solace Command Line Interface
+	// (CLI). This port provides you with scope-restricted access to the event broker service.</li>
+	// </ul>
+	// <ul>
+	//  Optional for updates - only provided ports will be modified.
+	Ports *[]ServiceConnectionEndpointPort `json:"ports,omitempty"`
+
+	// Type The type of object for informational purposes.
+	Type *string `json:"type,omitempty"`
+}
+
+// UpdateConnectionEndpointK8sServiceType The connectivity configuration that is used in the Kubernetes cluster.
+type UpdateConnectionEndpointK8sServiceType string
+
 // UpdateServiceRequest defines model for UpdateServiceRequest.
 type UpdateServiceRequest struct {
-	// Locked Whether the event broker service has deletion protection enabled. The valid values are 'true' (enabled) or 'false' (disabled). The default is 'false'.
+	// Locked Indicates whether the event broker service has deletion protection enabled. The valid values are 'true' (enabled) or 'false' (disabled). The default is 'false'.
 	Locked *bool `json:"locked,omitempty"`
 
 	// Name The new service name. The new service name must be unique within an organization.
@@ -2049,10 +4183,53 @@ type UpdateServiceRequest struct {
 	OwnedBy *string `json:"ownedBy,omitempty"`
 }
 
+// UpgradeReadiness defines model for UpgradeReadiness.
+type UpgradeReadiness struct {
+	// JobExpiryInMinutes Describes the job expiry time in minutes.
+	JobExpiryInMinutes *int64 `json:"jobExpiryInMinutes,omitempty"`
+
+	// Message Describes the status of the upgrade readiness check.
+	Message *string `json:"message,omitempty"`
+
+	// Status Indicates the status of the upgrade readiness.
+	Status *UpgradeReadinessStatus `json:"status,omitempty"`
+}
+
+// UpgradeReadinessStatus Indicates the status of the upgrade readiness.
+type UpgradeReadinessStatus string
+
 // UploadCertificateRequest defines model for UploadCertificateRequest.
 type UploadCertificateRequest struct {
 	Certificate string `json:"certificate"`
 	PrivateKey  string `json:"privateKey"`
+}
+
+// DnsNameCreateRequest DNS name creation request
+type DnsNameCreateRequest struct {
+	// DnsName <p>The FQDN to use for the DNS name for the connection endpoint. The dnsName you enter:</p>
+	// <p>• must contain only lowercase alphanumeric characters (a-z, 0-9), hyphens (-), or dots (.)</p>
+	// <p>• cannot end with a hyphen or dot</p>
+	// <p>• must have each portion of the FQDN (label) be between 1-63 characters</p>
+	// <p>• must have an entire length no longer than 230 characters.</p>
+	DnsName string `json:"dnsName"`
+
+	// Id The DNS name identifier
+	Id *string `json:"id,omitempty"`
+
+	// Type The type of object for informational purposes.
+	Type *string `json:"type,omitempty"`
+}
+
+// JobOperationTypes The type of operation against the resource.
+type JobOperationTypes string
+
+// OperationTypesFilter defines model for operationTypesFilter.
+type OperationTypesFilter string
+
+// UpgradeReadinessResponse defines model for upgradeReadinessResponse.
+type UpgradeReadinessResponse struct {
+	Data *UpgradeReadiness                  `json:"data,omitempty"`
+	Meta *map[string]map[string]interface{} `json:"meta,omitempty"`
 }
 
 // GetDatacentersParams defines parameters for GetDatacenters.
@@ -2110,6 +4287,58 @@ type GetDatacentersParamsDatacenterType string
 // GetDatacentersParamsProvider defines parameters for GetDatacenters.
 type GetDatacentersParamsProvider string
 
+// GetDatacenterParams defines parameters for GetDatacenter.
+type GetDatacenterParams struct {
+	// ShowSelfServe Indicates self-serve upgrade availability. The possible values are:<ul><li><code>True</code> - Self-serve upgrades are available.</li><li><code>False</code> - Self-serve upgrades are not available.</li></ul>
+	ShowSelfServe *bool `form:"showSelfServe,omitempty" json:"showSelfServe,omitempty"`
+}
+
+// GetEventBrokerServiceVersionsByDatacenterParams defines parameters for GetEventBrokerServiceVersionsByDatacenter.
+type GetEventBrokerServiceVersionsByDatacenterParams struct {
+	// FilterIncompatibleVersions Exclude event broker service versions that are incompatible with the datacenter’s Kubernetes version. The default setting is false.
+	FilterIncompatibleVersions *bool `form:"filterIncompatibleVersions,omitempty" json:"filterIncompatibleVersions,omitempty"`
+}
+
+// GetEnvironmentParams defines parameters for GetEnvironment.
+type GetEnvironmentParams struct {
+	// Expand Populate additional hidden attributes
+	Expand *[]string `form:"expand,omitempty" json:"expand,omitempty"`
+}
+
+// GetEventBrokerServiceVersionsParams defines parameters for GetEventBrokerServiceVersions.
+type GetEventBrokerServiceVersionsParams struct {
+	// Recommended <p>Choose to show only recommended or unrecommended event broker versions for service creation.
+	// The default value for this field is blank, which returns all event broker versions,
+	//  recommended and unrecommended. You can sort the responses by selecting:</p>
+	//  <ul><li><code>true</code> - Show only recommended event broker versions.</li>
+	//  <li><code>false</code> - Show only unrecommended event broker versions.</li></ul>
+	Recommended *bool `form:"recommended,omitempty" json:"recommended,omitempty"`
+
+	// ReleaseChannel <p>The release channel shows the type of broker release. The release types offer differing support and upgrade paths. For more information, seesee <a href="https://docs.solace.com/Cloud/understand-event-broker-releases.htm">Version Adoption</a> in the Solace documentation.</p><p>The filtering options include:</p><ul><li><code>Preview</code> - A pre-10.25 version release for previewing new features.</li><li><code>Production</code> - A pre-10.25 version production release.</li><li><code>Production_LTS</code> - A pre-10.25 version long term support production release.</li><li><code>LTS</code> - A 10.25 version and later, annual production release with two-years of support and maintenance releases.</li><li><code>Rolling</code> - A 10.25 version and later, bi-weekly production release for introducing new features. Rolling releases have two years of support with no maintenance releases.</li><li><code>Declined</code> - Unsupported versions, available for testing.</li></ul>
+	ReleaseChannel *GetEventBrokerServiceVersionsParamsReleaseChannel `form:"releaseChannel,omitempty" json:"releaseChannel,omitempty"`
+
+	// FamilyVersion Filter the responses by the family version number. The family version number differs based on the version and is generally the two first to digits of the version number, for example, 10.25. For more information, see <a href="https://docs.solace.com/Cloud/broker-version-conventions.htm">Release and Versioning Scheme of Event Broker Services</a> in the Solace documentation.
+	FamilyVersion *float32 `form:"familyVersion,omitempty" json:"familyVersion,omitempty"`
+
+	// DatacenterId The unique identifier of the datacenter. The identifier is required when the filterIncompatibleVersions parameter setting is true.
+	DatacenterId *string `form:"datacenterId,omitempty" json:"datacenterId,omitempty"`
+
+	// FilterIncompatibleVersions Exclude event broker service versions that are incompatible with the datacenter’s Kubernetes version. Requires providing the datacenter ID. The default setting is false.
+	FilterIncompatibleVersions *bool `form:"filterIncompatibleVersions,omitempty" json:"filterIncompatibleVersions,omitempty"`
+
+	// PageNumber The page number for pagination.
+	PageNumber *int `form:"pageNumber,omitempty" json:"pageNumber,omitempty"`
+
+	// PageSize The number of items per page.
+	PageSize *int `form:"pageSize,omitempty" json:"pageSize,omitempty"`
+
+	// Sort The sorting criteria for the returned results. You can sort the results by query parameter in ascending or descending order. Define the sort order using the following string: fieldname:asc/desc
+	Sort *string `form:"sort,omitempty" json:"sort,omitempty"`
+}
+
+// GetEventBrokerServiceVersionsParamsReleaseChannel defines parameters for GetEventBrokerServiceVersions.
+type GetEventBrokerServiceVersionsParamsReleaseChannel string
+
 // GetServicesParams defines parameters for GetServices.
 type GetServicesParams struct {
 	// CustomAttributes <p>Filter the list of event broker services by custom attributes.</p><p>To filter by custom attribute name and value, use the format: <code>customAttributes=&lt;custom-attribute-name&gt;==&lt;custom-attribute-value&gt;</code>.</p><code>customAttributes</code> are RSQL query strings that support using asterisks as a wildcard. You can place a wildcard at the beginning, middle, or end of the query value.</p><p>The supported attributes, and examples of each are listed below:</p><ul>
@@ -2166,6 +4395,13 @@ type GetServicesParams struct {
 	PageSize *int `form:"pageSize,omitempty" json:"pageSize,omitempty"`
 }
 
+// GetMultiResourceOperationParams defines parameters for GetMultiResourceOperation.
+type GetMultiResourceOperationParams struct {
+	// Expand Additional information to retrieve about the in-progress operations for the event broker services. The supported values are: <li><code>operations</code></li>
+	// The returned <code>operations</code> may include information about the detail information of each single operation.
+	Expand *string `form:"expand,omitempty" json:"expand,omitempty"`
+}
+
 // GetServiceParams defines parameters for GetService.
 type GetServiceParams struct {
 	// Expand You can request additional information about the event broker service by selecting expand parameters, including connection endpoint information, broker details including version, allowed actions you can perform on the service, and message spool details.
@@ -2204,6 +4440,222 @@ type GetClientProfilesParams struct {
 	Sort *string `form:"sort,omitempty" json:"sort,omitempty"`
 }
 
+// GetServiceOperationsParams defines parameters for GetServiceOperations.
+type GetServiceOperationsParams struct {
+	// OperationTypes Filter the returned query results by the type of operation being performed on the event broker service. The filtering options include: <li><code>haSwitchover</code> - A high-availability switchover operation.</li>
+	OperationTypes *[]OperationTypesFilter `form:"operationTypes,omitempty" json:"operationTypes,omitempty"`
+
+	// PageNumber The page number to retrieve.
+	PageNumber *int `form:"pageNumber,omitempty" json:"pageNumber,omitempty"`
+
+	// PageSize The number of operations to return per page.
+	PageSize *int `form:"pageSize,omitempty" json:"pageSize,omitempty"`
+}
+
+// GetServiceOperationParams defines parameters for GetServiceOperation.
+type GetServiceOperationParams struct {
+	// Expand Additional information to retrieve about the in-progress operation for the event broker service. The supported values are: <li><code>progressLogs</code></li>
+	// The returned <code>progressLogs</code> may include information about the state of in-progress multi-stage operations for an event broker service, for example, high-availability switchovers.
+	Expand *string `form:"expand,omitempty" json:"expand,omitempty"`
+}
+
+// GetRecommendedEventBrokerServicesV2Params defines parameters for GetRecommendedEventBrokerServicesV2.
+type GetRecommendedEventBrokerServicesV2Params struct {
+	Recommended *bool   `form:"recommended,omitempty" json:"recommended,omitempty"`
+	PageNumber  *int32  `form:"pageNumber,omitempty" json:"pageNumber,omitempty"`
+	PageSize    *int32  `form:"pageSize,omitempty" json:"pageSize,omitempty"`
+	Sort        *string `form:"sort,omitempty" json:"sort,omitempty"`
+}
+
+// GetUpgradeReadinessParams defines parameters for GetUpgradeReadiness.
+type GetUpgradeReadinessParams struct {
+	// MaintenanceWindowId The specific maintenance window you want to get event broker service upgrade readiness for. You must specify the maintenanceTimeOrdinal parameter when defining this parameter.
+	MaintenanceWindowId *string `form:"maintenanceWindowId,omitempty" json:"maintenanceWindowId,omitempty"`
+
+	// MaintenanceTimeOrdinal The time range of the maintenance window you want to get event broker service upgrade readiness for. You must specify the maintenanceWindowId parameter when defining this parameter.
+	MaintenanceTimeOrdinal *int `form:"maintenanceTimeOrdinal,omitempty" json:"maintenanceTimeOrdinal,omitempty"`
+}
+
+// GetEventBrokerServiceUpgradesParams defines parameters for GetEventBrokerServiceUpgrades.
+type GetEventBrokerServiceUpgradesParams struct {
+	// MaintenanceWindowId The identifier of the maintenance window to filter by.
+	MaintenanceWindowId *string `form:"maintenanceWindowId,omitempty" json:"maintenanceWindowId,omitempty"`
+
+	// OperationStatus The operation status to filter by.
+	OperationStatus *GetEventBrokerServiceUpgradesParamsOperationStatus `form:"operationStatus,omitempty" json:"operationStatus,omitempty"`
+
+	// PreMaintenanceValidationStatus The pre-maintenance validation status to filter by.
+	PreMaintenanceValidationStatus *GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatus `form:"preMaintenanceValidationStatus,omitempty" json:"preMaintenanceValidationStatus,omitempty"`
+
+	// PostMaintenanceValidationStatus The post-maintenance validation status to filter by.
+	PostMaintenanceValidationStatus *GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatus `form:"postMaintenanceValidationStatus,omitempty" json:"postMaintenanceValidationStatus,omitempty"`
+
+	// MaintenanceActivityStatus The maintenance activity status to filter by.
+	MaintenanceActivityStatus *GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatus `form:"maintenanceActivityStatus,omitempty" json:"maintenanceActivityStatus,omitempty"`
+
+	// ScheduledStartTimeAfter Filter the returned query results by maintenance activities with start times scheduled after the entered timestamp (epoch milliseconds).
+	ScheduledStartTimeAfter *int64 `form:"scheduledStartTimeAfter,omitempty" json:"scheduledStartTimeAfter,omitempty"`
+
+	// ScheduledStartTimeBefore Filter the returned query results by maintenance activities with start times scheduled before the entered timestamp (epoch milliseconds).
+	ScheduledStartTimeBefore *int64 `form:"scheduledStartTimeBefore,omitempty" json:"scheduledStartTimeBefore,omitempty"`
+
+	// PageNumber The page number for pagination.
+	PageNumber *int `form:"pageNumber,omitempty" json:"pageNumber,omitempty"`
+
+	// PageSize The number of items per page.
+	PageSize *int `form:"pageSize,omitempty" json:"pageSize,omitempty"`
+
+	// Sort The sorting criteria for the returned results. You can sort the results by any of the query parameters,
+	// in either ascending or descending order.
+	// Define the sort order using the following string: <code>parameter name:asc/desc</code>
+	Sort *string `form:"sort,omitempty" json:"sort,omitempty"`
+}
+
+// GetEventBrokerServiceUpgradesParamsOperationStatus defines parameters for GetEventBrokerServiceUpgrades.
+type GetEventBrokerServiceUpgradesParamsOperationStatus string
+
+// GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatus defines parameters for GetEventBrokerServiceUpgrades.
+type GetEventBrokerServiceUpgradesParamsPreMaintenanceValidationStatus string
+
+// GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatus defines parameters for GetEventBrokerServiceUpgrades.
+type GetEventBrokerServiceUpgradesParamsPostMaintenanceValidationStatus string
+
+// GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatus defines parameters for GetEventBrokerServiceUpgrades.
+type GetEventBrokerServiceUpgradesParamsMaintenanceActivityStatus string
+
+// GetMaintenanceActivitiesParams defines parameters for GetMaintenanceActivities.
+type GetMaintenanceActivitiesParams struct {
+	// MaintenanceWindowId The identifier of the maintenance window to filter by.
+	MaintenanceWindowId *string `form:"maintenanceWindowId,omitempty" json:"maintenanceWindowId,omitempty"`
+
+	// EnvironmentId The identifier of the environment to filter by.
+	EnvironmentId *string `form:"environmentId,omitempty" json:"environmentId,omitempty"`
+
+	// OperationStatus The operation status to filter by.
+	OperationStatus *GetMaintenanceActivitiesParamsOperationStatus `form:"operationStatus,omitempty" json:"operationStatus,omitempty"`
+
+	// ResourceId The identifier of the resource to filter by.
+	ResourceId *string `form:"resourceId,omitempty" json:"resourceId,omitempty"`
+
+	// ResourceType The resource type to filter by. Filter options include:
+	ResourceType *GetMaintenanceActivitiesParamsResourceType `form:"resourceType,omitempty" json:"resourceType,omitempty"`
+
+	// ScheduledStartTimeAfter Filter the returned query results by maintenance activities with start times scheduled after the entered timestamp (epoch milliseconds).
+	ScheduledStartTimeAfter *int64 `form:"scheduledStartTimeAfter,omitempty" json:"scheduledStartTimeAfter,omitempty"`
+
+	// ScheduledStartTimeBefore Filter the returned query results by maintenance activities with start times scheduled before the entered timestamp (epoch milliseconds).
+	ScheduledStartTimeBefore *int64 `form:"scheduledStartTimeBefore,omitempty" json:"scheduledStartTimeBefore,omitempty"`
+
+	// PageNumber The page number for pagination.
+	PageNumber *int `form:"pageNumber,omitempty" json:"pageNumber,omitempty"`
+
+	// PageSize The number of items per page.
+	PageSize *int `form:"pageSize,omitempty" json:"pageSize,omitempty"`
+
+	// PreMaintenanceValidationStatus The pre-maintenance validation status to filter by.
+	PreMaintenanceValidationStatus *GetMaintenanceActivitiesParamsPreMaintenanceValidationStatus `form:"preMaintenanceValidationStatus,omitempty" json:"preMaintenanceValidationStatus,omitempty"`
+
+	// PostMaintenanceValidationStatus The post-maintenance validation status to filter by.
+	PostMaintenanceValidationStatus *GetMaintenanceActivitiesParamsPostMaintenanceValidationStatus `form:"postMaintenanceValidationStatus,omitempty" json:"postMaintenanceValidationStatus,omitempty"`
+
+	// MaintenanceActivityStatus The maintenance activity status to filter by.
+	MaintenanceActivityStatus *GetMaintenanceActivitiesParamsMaintenanceActivityStatus `form:"maintenanceActivityStatus,omitempty" json:"maintenanceActivityStatus,omitempty"`
+
+	// Critical Filter by critical flag. Critical activities may not be cancelled, only rescheduled.
+	Critical *bool `form:"critical,omitempty" json:"critical,omitempty"`
+
+	// Sort The sorting criteria for the returned results. You can sort the results by query parameter in ascending or descending order. Define the sort order using the following string: fieldname:asc/desc
+	Sort *string `form:"sort,omitempty" json:"sort,omitempty"`
+}
+
+// GetMaintenanceActivitiesParamsOperationStatus defines parameters for GetMaintenanceActivities.
+type GetMaintenanceActivitiesParamsOperationStatus string
+
+// GetMaintenanceActivitiesParamsResourceType defines parameters for GetMaintenanceActivities.
+type GetMaintenanceActivitiesParamsResourceType string
+
+// GetMaintenanceActivitiesParamsPreMaintenanceValidationStatus defines parameters for GetMaintenanceActivities.
+type GetMaintenanceActivitiesParamsPreMaintenanceValidationStatus string
+
+// GetMaintenanceActivitiesParamsPostMaintenanceValidationStatus defines parameters for GetMaintenanceActivities.
+type GetMaintenanceActivitiesParamsPostMaintenanceValidationStatus string
+
+// GetMaintenanceActivitiesParamsMaintenanceActivityStatus defines parameters for GetMaintenanceActivities.
+type GetMaintenanceActivitiesParamsMaintenanceActivityStatus string
+
+// GetMaintenanceSchedulesParams defines parameters for GetMaintenanceSchedules.
+type GetMaintenanceSchedulesParams struct {
+	// EnvironmentId The identifier of the environment to filter by.
+	EnvironmentId *string `form:"environmentId,omitempty" json:"environmentId,omitempty"`
+
+	// Page The page number to retrieve.
+	Page *int `form:"page,omitempty" json:"page,omitempty"`
+
+	// Size The number of items per page.
+	Size *int `form:"size,omitempty" json:"size,omitempty"`
+
+	// Sort The sorting criteria for the returned results.
+	// You can sort the results by query parameter in ascending or descending order.
+	// Define the sort order using the following string: field name:asc/desc where:
+	// <ul>
+	// <li><code>environmentId</code>: The environment identifier.</li>
+	// <li><code>organizationId</code>: The organization identifier.</li>
+	// <li><code>id</code>: The maintenance schedule identifier.</li>
+	// <li><code>maintenanceType</code>: The type of maintenance type.</li>
+	// <li><code>createdBy</code>: The identifier of the person who created the recurrence.</li>
+	// <li><code>createdTime</code>: The date and time the recurrence was created.</li>
+	// </ul>
+	Sort       *string `form:"sort,omitempty" json:"sort,omitempty"`
+	PageNumber *int32  `form:"pageNumber,omitempty" json:"pageNumber,omitempty"`
+	PageSize   *int32  `form:"pageSize,omitempty" json:"pageSize,omitempty"`
+}
+
+// GetMaintenanceWindowsParams defines parameters for GetMaintenanceWindows.
+type GetMaintenanceWindowsParams struct {
+	// EnvironmentId The identifier of the environment to filter by.
+	EnvironmentId *string `form:"environmentId,omitempty" json:"environmentId,omitempty"`
+
+	// MaintenanceScheduleId The identifier of the maintenance schedule to filter by.
+	MaintenanceScheduleId *string `form:"maintenanceScheduleId,omitempty" json:"maintenanceScheduleId,omitempty"`
+
+	// PageNumber The page number for pagination.
+	PageNumber *int `form:"pageNumber,omitempty" json:"pageNumber,omitempty"`
+
+	// PageSize The number of items per page.
+	PageSize *int `form:"pageSize,omitempty" json:"pageSize,omitempty"`
+
+	// Sort The sorting criteria for the returned results.
+	// You can sort the results by query parameter in ascending or descending order.
+	// Define the sort order using the following string: field name:asc/desc where:
+	// <ul>
+	// <li><code>organizationId</code>: The organization identifier.</li>
+	// <li><code>maintenanceScheduleId</code>: The identifier of the maintenance schedule.</li>
+	// <li><code>maintenanceType</code>: The type of maintenance type.</li>
+	// <li><code>recurrenceDayOfWeek</code>: The day of the week for the recurrence.</li>
+	// <li><code>recurrenceFrequency</code>: The frequency of the recurrence.</li>
+	// <li><code>recurrenceDayOfWeekMonthly</code>: The day of the recurrence,
+	//     when the recurrence occurs on a specific day of the month.
+	//     For example, if the recurrenceDayOfWeek returns Tuesday, and recurrenceDayOfWeekMonthly returns SECOND,
+	//     then upgrades are triggered on the second Tuesday of a month.</li>
+	// <li><code>startTime</code>: The date and time of the recurrence starts.</li>
+	// <li><code>durationInHours</code>: The duration of the maintenance window, in hours.</li>
+	// <li><code>createdBy</code>: The identifier of the person who created the recurrence.</li>
+	// <li><code>createdTime</code>: The date and time the recurrence was created.</li>
+	// <li><code>updatedBy</code>: The identifier of the last person to update the recurrence.</li>
+	// <li><code>updatedTime</code>: The date and time the recurrence was last updated.</li>
+	// </ul>
+	Sort *string `form:"sort,omitempty" json:"sort,omitempty"`
+}
+
+// GetMaintenanceWindowParams defines parameters for GetMaintenanceWindow.
+type GetMaintenanceWindowParams struct {
+	// EnvironmentId The identifier of the environment to filter by.
+	EnvironmentId *string `form:"environmentId,omitempty" json:"environmentId,omitempty"`
+
+	// MaintenanceScheduleId The identifier of the maintenance schedule to filter by.
+	MaintenanceScheduleId *string `form:"maintenanceScheduleId,omitempty" json:"maintenanceScheduleId,omitempty"`
+}
+
 // GetServiceClassesParams defines parameters for GetServiceClasses.
 type GetServiceClassesParams struct {
 	// BrokerFamilyVersion The version of the broker family. For example 10.6
@@ -2227,6 +4679,9 @@ type PatchEnvironmentJSONRequestBody = EnvironmentRequest
 
 // CreateServiceJSONRequestBody defines body for CreateService for application/json ContentType.
 type CreateServiceJSONRequestBody = CreateServiceRequest
+
+// InitiateReplicationPSKJSONRequestBody defines body for InitiateReplicationPSK for application/json ContentType.
+type InitiateReplicationPSKJSONRequestBody = Replication
 
 // UpdateServiceJSONRequestBody defines body for UpdateService for application/json ContentType.
 type UpdateServiceJSONRequestBody = UpdateServiceRequest
@@ -2252,6 +4707,18 @@ type UpdateClientProfileJSONRequestBody = ClientProfileRequest
 // ReplaceClientProfileJSONRequestBody defines body for ReplaceClientProfile for application/json ContentType.
 type ReplaceClientProfileJSONRequestBody = ClientProfileRequest
 
+// CreateConnectionEndpointJSONRequestBody defines body for CreateConnectionEndpoint for application/json ContentType.
+type CreateConnectionEndpointJSONRequestBody = CreateConnectionEndpoint
+
+// UpdateConnectionEndpointJSONRequestBody defines body for UpdateConnectionEndpoint for application/json ContentType.
+type UpdateConnectionEndpointJSONRequestBody = UpdateConnectionEndpoint
+
+// CreateConnectionEndpointDnsNameJSONRequestBody defines body for CreateConnectionEndpointDnsName for application/json ContentType.
+type CreateConnectionEndpointDnsNameJSONRequestBody = DnsNameCreateRequest
+
+// MoveConnectionEndpointDnsNameJSONRequestBody defines body for MoveConnectionEndpointDnsName for application/json ContentType.
+type MoveConnectionEndpointDnsNameJSONRequestBody = DnsNameMoveRequest
+
 // UpdateMessageSpoolJSONRequestBody defines body for UpdateMessageSpool for application/json ContentType.
 type UpdateMessageSpoolJSONRequestBody = MessageSpool
 
@@ -2263,6 +4730,24 @@ type UploadServerCertificateJSONRequestBody = UploadCertificateRequest
 
 // InstallServerCertificateJSONRequestBody defines body for InstallServerCertificate for application/json ContentType.
 type InstallServerCertificateJSONRequestBody = InstallCertificateRequest
+
+// CreateEventBrokerServiceUpgradeJSONRequestBody defines body for CreateEventBrokerServiceUpgrade for application/json ContentType.
+type CreateEventBrokerServiceUpgradeJSONRequestBody = EventBrokerUpgradeRequest
+
+// CreateMaintenanceScheduleJSONRequestBody defines body for CreateMaintenanceSchedule for application/json ContentType.
+type CreateMaintenanceScheduleJSONRequestBody = MaintenanceScheduleRequest
+
+// CreateMaintenanceWindowJSONRequestBody defines body for CreateMaintenanceWindow for application/json ContentType.
+type CreateMaintenanceWindowJSONRequestBody = MaintenanceWindowRequest
+
+// UpdateMaintenanceWindowJSONRequestBody defines body for UpdateMaintenanceWindow for application/json ContentType.
+type UpdateMaintenanceWindowJSONRequestBody = MaintenanceWindowRequest
+
+// CreateCustomerControlledClusterJSONRequestBody defines body for CreateCustomerControlledCluster for application/json ContentType.
+type CreateCustomerControlledClusterJSONRequestBody = CustomerControlledCluster
+
+// PatchPrivateRegionJSONRequestBody defines body for PatchPrivateRegion for application/json ContentType.
+type PatchPrivateRegionJSONRequestBody = CustomerControlledCluster
 
 // RequestEditorFn  is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
@@ -2341,26 +4826,29 @@ type ClientInterface interface {
 	GetDatacenters(ctx context.Context, params *GetDatacentersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetDatacenter request
-	GetDatacenter(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetDatacenter(ctx context.Context, id string, params *GetDatacenterParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateDatacenterWithBody request with any body
 	UpdateDatacenterWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	UpdateDatacenter(ctx context.Context, id string, body UpdateDatacenterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetEventBrokerServiceVersions request
-	GetEventBrokerServiceVersions(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetEventBrokerServiceVersionsByDatacenter request
+	GetEventBrokerServiceVersionsByDatacenter(ctx context.Context, id string, params *GetEventBrokerServiceVersionsByDatacenterParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetVersions request
 	GetVersions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetEnvironment request
-	GetEnvironment(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetEnvironment(ctx context.Context, id string, params *GetEnvironmentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PatchEnvironmentWithBody request with any body
 	PatchEnvironmentWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	PatchEnvironment(ctx context.Context, id string, body PatchEnvironmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetEventBrokerServiceVersions request
+	GetEventBrokerServiceVersions(ctx context.Context, params *GetEventBrokerServiceVersionsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetServices request
 	GetServices(ctx context.Context, params *GetServicesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -2369,6 +4857,14 @@ type ClientInterface interface {
 	CreateServiceWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	CreateService(ctx context.Context, body CreateServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetMultiResourceOperation request
+	GetMultiResourceOperation(ctx context.Context, operationId string, params *GetMultiResourceOperationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// InitiateReplicationPSKWithBody request with any body
+	InitiateReplicationPSKWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	InitiateReplicationPSK(ctx context.Context, body InitiateReplicationPSKJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteService request
 	DeleteService(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -2407,6 +4903,9 @@ type ClientInterface interface {
 
 	ReplaceResource(ctx context.Context, serviceId string, resourcePath string, body ReplaceResourceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetBrokerStateByServiceId request
+	GetBrokerStateByServiceId(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetClientProfiles request
 	GetClientProfiles(ctx context.Context, serviceId string, params *GetClientProfilesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -2431,13 +4930,54 @@ type ClientInterface interface {
 
 	ReplaceClientProfile(ctx context.Context, serviceId string, name string, body ReplaceClientProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetConnectionEndpoints request
+	GetConnectionEndpoints(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateConnectionEndpointWithBody request with any body
+	CreateConnectionEndpointWithBody(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateConnectionEndpoint(ctx context.Context, serviceId string, body CreateConnectionEndpointJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteConnectionEndpoint request
+	DeleteConnectionEndpoint(ctx context.Context, serviceId string, connectionEndpointId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetConnectionEndpoint request
+	GetConnectionEndpoint(ctx context.Context, serviceId string, connectionEndpointId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateConnectionEndpointWithBody request with any body
+	UpdateConnectionEndpointWithBody(ctx context.Context, serviceId string, connectionEndpointId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateConnectionEndpoint(ctx context.Context, serviceId string, connectionEndpointId string, body UpdateConnectionEndpointJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetConnectionEndpointDnsNames request
+	GetConnectionEndpointDnsNames(ctx context.Context, serviceId string, connectionEndpointId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateConnectionEndpointDnsNameWithBody request with any body
+	CreateConnectionEndpointDnsNameWithBody(ctx context.Context, serviceId string, connectionEndpointId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateConnectionEndpointDnsName(ctx context.Context, serviceId string, connectionEndpointId string, body CreateConnectionEndpointDnsNameJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteConnectionEndpointDnsName request
+	DeleteConnectionEndpointDnsName(ctx context.Context, serviceId string, connectionEndpointId string, dnsName string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// MoveConnectionEndpointDnsNameWithBody request with any body
+	MoveConnectionEndpointDnsNameWithBody(ctx context.Context, serviceId string, connectionEndpointId string, dnsName string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	MoveConnectionEndpointDnsName(ctx context.Context, serviceId string, connectionEndpointId string, dnsName string, body MoveConnectionEndpointDnsNameJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// UpdateMessageSpoolWithBody request with any body
 	UpdateMessageSpoolWithBody(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	UpdateMessageSpool(ctx context.Context, serviceId string, body UpdateMessageSpoolJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetServiceOperations request
+	GetServiceOperations(ctx context.Context, serviceId string, params *GetServiceOperationsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetServiceOperation request
-	GetServiceOperation(ctx context.Context, serviceId string, operationId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetServiceOperation(ctx context.Context, serviceId string, operationId string, params *GetServiceOperationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetRecommendedEventBrokerServicesV2 request
+	GetRecommendedEventBrokerServicesV2(ctx context.Context, serviceId string, params *GetRecommendedEventBrokerServicesV2Params, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DisableOrEnableWithBody request with any body
 	DisableOrEnableWithBody(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -2463,8 +5003,95 @@ type ClientInterface interface {
 
 	InstallServerCertificate(ctx context.Context, serviceId string, certificateId string, body InstallServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// SwitchoverBroker request
+	SwitchoverBroker(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetUpgradeReadiness request
+	GetUpgradeReadiness(ctx context.Context, serviceId string, params *GetUpgradeReadinessParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetEventBrokerServiceUpgrades request
+	GetEventBrokerServiceUpgrades(ctx context.Context, serviceId string, params *GetEventBrokerServiceUpgradesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateEventBrokerServiceUpgradeWithBody request with any body
+	CreateEventBrokerServiceUpgradeWithBody(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateEventBrokerServiceUpgrade(ctx context.Context, serviceId string, body CreateEventBrokerServiceUpgradeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetEventBrokerServiceUpgrade request
+	GetEventBrokerServiceUpgrade(ctx context.Context, serviceId string, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetMaintenanceActivities request
+	GetMaintenanceActivities(ctx context.Context, params *GetMaintenanceActivitiesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetMaintenanceActivity request
+	GetMaintenanceActivity(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CancelMaintenanceActivity request
+	CancelMaintenanceActivity(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// InitiatePostMaintenanceCheck request
+	InitiatePostMaintenanceCheck(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// InitiatePreMaintenanceCheck request
+	InitiatePreMaintenanceCheck(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetMaintenanceSchedules request
+	GetMaintenanceSchedules(ctx context.Context, params *GetMaintenanceSchedulesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateMaintenanceScheduleWithBody request with any body
+	CreateMaintenanceScheduleWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateMaintenanceSchedule(ctx context.Context, body CreateMaintenanceScheduleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteMaintenanceSchedule request
+	DeleteMaintenanceSchedule(ctx context.Context, maintenanceScheduleId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetMaintenanceSchedule request
+	GetMaintenanceSchedule(ctx context.Context, maintenanceScheduleId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetMaintenanceWindows request
+	GetMaintenanceWindows(ctx context.Context, params *GetMaintenanceWindowsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateMaintenanceWindowWithBody request with any body
+	CreateMaintenanceWindowWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateMaintenanceWindow(ctx context.Context, body CreateMaintenanceWindowJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteMaintenanceWindow request
+	DeleteMaintenanceWindow(ctx context.Context, maintenanceWindowId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetMaintenanceWindow request
+	GetMaintenanceWindow(ctx context.Context, maintenanceWindowId string, params *GetMaintenanceWindowParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateMaintenanceWindowWithBody request with any body
+	UpdateMaintenanceWindowWithBody(ctx context.Context, maintenanceWindowId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateMaintenanceWindow(ctx context.Context, maintenanceWindowId string, body UpdateMaintenanceWindowJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetLimits request
 	GetLimits(ctx context.Context, orgId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateCustomerControlledClusterWithBody request with any body
+	CreateCustomerControlledClusterWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateCustomerControlledCluster(ctx context.Context, body CreateCustomerControlledClusterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeletePrivateRegion request
+	DeletePrivateRegion(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetPrivateRegion request
+	GetPrivateRegion(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PatchPrivateRegionWithBody request with any body
+	PatchPrivateRegionWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	PatchPrivateRegion(ctx context.Context, id string, body PatchPrivateRegionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetPrivateRegionHealth request
+	GetPrivateRegionHealth(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetPrivateRegionHelmValues request
+	GetPrivateRegionHelmValues(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetServiceClasses request
 	GetServiceClasses(ctx context.Context, params *GetServiceClassesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -2485,8 +5112,8 @@ func (c *Client) GetDatacenters(ctx context.Context, params *GetDatacentersParam
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetDatacenter(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetDatacenterRequest(c.Server, id)
+func (c *Client) GetDatacenter(ctx context.Context, id string, params *GetDatacenterParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetDatacenterRequest(c.Server, id, params)
 	if err != nil {
 		return nil, err
 	}
@@ -2521,8 +5148,8 @@ func (c *Client) UpdateDatacenter(ctx context.Context, id string, body UpdateDat
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetEventBrokerServiceVersions(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetEventBrokerServiceVersionsRequest(c.Server, id)
+func (c *Client) GetEventBrokerServiceVersionsByDatacenter(ctx context.Context, id string, params *GetEventBrokerServiceVersionsByDatacenterParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetEventBrokerServiceVersionsByDatacenterRequest(c.Server, id, params)
 	if err != nil {
 		return nil, err
 	}
@@ -2545,8 +5172,8 @@ func (c *Client) GetVersions(ctx context.Context, reqEditors ...RequestEditorFn)
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetEnvironment(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetEnvironmentRequest(c.Server, id)
+func (c *Client) GetEnvironment(ctx context.Context, id string, params *GetEnvironmentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetEnvironmentRequest(c.Server, id, params)
 	if err != nil {
 		return nil, err
 	}
@@ -2571,6 +5198,18 @@ func (c *Client) PatchEnvironmentWithBody(ctx context.Context, id string, conten
 
 func (c *Client) PatchEnvironment(ctx context.Context, id string, body PatchEnvironmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewPatchEnvironmentRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetEventBrokerServiceVersions(ctx context.Context, params *GetEventBrokerServiceVersionsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetEventBrokerServiceVersionsRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -2607,6 +5246,42 @@ func (c *Client) CreateServiceWithBody(ctx context.Context, contentType string, 
 
 func (c *Client) CreateService(ctx context.Context, body CreateServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateServiceRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetMultiResourceOperation(ctx context.Context, operationId string, params *GetMultiResourceOperationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMultiResourceOperationRequest(c.Server, operationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) InitiateReplicationPSKWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewInitiateReplicationPSKRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) InitiateReplicationPSK(ctx context.Context, body InitiateReplicationPSKJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewInitiateReplicationPSKRequest(c.Server, body)
 	if err != nil {
 		return nil, err
 	}
@@ -2785,6 +5460,18 @@ func (c *Client) ReplaceResource(ctx context.Context, serviceId string, resource
 	return c.Client.Do(req)
 }
 
+func (c *Client) GetBrokerStateByServiceId(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetBrokerStateByServiceIdRequest(c.Server, serviceId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) GetClientProfiles(ctx context.Context, serviceId string, params *GetClientProfilesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetClientProfilesRequest(c.Server, serviceId, params)
 	if err != nil {
@@ -2893,6 +5580,162 @@ func (c *Client) ReplaceClientProfile(ctx context.Context, serviceId string, nam
 	return c.Client.Do(req)
 }
 
+func (c *Client) GetConnectionEndpoints(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetConnectionEndpointsRequest(c.Server, serviceId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateConnectionEndpointWithBody(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateConnectionEndpointRequestWithBody(c.Server, serviceId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateConnectionEndpoint(ctx context.Context, serviceId string, body CreateConnectionEndpointJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateConnectionEndpointRequest(c.Server, serviceId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteConnectionEndpoint(ctx context.Context, serviceId string, connectionEndpointId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteConnectionEndpointRequest(c.Server, serviceId, connectionEndpointId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetConnectionEndpoint(ctx context.Context, serviceId string, connectionEndpointId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetConnectionEndpointRequest(c.Server, serviceId, connectionEndpointId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateConnectionEndpointWithBody(ctx context.Context, serviceId string, connectionEndpointId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateConnectionEndpointRequestWithBody(c.Server, serviceId, connectionEndpointId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateConnectionEndpoint(ctx context.Context, serviceId string, connectionEndpointId string, body UpdateConnectionEndpointJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateConnectionEndpointRequest(c.Server, serviceId, connectionEndpointId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetConnectionEndpointDnsNames(ctx context.Context, serviceId string, connectionEndpointId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetConnectionEndpointDnsNamesRequest(c.Server, serviceId, connectionEndpointId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateConnectionEndpointDnsNameWithBody(ctx context.Context, serviceId string, connectionEndpointId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateConnectionEndpointDnsNameRequestWithBody(c.Server, serviceId, connectionEndpointId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateConnectionEndpointDnsName(ctx context.Context, serviceId string, connectionEndpointId string, body CreateConnectionEndpointDnsNameJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateConnectionEndpointDnsNameRequest(c.Server, serviceId, connectionEndpointId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteConnectionEndpointDnsName(ctx context.Context, serviceId string, connectionEndpointId string, dnsName string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteConnectionEndpointDnsNameRequest(c.Server, serviceId, connectionEndpointId, dnsName)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) MoveConnectionEndpointDnsNameWithBody(ctx context.Context, serviceId string, connectionEndpointId string, dnsName string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewMoveConnectionEndpointDnsNameRequestWithBody(c.Server, serviceId, connectionEndpointId, dnsName, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) MoveConnectionEndpointDnsName(ctx context.Context, serviceId string, connectionEndpointId string, dnsName string, body MoveConnectionEndpointDnsNameJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewMoveConnectionEndpointDnsNameRequest(c.Server, serviceId, connectionEndpointId, dnsName, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) UpdateMessageSpoolWithBody(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateMessageSpoolRequestWithBody(c.Server, serviceId, contentType, body)
 	if err != nil {
@@ -2917,8 +5760,32 @@ func (c *Client) UpdateMessageSpool(ctx context.Context, serviceId string, body 
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetServiceOperation(ctx context.Context, serviceId string, operationId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetServiceOperationRequest(c.Server, serviceId, operationId)
+func (c *Client) GetServiceOperations(ctx context.Context, serviceId string, params *GetServiceOperationsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetServiceOperationsRequest(c.Server, serviceId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetServiceOperation(ctx context.Context, serviceId string, operationId string, params *GetServiceOperationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetServiceOperationRequest(c.Server, serviceId, operationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetRecommendedEventBrokerServicesV2(ctx context.Context, serviceId string, params *GetRecommendedEventBrokerServicesV2Params, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetRecommendedEventBrokerServicesV2Request(c.Server, serviceId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -3037,8 +5904,380 @@ func (c *Client) InstallServerCertificate(ctx context.Context, serviceId string,
 	return c.Client.Do(req)
 }
 
+func (c *Client) SwitchoverBroker(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSwitchoverBrokerRequest(c.Server, serviceId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetUpgradeReadiness(ctx context.Context, serviceId string, params *GetUpgradeReadinessParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetUpgradeReadinessRequest(c.Server, serviceId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetEventBrokerServiceUpgrades(ctx context.Context, serviceId string, params *GetEventBrokerServiceUpgradesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetEventBrokerServiceUpgradesRequest(c.Server, serviceId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateEventBrokerServiceUpgradeWithBody(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateEventBrokerServiceUpgradeRequestWithBody(c.Server, serviceId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateEventBrokerServiceUpgrade(ctx context.Context, serviceId string, body CreateEventBrokerServiceUpgradeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateEventBrokerServiceUpgradeRequest(c.Server, serviceId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetEventBrokerServiceUpgrade(ctx context.Context, serviceId string, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetEventBrokerServiceUpgradeRequest(c.Server, serviceId, maintenanceActivityId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetMaintenanceActivities(ctx context.Context, params *GetMaintenanceActivitiesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMaintenanceActivitiesRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetMaintenanceActivity(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMaintenanceActivityRequest(c.Server, maintenanceActivityId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CancelMaintenanceActivity(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCancelMaintenanceActivityRequest(c.Server, maintenanceActivityId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) InitiatePostMaintenanceCheck(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewInitiatePostMaintenanceCheckRequest(c.Server, maintenanceActivityId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) InitiatePreMaintenanceCheck(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewInitiatePreMaintenanceCheckRequest(c.Server, maintenanceActivityId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetMaintenanceSchedules(ctx context.Context, params *GetMaintenanceSchedulesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMaintenanceSchedulesRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateMaintenanceScheduleWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMaintenanceScheduleRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateMaintenanceSchedule(ctx context.Context, body CreateMaintenanceScheduleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMaintenanceScheduleRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteMaintenanceSchedule(ctx context.Context, maintenanceScheduleId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteMaintenanceScheduleRequest(c.Server, maintenanceScheduleId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetMaintenanceSchedule(ctx context.Context, maintenanceScheduleId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMaintenanceScheduleRequest(c.Server, maintenanceScheduleId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetMaintenanceWindows(ctx context.Context, params *GetMaintenanceWindowsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMaintenanceWindowsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateMaintenanceWindowWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMaintenanceWindowRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateMaintenanceWindow(ctx context.Context, body CreateMaintenanceWindowJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMaintenanceWindowRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteMaintenanceWindow(ctx context.Context, maintenanceWindowId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteMaintenanceWindowRequest(c.Server, maintenanceWindowId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetMaintenanceWindow(ctx context.Context, maintenanceWindowId string, params *GetMaintenanceWindowParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMaintenanceWindowRequest(c.Server, maintenanceWindowId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateMaintenanceWindowWithBody(ctx context.Context, maintenanceWindowId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateMaintenanceWindowRequestWithBody(c.Server, maintenanceWindowId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateMaintenanceWindow(ctx context.Context, maintenanceWindowId string, body UpdateMaintenanceWindowJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateMaintenanceWindowRequest(c.Server, maintenanceWindowId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) GetLimits(ctx context.Context, orgId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetLimitsRequest(c.Server, orgId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateCustomerControlledClusterWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateCustomerControlledClusterRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateCustomerControlledCluster(ctx context.Context, body CreateCustomerControlledClusterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateCustomerControlledClusterRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeletePrivateRegion(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeletePrivateRegionRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetPrivateRegion(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetPrivateRegionRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) PatchPrivateRegionWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPatchPrivateRegionRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) PatchPrivateRegion(ctx context.Context, id string, body PatchPrivateRegionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPatchPrivateRegionRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetPrivateRegionHealth(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetPrivateRegionHealthRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetPrivateRegionHelmValues(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetPrivateRegionHelmValuesRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -3203,7 +6442,7 @@ func NewGetDatacentersRequest(server string, params *GetDatacentersParams) (*htt
 }
 
 // NewGetDatacenterRequest generates requests for GetDatacenter
-func NewGetDatacenterRequest(server string, id string) (*http.Request, error) {
+func NewGetDatacenterRequest(server string, id string, params *GetDatacenterParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3226,6 +6465,28 @@ func NewGetDatacenterRequest(server string, id string) (*http.Request, error) {
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.ShowSelfServe != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "showSelfServe", *params.ShowSelfServe, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
 	}
 
 	req, err := http.NewRequest("GET", queryURL.String(), nil)
@@ -3283,8 +6544,8 @@ func NewUpdateDatacenterRequestWithBody(server string, id string, contentType st
 	return req, nil
 }
 
-// NewGetEventBrokerServiceVersionsRequest generates requests for GetEventBrokerServiceVersions
-func NewGetEventBrokerServiceVersionsRequest(server string, id string) (*http.Request, error) {
+// NewGetEventBrokerServiceVersionsByDatacenterRequest generates requests for GetEventBrokerServiceVersionsByDatacenter
+func NewGetEventBrokerServiceVersionsByDatacenterRequest(server string, id string, params *GetEventBrokerServiceVersionsByDatacenterParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3307,6 +6568,28 @@ func NewGetEventBrokerServiceVersionsRequest(server string, id string) (*http.Re
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.FilterIncompatibleVersions != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "filterIncompatibleVersions", *params.FilterIncompatibleVersions, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
 	}
 
 	req, err := http.NewRequest("GET", queryURL.String(), nil)
@@ -3345,7 +6628,7 @@ func NewGetVersionsRequest(server string) (*http.Request, error) {
 }
 
 // NewGetEnvironmentRequest generates requests for GetEnvironment
-func NewGetEnvironmentRequest(server string, id string) (*http.Request, error) {
+func NewGetEnvironmentRequest(server string, id string, params *GetEnvironmentParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -3368,6 +6651,28 @@ func NewGetEnvironmentRequest(server string, id string) (*http.Request, error) {
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Expand != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "expand", *params.Expand, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
 	}
 
 	req, err := http.NewRequest("GET", queryURL.String(), nil)
@@ -3421,6 +6726,167 @@ func NewPatchEnvironmentRequestWithBody(server string, id string, contentType st
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetEventBrokerServiceVersionsRequest generates requests for GetEventBrokerServiceVersions
+func NewGetEventBrokerServiceVersionsRequest(server string, params *GetEventBrokerServiceVersionsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServiceVersions")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Recommended != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "recommended", *params.Recommended, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ReleaseChannel != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", false, "releaseChannel", *params.ReleaseChannel, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.FamilyVersion != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "familyVersion", *params.FamilyVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "number", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.DatacenterId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "datacenterId", *params.DatacenterId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.FilterIncompatibleVersions != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "filterIncompatibleVersions", *params.FilterIncompatibleVersions, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pageNumber", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pageSize", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	return req, nil
 }
@@ -3559,6 +7025,102 @@ func NewCreateServiceRequestWithBody(server string, contentType string, body io.
 	}
 
 	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetMultiResourceOperationRequest generates requests for GetMultiResourceOperation
+func NewGetMultiResourceOperationRequest(server string, operationId string, params *GetMultiResourceOperationParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "operationId", operationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/multiResourceOperations/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Expand != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "expand", *params.Expand, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewInitiateReplicationPSKRequest calls the generic InitiateReplicationPSK builder with application/json body
+func NewInitiateReplicationPSKRequest(server string, body InitiateReplicationPSKJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewInitiateReplicationPSKRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewInitiateReplicationPSKRequestWithBody generates requests for InitiateReplicationPSK with any type of body
+func NewInitiateReplicationPSKRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/replication/rotatePSK")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -4028,6 +7590,40 @@ func NewReplaceResourceRequestWithBody(server string, serviceId string, resource
 	return req, nil
 }
 
+// NewGetBrokerStateByServiceIdRequest generates requests for GetBrokerStateByServiceId
+func NewGetBrokerStateByServiceIdRequest(server string, serviceId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/brokerState", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewGetClientProfilesRequest generates requests for GetClientProfiles
 func NewGetClientProfilesRequest(server string, serviceId string, params *GetClientProfilesParams) (*http.Request, error) {
 	var err error
@@ -4353,6 +7949,427 @@ func NewReplaceClientProfileRequestWithBody(server string, serviceId string, nam
 	return req, nil
 }
 
+// NewGetConnectionEndpointsRequest generates requests for GetConnectionEndpoints
+func NewGetConnectionEndpointsRequest(server string, serviceId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/connectionEndpoints", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateConnectionEndpointRequest calls the generic CreateConnectionEndpoint builder with application/json body
+func NewCreateConnectionEndpointRequest(server string, serviceId string, body CreateConnectionEndpointJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateConnectionEndpointRequestWithBody(server, serviceId, "application/json", bodyReader)
+}
+
+// NewCreateConnectionEndpointRequestWithBody generates requests for CreateConnectionEndpoint with any type of body
+func NewCreateConnectionEndpointRequestWithBody(server string, serviceId string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/connectionEndpoints", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteConnectionEndpointRequest generates requests for DeleteConnectionEndpoint
+func NewDeleteConnectionEndpointRequest(server string, serviceId string, connectionEndpointId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "connectionEndpointId", connectionEndpointId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/connectionEndpoints/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetConnectionEndpointRequest generates requests for GetConnectionEndpoint
+func NewGetConnectionEndpointRequest(server string, serviceId string, connectionEndpointId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "connectionEndpointId", connectionEndpointId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/connectionEndpoints/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateConnectionEndpointRequest calls the generic UpdateConnectionEndpoint builder with application/json body
+func NewUpdateConnectionEndpointRequest(server string, serviceId string, connectionEndpointId string, body UpdateConnectionEndpointJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateConnectionEndpointRequestWithBody(server, serviceId, connectionEndpointId, "application/json", bodyReader)
+}
+
+// NewUpdateConnectionEndpointRequestWithBody generates requests for UpdateConnectionEndpoint with any type of body
+func NewUpdateConnectionEndpointRequestWithBody(server string, serviceId string, connectionEndpointId string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "connectionEndpointId", connectionEndpointId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/connectionEndpoints/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetConnectionEndpointDnsNamesRequest generates requests for GetConnectionEndpointDnsNames
+func NewGetConnectionEndpointDnsNamesRequest(server string, serviceId string, connectionEndpointId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "connectionEndpointId", connectionEndpointId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/connectionEndpoints/%s/dnsNames", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateConnectionEndpointDnsNameRequest calls the generic CreateConnectionEndpointDnsName builder with application/json body
+func NewCreateConnectionEndpointDnsNameRequest(server string, serviceId string, connectionEndpointId string, body CreateConnectionEndpointDnsNameJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateConnectionEndpointDnsNameRequestWithBody(server, serviceId, connectionEndpointId, "application/json", bodyReader)
+}
+
+// NewCreateConnectionEndpointDnsNameRequestWithBody generates requests for CreateConnectionEndpointDnsName with any type of body
+func NewCreateConnectionEndpointDnsNameRequestWithBody(server string, serviceId string, connectionEndpointId string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "connectionEndpointId", connectionEndpointId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/connectionEndpoints/%s/dnsNames", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteConnectionEndpointDnsNameRequest generates requests for DeleteConnectionEndpointDnsName
+func NewDeleteConnectionEndpointDnsNameRequest(server string, serviceId string, connectionEndpointId string, dnsName string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "connectionEndpointId", connectionEndpointId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "dnsName", dnsName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/connectionEndpoints/%s/dnsNames/%s", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewMoveConnectionEndpointDnsNameRequest calls the generic MoveConnectionEndpointDnsName builder with application/json body
+func NewMoveConnectionEndpointDnsNameRequest(server string, serviceId string, connectionEndpointId string, dnsName string, body MoveConnectionEndpointDnsNameJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewMoveConnectionEndpointDnsNameRequestWithBody(server, serviceId, connectionEndpointId, dnsName, "application/json", bodyReader)
+}
+
+// NewMoveConnectionEndpointDnsNameRequestWithBody generates requests for MoveConnectionEndpointDnsName with any type of body
+func NewMoveConnectionEndpointDnsNameRequestWithBody(server string, serviceId string, connectionEndpointId string, dnsName string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "connectionEndpointId", connectionEndpointId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "dnsName", dnsName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/connectionEndpoints/%s/dnsNames/%s/move", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewUpdateMessageSpoolRequest calls the generic UpdateMessageSpool builder with application/json body
 func NewUpdateMessageSpoolRequest(server string, serviceId string, body UpdateMessageSpoolJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -4400,8 +8417,96 @@ func NewUpdateMessageSpoolRequestWithBody(server string, serviceId string, conte
 	return req, nil
 }
 
+// NewGetServiceOperationsRequest generates requests for GetServiceOperations
+func NewGetServiceOperationsRequest(server string, serviceId string, params *GetServiceOperationsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/operations", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.OperationTypes != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "operationTypes", *params.OperationTypes, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pageNumber", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pageSize", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewGetServiceOperationRequest generates requests for GetServiceOperation
-func NewGetServiceOperationRequest(server string, serviceId string, operationId string) (*http.Request, error) {
+func NewGetServiceOperationRequest(server string, serviceId string, operationId string, params *GetServiceOperationParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4431,6 +8536,132 @@ func NewGetServiceOperationRequest(server string, serviceId string, operationId 
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Expand != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "expand", *params.Expand, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetRecommendedEventBrokerServicesV2Request generates requests for GetRecommendedEventBrokerServicesV2
+func NewGetRecommendedEventBrokerServicesV2Request(server string, serviceId string, params *GetRecommendedEventBrokerServicesV2Params) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/recommendedVersions", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Recommended != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "recommended", *params.Recommended, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pageNumber", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pageSize", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
 	}
 
 	req, err := http.NewRequest("GET", queryURL.String(), nil)
@@ -4705,6 +8936,1336 @@ func NewInstallServerCertificateRequestWithBody(server string, serviceId string,
 	return req, nil
 }
 
+// NewSwitchoverBrokerRequest generates requests for SwitchoverBroker
+func NewSwitchoverBrokerRequest(server string, serviceId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/switchover", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetUpgradeReadinessRequest generates requests for GetUpgradeReadiness
+func NewGetUpgradeReadinessRequest(server string, serviceId string, params *GetUpgradeReadinessParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/upgradeReadiness", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.MaintenanceWindowId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "maintenanceWindowId", *params.MaintenanceWindowId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.MaintenanceTimeOrdinal != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "maintenanceTimeOrdinal", *params.MaintenanceTimeOrdinal, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetEventBrokerServiceUpgradesRequest generates requests for GetEventBrokerServiceUpgrades
+func NewGetEventBrokerServiceUpgradesRequest(server string, serviceId string, params *GetEventBrokerServiceUpgradesParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/upgrades", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.MaintenanceWindowId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "maintenanceWindowId", *params.MaintenanceWindowId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.OperationStatus != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "operationStatus", *params.OperationStatus, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PreMaintenanceValidationStatus != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "preMaintenanceValidationStatus", *params.PreMaintenanceValidationStatus, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PostMaintenanceValidationStatus != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "postMaintenanceValidationStatus", *params.PostMaintenanceValidationStatus, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.MaintenanceActivityStatus != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "maintenanceActivityStatus", *params.MaintenanceActivityStatus, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ScheduledStartTimeAfter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "scheduledStartTimeAfter", *params.ScheduledStartTimeAfter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ScheduledStartTimeBefore != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "scheduledStartTimeBefore", *params.ScheduledStartTimeBefore, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pageNumber", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pageSize", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateEventBrokerServiceUpgradeRequest calls the generic CreateEventBrokerServiceUpgrade builder with application/json body
+func NewCreateEventBrokerServiceUpgradeRequest(server string, serviceId string, body CreateEventBrokerServiceUpgradeJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateEventBrokerServiceUpgradeRequestWithBody(server, serviceId, "application/json", bodyReader)
+}
+
+// NewCreateEventBrokerServiceUpgradeRequestWithBody generates requests for CreateEventBrokerServiceUpgrade with any type of body
+func NewCreateEventBrokerServiceUpgradeRequestWithBody(server string, serviceId string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/upgrades", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetEventBrokerServiceUpgradeRequest generates requests for GetEventBrokerServiceUpgrade
+func NewGetEventBrokerServiceUpgradeRequest(server string, serviceId string, maintenanceActivityId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "serviceId", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "maintenanceActivityId", maintenanceActivityId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/eventBrokerServices/%s/upgrades/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetMaintenanceActivitiesRequest generates requests for GetMaintenanceActivities
+func NewGetMaintenanceActivitiesRequest(server string, params *GetMaintenanceActivitiesParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/maintenanceActivities")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.MaintenanceWindowId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "maintenanceWindowId", *params.MaintenanceWindowId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.EnvironmentId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "environmentId", *params.EnvironmentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.OperationStatus != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "operationStatus", *params.OperationStatus, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ResourceId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "resourceId", *params.ResourceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ResourceType != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "resourceType", *params.ResourceType, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ScheduledStartTimeAfter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "scheduledStartTimeAfter", *params.ScheduledStartTimeAfter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ScheduledStartTimeBefore != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "scheduledStartTimeBefore", *params.ScheduledStartTimeBefore, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pageNumber", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pageSize", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PreMaintenanceValidationStatus != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "preMaintenanceValidationStatus", *params.PreMaintenanceValidationStatus, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PostMaintenanceValidationStatus != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "postMaintenanceValidationStatus", *params.PostMaintenanceValidationStatus, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.MaintenanceActivityStatus != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "maintenanceActivityStatus", *params.MaintenanceActivityStatus, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Critical != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "critical", *params.Critical, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetMaintenanceActivityRequest generates requests for GetMaintenanceActivity
+func NewGetMaintenanceActivityRequest(server string, maintenanceActivityId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "maintenanceActivityId", maintenanceActivityId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/maintenanceActivities/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCancelMaintenanceActivityRequest generates requests for CancelMaintenanceActivity
+func NewCancelMaintenanceActivityRequest(server string, maintenanceActivityId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "maintenanceActivityId", maintenanceActivityId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/maintenanceActivities/%s/cancel", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewInitiatePostMaintenanceCheckRequest generates requests for InitiatePostMaintenanceCheck
+func NewInitiatePostMaintenanceCheckRequest(server string, maintenanceActivityId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "maintenanceActivityId", maintenanceActivityId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/maintenanceActivities/%s/initiatePostMaintenanceCheck", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewInitiatePreMaintenanceCheckRequest generates requests for InitiatePreMaintenanceCheck
+func NewInitiatePreMaintenanceCheckRequest(server string, maintenanceActivityId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "maintenanceActivityId", maintenanceActivityId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/maintenanceActivities/%s/initiatePreMaintenanceCheck", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetMaintenanceSchedulesRequest generates requests for GetMaintenanceSchedules
+func NewGetMaintenanceSchedulesRequest(server string, params *GetMaintenanceSchedulesParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/maintenanceSchedules")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.EnvironmentId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "environmentId", *params.EnvironmentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Size != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "size", *params.Size, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pageNumber", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pageSize", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateMaintenanceScheduleRequest calls the generic CreateMaintenanceSchedule builder with application/json body
+func NewCreateMaintenanceScheduleRequest(server string, body CreateMaintenanceScheduleJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateMaintenanceScheduleRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateMaintenanceScheduleRequestWithBody generates requests for CreateMaintenanceSchedule with any type of body
+func NewCreateMaintenanceScheduleRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/maintenanceSchedules")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteMaintenanceScheduleRequest generates requests for DeleteMaintenanceSchedule
+func NewDeleteMaintenanceScheduleRequest(server string, maintenanceScheduleId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "maintenanceScheduleId", maintenanceScheduleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/maintenanceSchedules/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetMaintenanceScheduleRequest generates requests for GetMaintenanceSchedule
+func NewGetMaintenanceScheduleRequest(server string, maintenanceScheduleId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "maintenanceScheduleId", maintenanceScheduleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/maintenanceSchedules/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetMaintenanceWindowsRequest generates requests for GetMaintenanceWindows
+func NewGetMaintenanceWindowsRequest(server string, params *GetMaintenanceWindowsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/maintenanceWindows")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.EnvironmentId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "environmentId", *params.EnvironmentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.MaintenanceScheduleId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "maintenanceScheduleId", *params.MaintenanceScheduleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pageNumber", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pageSize", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateMaintenanceWindowRequest calls the generic CreateMaintenanceWindow builder with application/json body
+func NewCreateMaintenanceWindowRequest(server string, body CreateMaintenanceWindowJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateMaintenanceWindowRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateMaintenanceWindowRequestWithBody generates requests for CreateMaintenanceWindow with any type of body
+func NewCreateMaintenanceWindowRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/maintenanceWindows")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteMaintenanceWindowRequest generates requests for DeleteMaintenanceWindow
+func NewDeleteMaintenanceWindowRequest(server string, maintenanceWindowId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "maintenanceWindowId", maintenanceWindowId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/maintenanceWindows/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetMaintenanceWindowRequest generates requests for GetMaintenanceWindow
+func NewGetMaintenanceWindowRequest(server string, maintenanceWindowId string, params *GetMaintenanceWindowParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "maintenanceWindowId", maintenanceWindowId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/maintenanceWindows/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.EnvironmentId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "environmentId", *params.EnvironmentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.MaintenanceScheduleId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "maintenanceScheduleId", *params.MaintenanceScheduleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateMaintenanceWindowRequest calls the generic UpdateMaintenanceWindow builder with application/json body
+func NewUpdateMaintenanceWindowRequest(server string, maintenanceWindowId string, body UpdateMaintenanceWindowJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateMaintenanceWindowRequestWithBody(server, maintenanceWindowId, "application/json", bodyReader)
+}
+
+// NewUpdateMaintenanceWindowRequestWithBody generates requests for UpdateMaintenanceWindow with any type of body
+func NewUpdateMaintenanceWindowRequestWithBody(server string, maintenanceWindowId string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "maintenanceWindowId", maintenanceWindowId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/maintenanceWindows/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PUT", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewGetLimitsRequest generates requests for GetLimits
 func NewGetLimitsRequest(server string, orgId string) (*http.Request, error) {
 	var err error
@@ -4722,6 +10283,229 @@ func NewGetLimitsRequest(server string, orgId string) (*http.Request, error) {
 	}
 
 	operationPath := fmt.Sprintf("/api/v2/missionControl/organizations/%s/messageSpoolLimitUsage", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateCustomerControlledClusterRequest calls the generic CreateCustomerControlledCluster builder with application/json body
+func NewCreateCustomerControlledClusterRequest(server string, body CreateCustomerControlledClusterJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateCustomerControlledClusterRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateCustomerControlledClusterRequestWithBody generates requests for CreateCustomerControlledCluster with any type of body
+func NewCreateCustomerControlledClusterRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/privateRegions")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeletePrivateRegionRequest generates requests for DeletePrivateRegion
+func NewDeletePrivateRegionRequest(server string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/privateRegions/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetPrivateRegionRequest generates requests for GetPrivateRegion
+func NewGetPrivateRegionRequest(server string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/privateRegions/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewPatchPrivateRegionRequest calls the generic PatchPrivateRegion builder with application/json body
+func NewPatchPrivateRegionRequest(server string, id string, body PatchPrivateRegionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewPatchPrivateRegionRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewPatchPrivateRegionRequestWithBody generates requests for PatchPrivateRegion with any type of body
+func NewPatchPrivateRegionRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/privateRegions/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetPrivateRegionHealthRequest generates requests for GetPrivateRegionHealth
+func NewGetPrivateRegionHealthRequest(server string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/privateRegions/%s/health", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetPrivateRegionHelmValuesRequest generates requests for GetPrivateRegionHelmValues
+func NewGetPrivateRegionHelmValuesRequest(server string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/v2/missionControl/privateRegions/%s/helmValues", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -4888,152 +10672,295 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 	// GetDatacentersWithResponse request
-	GetDatacentersWithResponse(ctx context.Context, params *GetDatacentersParams, reqEditors ...RequestEditorFn) (*GetDatacentersResponse, error)
+	GetDatacentersWithResponse(ctx context.Context, params *GetDatacentersParams, reqEditors ...RequestEditorFn) (*GetDatacentersResp, error)
 
 	// GetDatacenterWithResponse request
-	GetDatacenterWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetDatacenterResponse, error)
+	GetDatacenterWithResponse(ctx context.Context, id string, params *GetDatacenterParams, reqEditors ...RequestEditorFn) (*GetDatacenterResp, error)
 
 	// UpdateDatacenterWithBodyWithResponse request with any body
-	UpdateDatacenterWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateDatacenterResponse, error)
+	UpdateDatacenterWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateDatacenterResp, error)
 
-	UpdateDatacenterWithResponse(ctx context.Context, id string, body UpdateDatacenterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateDatacenterResponse, error)
+	UpdateDatacenterWithResponse(ctx context.Context, id string, body UpdateDatacenterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateDatacenterResp, error)
 
-	// GetEventBrokerServiceVersionsWithResponse request
-	GetEventBrokerServiceVersionsWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetEventBrokerServiceVersionsResponse, error)
+	// GetEventBrokerServiceVersionsByDatacenterWithResponse request
+	GetEventBrokerServiceVersionsByDatacenterWithResponse(ctx context.Context, id string, params *GetEventBrokerServiceVersionsByDatacenterParams, reqEditors ...RequestEditorFn) (*GetEventBrokerServiceVersionsByDatacenterResp, error)
 
 	// GetVersionsWithResponse request
-	GetVersionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetVersionsResponse, error)
+	GetVersionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetVersionsResp, error)
 
 	// GetEnvironmentWithResponse request
-	GetEnvironmentWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetEnvironmentResponse, error)
+	GetEnvironmentWithResponse(ctx context.Context, id string, params *GetEnvironmentParams, reqEditors ...RequestEditorFn) (*GetEnvironmentResp, error)
 
 	// PatchEnvironmentWithBodyWithResponse request with any body
-	PatchEnvironmentWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchEnvironmentResponse, error)
+	PatchEnvironmentWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchEnvironmentResp, error)
 
-	PatchEnvironmentWithResponse(ctx context.Context, id string, body PatchEnvironmentJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchEnvironmentResponse, error)
+	PatchEnvironmentWithResponse(ctx context.Context, id string, body PatchEnvironmentJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchEnvironmentResp, error)
+
+	// GetEventBrokerServiceVersionsWithResponse request
+	GetEventBrokerServiceVersionsWithResponse(ctx context.Context, params *GetEventBrokerServiceVersionsParams, reqEditors ...RequestEditorFn) (*GetEventBrokerServiceVersionsResp, error)
 
 	// GetServicesWithResponse request
-	GetServicesWithResponse(ctx context.Context, params *GetServicesParams, reqEditors ...RequestEditorFn) (*GetServicesResponse, error)
+	GetServicesWithResponse(ctx context.Context, params *GetServicesParams, reqEditors ...RequestEditorFn) (*GetServicesResp, error)
 
 	// CreateServiceWithBodyWithResponse request with any body
-	CreateServiceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServiceResponse, error)
+	CreateServiceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServiceResp, error)
 
-	CreateServiceWithResponse(ctx context.Context, body CreateServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServiceResponse, error)
+	CreateServiceWithResponse(ctx context.Context, body CreateServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServiceResp, error)
+
+	// GetMultiResourceOperationWithResponse request
+	GetMultiResourceOperationWithResponse(ctx context.Context, operationId string, params *GetMultiResourceOperationParams, reqEditors ...RequestEditorFn) (*GetMultiResourceOperationResp, error)
+
+	// InitiateReplicationPSKWithBodyWithResponse request with any body
+	InitiateReplicationPSKWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*InitiateReplicationPSKResp, error)
+
+	InitiateReplicationPSKWithResponse(ctx context.Context, body InitiateReplicationPSKJSONRequestBody, reqEditors ...RequestEditorFn) (*InitiateReplicationPSKResp, error)
 
 	// DeleteServiceWithResponse request
-	DeleteServiceWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*DeleteServiceResponse, error)
+	DeleteServiceWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*DeleteServiceResp, error)
 
 	// GetServiceWithResponse request
-	GetServiceWithResponse(ctx context.Context, id string, params *GetServiceParams, reqEditors ...RequestEditorFn) (*GetServiceResponse, error)
+	GetServiceWithResponse(ctx context.Context, id string, params *GetServiceParams, reqEditors ...RequestEditorFn) (*GetServiceResp, error)
 
 	// UpdateServiceWithBodyWithResponse request with any body
-	UpdateServiceWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateServiceResponse, error)
+	UpdateServiceWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateServiceResp, error)
 
-	UpdateServiceWithResponse(ctx context.Context, id string, body UpdateServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateServiceResponse, error)
+	UpdateServiceWithResponse(ctx context.Context, id string, body UpdateServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateServiceResp, error)
 
 	// CloneServiceWithBodyWithResponse request with any body
-	CloneServiceWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CloneServiceResponse, error)
+	CloneServiceWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CloneServiceResp, error)
 
-	CloneServiceWithResponse(ctx context.Context, id string, body CloneServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CloneServiceResponse, error)
+	CloneServiceWithResponse(ctx context.Context, id string, body CloneServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CloneServiceResp, error)
 
 	// DeleteResourceWithResponse request
-	DeleteResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, reqEditors ...RequestEditorFn) (*DeleteResourceResponse, error)
+	DeleteResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, reqEditors ...RequestEditorFn) (*DeleteResourceResp, error)
 
 	// GetResourceWithResponse request
-	GetResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, params *GetResourceParams, reqEditors ...RequestEditorFn) (*GetResourceResponse, error)
+	GetResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, params *GetResourceParams, reqEditors ...RequestEditorFn) (*GetResourceResp, error)
 
 	// PatchResourceWithBodyWithResponse request with any body
-	PatchResourceWithBodyWithResponse(ctx context.Context, serviceId string, resourcePath string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchResourceResponse, error)
+	PatchResourceWithBodyWithResponse(ctx context.Context, serviceId string, resourcePath string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchResourceResp, error)
 
-	PatchResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, body PatchResourceJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchResourceResponse, error)
+	PatchResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, body PatchResourceJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchResourceResp, error)
 
 	// CreateResourceWithBodyWithResponse request with any body
-	CreateResourceWithBodyWithResponse(ctx context.Context, serviceId string, resourcePath string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateResourceResponse, error)
+	CreateResourceWithBodyWithResponse(ctx context.Context, serviceId string, resourcePath string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateResourceResp, error)
 
-	CreateResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, body CreateResourceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateResourceResponse, error)
+	CreateResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, body CreateResourceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateResourceResp, error)
 
 	// ReplaceResourceWithBodyWithResponse request with any body
-	ReplaceResourceWithBodyWithResponse(ctx context.Context, serviceId string, resourcePath string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceResourceResponse, error)
+	ReplaceResourceWithBodyWithResponse(ctx context.Context, serviceId string, resourcePath string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceResourceResp, error)
 
-	ReplaceResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, body ReplaceResourceJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceResourceResponse, error)
+	ReplaceResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, body ReplaceResourceJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceResourceResp, error)
+
+	// GetBrokerStateByServiceIdWithResponse request
+	GetBrokerStateByServiceIdWithResponse(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*GetBrokerStateByServiceIdResp, error)
 
 	// GetClientProfilesWithResponse request
-	GetClientProfilesWithResponse(ctx context.Context, serviceId string, params *GetClientProfilesParams, reqEditors ...RequestEditorFn) (*GetClientProfilesResponse, error)
+	GetClientProfilesWithResponse(ctx context.Context, serviceId string, params *GetClientProfilesParams, reqEditors ...RequestEditorFn) (*GetClientProfilesResp, error)
 
 	// CreateClientProfileWithBodyWithResponse request with any body
-	CreateClientProfileWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientProfileResponse, error)
+	CreateClientProfileWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientProfileResp, error)
 
-	CreateClientProfileWithResponse(ctx context.Context, serviceId string, body CreateClientProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientProfileResponse, error)
+	CreateClientProfileWithResponse(ctx context.Context, serviceId string, body CreateClientProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientProfileResp, error)
 
 	// DeleteClientProfileWithResponse request
-	DeleteClientProfileWithResponse(ctx context.Context, serviceId string, name string, reqEditors ...RequestEditorFn) (*DeleteClientProfileResponse, error)
+	DeleteClientProfileWithResponse(ctx context.Context, serviceId string, name string, reqEditors ...RequestEditorFn) (*DeleteClientProfileResp, error)
 
 	// GetClientProfileWithResponse request
-	GetClientProfileWithResponse(ctx context.Context, serviceId string, name string, reqEditors ...RequestEditorFn) (*GetClientProfileResponse, error)
+	GetClientProfileWithResponse(ctx context.Context, serviceId string, name string, reqEditors ...RequestEditorFn) (*GetClientProfileResp, error)
 
 	// UpdateClientProfileWithBodyWithResponse request with any body
-	UpdateClientProfileWithBodyWithResponse(ctx context.Context, serviceId string, name string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientProfileResponse, error)
+	UpdateClientProfileWithBodyWithResponse(ctx context.Context, serviceId string, name string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientProfileResp, error)
 
-	UpdateClientProfileWithResponse(ctx context.Context, serviceId string, name string, body UpdateClientProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClientProfileResponse, error)
+	UpdateClientProfileWithResponse(ctx context.Context, serviceId string, name string, body UpdateClientProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClientProfileResp, error)
 
 	// ReplaceClientProfileWithBodyWithResponse request with any body
-	ReplaceClientProfileWithBodyWithResponse(ctx context.Context, serviceId string, name string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceClientProfileResponse, error)
+	ReplaceClientProfileWithBodyWithResponse(ctx context.Context, serviceId string, name string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceClientProfileResp, error)
 
-	ReplaceClientProfileWithResponse(ctx context.Context, serviceId string, name string, body ReplaceClientProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceClientProfileResponse, error)
+	ReplaceClientProfileWithResponse(ctx context.Context, serviceId string, name string, body ReplaceClientProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceClientProfileResp, error)
+
+	// GetConnectionEndpointsWithResponse request
+	GetConnectionEndpointsWithResponse(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*GetConnectionEndpointsResp, error)
+
+	// CreateConnectionEndpointWithBodyWithResponse request with any body
+	CreateConnectionEndpointWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateConnectionEndpointResp, error)
+
+	CreateConnectionEndpointWithResponse(ctx context.Context, serviceId string, body CreateConnectionEndpointJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateConnectionEndpointResp, error)
+
+	// DeleteConnectionEndpointWithResponse request
+	DeleteConnectionEndpointWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, reqEditors ...RequestEditorFn) (*DeleteConnectionEndpointResp, error)
+
+	// GetConnectionEndpointWithResponse request
+	GetConnectionEndpointWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, reqEditors ...RequestEditorFn) (*GetConnectionEndpointResp, error)
+
+	// UpdateConnectionEndpointWithBodyWithResponse request with any body
+	UpdateConnectionEndpointWithBodyWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateConnectionEndpointResp, error)
+
+	UpdateConnectionEndpointWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, body UpdateConnectionEndpointJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateConnectionEndpointResp, error)
+
+	// GetConnectionEndpointDnsNamesWithResponse request
+	GetConnectionEndpointDnsNamesWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, reqEditors ...RequestEditorFn) (*GetConnectionEndpointDnsNamesResp, error)
+
+	// CreateConnectionEndpointDnsNameWithBodyWithResponse request with any body
+	CreateConnectionEndpointDnsNameWithBodyWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateConnectionEndpointDnsNameResp, error)
+
+	CreateConnectionEndpointDnsNameWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, body CreateConnectionEndpointDnsNameJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateConnectionEndpointDnsNameResp, error)
+
+	// DeleteConnectionEndpointDnsNameWithResponse request
+	DeleteConnectionEndpointDnsNameWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, dnsName string, reqEditors ...RequestEditorFn) (*DeleteConnectionEndpointDnsNameResp, error)
+
+	// MoveConnectionEndpointDnsNameWithBodyWithResponse request with any body
+	MoveConnectionEndpointDnsNameWithBodyWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, dnsName string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*MoveConnectionEndpointDnsNameResp, error)
+
+	MoveConnectionEndpointDnsNameWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, dnsName string, body MoveConnectionEndpointDnsNameJSONRequestBody, reqEditors ...RequestEditorFn) (*MoveConnectionEndpointDnsNameResp, error)
 
 	// UpdateMessageSpoolWithBodyWithResponse request with any body
-	UpdateMessageSpoolWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateMessageSpoolResponse, error)
+	UpdateMessageSpoolWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateMessageSpoolResp, error)
 
-	UpdateMessageSpoolWithResponse(ctx context.Context, serviceId string, body UpdateMessageSpoolJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateMessageSpoolResponse, error)
+	UpdateMessageSpoolWithResponse(ctx context.Context, serviceId string, body UpdateMessageSpoolJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateMessageSpoolResp, error)
+
+	// GetServiceOperationsWithResponse request
+	GetServiceOperationsWithResponse(ctx context.Context, serviceId string, params *GetServiceOperationsParams, reqEditors ...RequestEditorFn) (*GetServiceOperationsResp, error)
 
 	// GetServiceOperationWithResponse request
-	GetServiceOperationWithResponse(ctx context.Context, serviceId string, operationId string, reqEditors ...RequestEditorFn) (*GetServiceOperationResponse, error)
+	GetServiceOperationWithResponse(ctx context.Context, serviceId string, operationId string, params *GetServiceOperationParams, reqEditors ...RequestEditorFn) (*GetServiceOperationResp, error)
+
+	// GetRecommendedEventBrokerServicesV2WithResponse request
+	GetRecommendedEventBrokerServicesV2WithResponse(ctx context.Context, serviceId string, params *GetRecommendedEventBrokerServicesV2Params, reqEditors ...RequestEditorFn) (*GetRecommendedEventBrokerServicesV2Resp, error)
 
 	// DisableOrEnableWithBodyWithResponse request with any body
-	DisableOrEnableWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DisableOrEnableResponse, error)
+	DisableOrEnableWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DisableOrEnableResp, error)
 
-	DisableOrEnableWithResponse(ctx context.Context, serviceId string, body DisableOrEnableJSONRequestBody, reqEditors ...RequestEditorFn) (*DisableOrEnableResponse, error)
+	DisableOrEnableWithResponse(ctx context.Context, serviceId string, body DisableOrEnableJSONRequestBody, reqEditors ...RequestEditorFn) (*DisableOrEnableResp, error)
 
 	// GetAllServerCertificatesWithResponse request
-	GetAllServerCertificatesWithResponse(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*GetAllServerCertificatesResponse, error)
+	GetAllServerCertificatesWithResponse(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*GetAllServerCertificatesResp, error)
 
 	// UploadServerCertificateWithBodyWithResponse request with any body
-	UploadServerCertificateWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadServerCertificateResponse, error)
+	UploadServerCertificateWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadServerCertificateResp, error)
 
-	UploadServerCertificateWithResponse(ctx context.Context, serviceId string, body UploadServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*UploadServerCertificateResponse, error)
+	UploadServerCertificateWithResponse(ctx context.Context, serviceId string, body UploadServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*UploadServerCertificateResp, error)
 
 	// DeleteServerCertificateByIdWithResponse request
-	DeleteServerCertificateByIdWithResponse(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*DeleteServerCertificateByIdResponse, error)
+	DeleteServerCertificateByIdWithResponse(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*DeleteServerCertificateByIdResp, error)
 
 	// GetServerCertificateByIdWithResponse request
-	GetServerCertificateByIdWithResponse(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*GetServerCertificateByIdResponse, error)
+	GetServerCertificateByIdWithResponse(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*GetServerCertificateByIdResp, error)
 
 	// InstallServerCertificateWithBodyWithResponse request with any body
-	InstallServerCertificateWithBodyWithResponse(ctx context.Context, serviceId string, certificateId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*InstallServerCertificateResponse, error)
+	InstallServerCertificateWithBodyWithResponse(ctx context.Context, serviceId string, certificateId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*InstallServerCertificateResp, error)
 
-	InstallServerCertificateWithResponse(ctx context.Context, serviceId string, certificateId string, body InstallServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*InstallServerCertificateResponse, error)
+	InstallServerCertificateWithResponse(ctx context.Context, serviceId string, certificateId string, body InstallServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*InstallServerCertificateResp, error)
+
+	// SwitchoverBrokerWithResponse request
+	SwitchoverBrokerWithResponse(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*SwitchoverBrokerResp, error)
+
+	// GetUpgradeReadinessWithResponse request
+	GetUpgradeReadinessWithResponse(ctx context.Context, serviceId string, params *GetUpgradeReadinessParams, reqEditors ...RequestEditorFn) (*GetUpgradeReadinessResp, error)
+
+	// GetEventBrokerServiceUpgradesWithResponse request
+	GetEventBrokerServiceUpgradesWithResponse(ctx context.Context, serviceId string, params *GetEventBrokerServiceUpgradesParams, reqEditors ...RequestEditorFn) (*GetEventBrokerServiceUpgradesResp, error)
+
+	// CreateEventBrokerServiceUpgradeWithBodyWithResponse request with any body
+	CreateEventBrokerServiceUpgradeWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateEventBrokerServiceUpgradeResp, error)
+
+	CreateEventBrokerServiceUpgradeWithResponse(ctx context.Context, serviceId string, body CreateEventBrokerServiceUpgradeJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateEventBrokerServiceUpgradeResp, error)
+
+	// GetEventBrokerServiceUpgradeWithResponse request
+	GetEventBrokerServiceUpgradeWithResponse(ctx context.Context, serviceId string, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*GetEventBrokerServiceUpgradeResp, error)
+
+	// GetMaintenanceActivitiesWithResponse request
+	GetMaintenanceActivitiesWithResponse(ctx context.Context, params *GetMaintenanceActivitiesParams, reqEditors ...RequestEditorFn) (*GetMaintenanceActivitiesResp, error)
+
+	// GetMaintenanceActivityWithResponse request
+	GetMaintenanceActivityWithResponse(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*GetMaintenanceActivityResp, error)
+
+	// CancelMaintenanceActivityWithResponse request
+	CancelMaintenanceActivityWithResponse(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*CancelMaintenanceActivityResp, error)
+
+	// InitiatePostMaintenanceCheckWithResponse request
+	InitiatePostMaintenanceCheckWithResponse(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*InitiatePostMaintenanceCheckResp, error)
+
+	// InitiatePreMaintenanceCheckWithResponse request
+	InitiatePreMaintenanceCheckWithResponse(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*InitiatePreMaintenanceCheckResp, error)
+
+	// GetMaintenanceSchedulesWithResponse request
+	GetMaintenanceSchedulesWithResponse(ctx context.Context, params *GetMaintenanceSchedulesParams, reqEditors ...RequestEditorFn) (*GetMaintenanceSchedulesResp, error)
+
+	// CreateMaintenanceScheduleWithBodyWithResponse request with any body
+	CreateMaintenanceScheduleWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMaintenanceScheduleResp, error)
+
+	CreateMaintenanceScheduleWithResponse(ctx context.Context, body CreateMaintenanceScheduleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMaintenanceScheduleResp, error)
+
+	// DeleteMaintenanceScheduleWithResponse request
+	DeleteMaintenanceScheduleWithResponse(ctx context.Context, maintenanceScheduleId string, reqEditors ...RequestEditorFn) (*DeleteMaintenanceScheduleResp, error)
+
+	// GetMaintenanceScheduleWithResponse request
+	GetMaintenanceScheduleWithResponse(ctx context.Context, maintenanceScheduleId string, reqEditors ...RequestEditorFn) (*GetMaintenanceScheduleResp, error)
+
+	// GetMaintenanceWindowsWithResponse request
+	GetMaintenanceWindowsWithResponse(ctx context.Context, params *GetMaintenanceWindowsParams, reqEditors ...RequestEditorFn) (*GetMaintenanceWindowsResp, error)
+
+	// CreateMaintenanceWindowWithBodyWithResponse request with any body
+	CreateMaintenanceWindowWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMaintenanceWindowResp, error)
+
+	CreateMaintenanceWindowWithResponse(ctx context.Context, body CreateMaintenanceWindowJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMaintenanceWindowResp, error)
+
+	// DeleteMaintenanceWindowWithResponse request
+	DeleteMaintenanceWindowWithResponse(ctx context.Context, maintenanceWindowId string, reqEditors ...RequestEditorFn) (*DeleteMaintenanceWindowResp, error)
+
+	// GetMaintenanceWindowWithResponse request
+	GetMaintenanceWindowWithResponse(ctx context.Context, maintenanceWindowId string, params *GetMaintenanceWindowParams, reqEditors ...RequestEditorFn) (*GetMaintenanceWindowResp, error)
+
+	// UpdateMaintenanceWindowWithBodyWithResponse request with any body
+	UpdateMaintenanceWindowWithBodyWithResponse(ctx context.Context, maintenanceWindowId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateMaintenanceWindowResp, error)
+
+	UpdateMaintenanceWindowWithResponse(ctx context.Context, maintenanceWindowId string, body UpdateMaintenanceWindowJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateMaintenanceWindowResp, error)
 
 	// GetLimitsWithResponse request
-	GetLimitsWithResponse(ctx context.Context, orgId string, reqEditors ...RequestEditorFn) (*GetLimitsResponse, error)
+	GetLimitsWithResponse(ctx context.Context, orgId string, reqEditors ...RequestEditorFn) (*GetLimitsResp, error)
+
+	// CreateCustomerControlledClusterWithBodyWithResponse request with any body
+	CreateCustomerControlledClusterWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCustomerControlledClusterResp, error)
+
+	CreateCustomerControlledClusterWithResponse(ctx context.Context, body CreateCustomerControlledClusterJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCustomerControlledClusterResp, error)
+
+	// DeletePrivateRegionWithResponse request
+	DeletePrivateRegionWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*DeletePrivateRegionResp, error)
+
+	// GetPrivateRegionWithResponse request
+	GetPrivateRegionWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetPrivateRegionResp, error)
+
+	// PatchPrivateRegionWithBodyWithResponse request with any body
+	PatchPrivateRegionWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchPrivateRegionResp, error)
+
+	PatchPrivateRegionWithResponse(ctx context.Context, id string, body PatchPrivateRegionJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchPrivateRegionResp, error)
+
+	// GetPrivateRegionHealthWithResponse request
+	GetPrivateRegionHealthWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetPrivateRegionHealthResp, error)
+
+	// GetPrivateRegionHelmValuesWithResponse request
+	GetPrivateRegionHelmValuesWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetPrivateRegionHelmValuesResp, error)
 
 	// GetServiceClassesWithResponse request
-	GetServiceClassesWithResponse(ctx context.Context, params *GetServiceClassesParams, reqEditors ...RequestEditorFn) (*GetServiceClassesResponse, error)
+	GetServiceClassesWithResponse(ctx context.Context, params *GetServiceClassesParams, reqEditors ...RequestEditorFn) (*GetServiceClassesResp, error)
 
 	// GetServiceClassWithResponse request
-	GetServiceClassWithResponse(ctx context.Context, id GetServiceClassParamsId, params *GetServiceClassParams, reqEditors ...RequestEditorFn) (*GetServiceClassResponse, error)
+	GetServiceClassWithResponse(ctx context.Context, id GetServiceClassParamsId, params *GetServiceClassParams, reqEditors ...RequestEditorFn) (*GetServiceClassResp, error)
 }
 
-type GetDatacentersResponse struct {
+type GetDatacentersResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DatacentersResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetDatacentersResponse) Status() string {
+func (r GetDatacentersResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5041,25 +10968,26 @@ func (r GetDatacentersResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetDatacentersResponse) StatusCode() int {
+func (r GetDatacentersResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetDatacenterResponse struct {
+type GetDatacenterResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DatacenterResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetDatacenterResponse) Status() string {
+func (r GetDatacenterResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5067,25 +10995,26 @@ func (r GetDatacenterResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetDatacenterResponse) StatusCode() int {
+func (r GetDatacenterResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type UpdateDatacenterResponse struct {
+type UpdateDatacenterResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DatacenterResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r UpdateDatacenterResponse) Status() string {
+func (r UpdateDatacenterResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5093,24 +11022,25 @@ func (r UpdateDatacenterResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r UpdateDatacenterResponse) StatusCode() int {
+func (r UpdateDatacenterResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetEventBrokerServiceVersionsResponse struct {
+type GetEventBrokerServiceVersionsByDatacenterResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *EventBrokerServiceVersionsResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetEventBrokerServiceVersionsResponse) Status() string {
+func (r GetEventBrokerServiceVersionsByDatacenterResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5118,25 +11048,26 @@ func (r GetEventBrokerServiceVersionsResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetEventBrokerServiceVersionsResponse) StatusCode() int {
+func (r GetEventBrokerServiceVersionsByDatacenterResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetVersionsResponse struct {
+type GetVersionsResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *EventBrokerVersionsResponse
 	JSON400      *ErrorResponse
 	JSON401      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetVersionsResponse) Status() string {
+func (r GetVersionsResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5144,24 +11075,25 @@ func (r GetVersionsResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetVersionsResponse) StatusCode() int {
+func (r GetVersionsResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetEnvironmentResponse struct {
+type GetEnvironmentResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetEnvironmentResponse) Status() string {
+func (r GetEnvironmentResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5169,24 +11101,25 @@ func (r GetEnvironmentResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetEnvironmentResponse) StatusCode() int {
+func (r GetEnvironmentResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type PatchEnvironmentResponse struct {
+type PatchEnvironmentResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r PatchEnvironmentResponse) Status() string {
+func (r PatchEnvironmentResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5194,24 +11127,51 @@ func (r PatchEnvironmentResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r PatchEnvironmentResponse) StatusCode() int {
+func (r PatchEnvironmentResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetServicesResponse struct {
+type GetEventBrokerServiceVersionsResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *EventBrokerServiceVersionsResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetEventBrokerServiceVersionsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetEventBrokerServiceVersionsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetServicesResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ServiceSummaryResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetServicesResponse) Status() string {
+func (r GetServicesResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5219,25 +11179,26 @@ func (r GetServicesResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetServicesResponse) StatusCode() int {
+func (r GetServicesResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type CreateServiceResponse struct {
+type CreateServiceResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON202      *OperationResponse
 	JSON400      *ErrorResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateServiceResponse) Status() string {
+func (r CreateServiceResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5245,25 +11206,26 @@ func (r CreateServiceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateServiceResponse) StatusCode() int {
+func (r CreateServiceResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type DeleteServiceResponse struct {
+type GetMultiResourceOperationResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON202      *OperationResponse
+	JSON400      *ErrorResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r DeleteServiceResponse) Status() string {
+func (r GetMultiResourceOperationResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5271,25 +11233,80 @@ func (r DeleteServiceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeleteServiceResponse) StatusCode() int {
+func (r GetMultiResourceOperationResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetServiceResponse struct {
+type InitiateReplicationPSKResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r InitiateReplicationPSKResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r InitiateReplicationPSKResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteServiceResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON202      *OperationResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteServiceResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteServiceResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetServiceResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ServiceResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetServiceResponse) Status() string {
+func (r GetServiceResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5297,14 +11314,14 @@ func (r GetServiceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetServiceResponse) StatusCode() int {
+func (r GetServiceResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type UpdateServiceResponse struct {
+type UpdateServiceResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ServiceResponse
@@ -5312,11 +11329,12 @@ type UpdateServiceResponse struct {
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r UpdateServiceResponse) Status() string {
+func (r UpdateServiceResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5324,25 +11342,26 @@ func (r UpdateServiceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r UpdateServiceResponse) StatusCode() int {
+func (r UpdateServiceResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type CloneServiceResponse struct {
+type CloneServiceResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON202      *OperationResponse
 	JSON400      *ErrorResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r CloneServiceResponse) Status() string {
+func (r CloneServiceResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5350,23 +11369,24 @@ func (r CloneServiceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CloneServiceResponse) StatusCode() int {
+func (r CloneServiceResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type DeleteResourceResponse struct {
+type DeleteResourceResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *string
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r DeleteResourceResponse) Status() string {
+func (r DeleteResourceResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5374,23 +11394,24 @@ func (r DeleteResourceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeleteResourceResponse) StatusCode() int {
+func (r DeleteResourceResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetResourceResponse struct {
+type GetResourceResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *string
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetResourceResponse) Status() string {
+func (r GetResourceResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5398,49 +11419,25 @@ func (r GetResourceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetResourceResponse) StatusCode() int {
+func (r GetResourceResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type PatchResourceResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *string
-	JSON400      *BrokerSempProxyError
-	JSON401      *ErrorResponse
-	JSON403      *ErrorResponse
-}
-
-// Status returns HTTPResponse.Status
-func (r PatchResourceResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r PatchResourceResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type CreateResourceResponse struct {
+type PatchResourceResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *string
 	JSON400      *BrokerSempProxyError
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateResourceResponse) Status() string {
+func (r PatchResourceResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5448,24 +11445,25 @@ func (r CreateResourceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateResourceResponse) StatusCode() int {
+func (r PatchResourceResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type ReplaceResourceResponse struct {
+type CreateResourceResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *string
 	JSON400      *BrokerSempProxyError
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r ReplaceResourceResponse) Status() string {
+func (r CreateResourceResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5473,24 +11471,79 @@ func (r ReplaceResourceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ReplaceResourceResponse) StatusCode() int {
+func (r CreateResourceResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetClientProfilesResponse struct {
+type ReplaceResourceResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *string
+	JSON400      *BrokerSempProxyError
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r ReplaceResourceResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ReplaceResourceResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetBrokerStateByServiceIdResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *BrokerStateResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetBrokerStateByServiceIdResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetBrokerStateByServiceIdResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetClientProfilesResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ClientProfilesResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetClientProfilesResponse) Status() string {
+func (r GetClientProfilesResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5498,25 +11551,26 @@ func (r GetClientProfilesResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetClientProfilesResponse) StatusCode() int {
+func (r GetClientProfilesResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type CreateClientProfileResponse struct {
+type CreateClientProfileResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON202      *OperationResponse
 	JSON400      *ErrorResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateClientProfileResponse) Status() string {
+func (r CreateClientProfileResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5524,25 +11578,26 @@ func (r CreateClientProfileResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateClientProfileResponse) StatusCode() int {
+func (r CreateClientProfileResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type DeleteClientProfileResponse struct {
+type DeleteClientProfileResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON202      *OperationResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r DeleteClientProfileResponse) Status() string {
+func (r DeleteClientProfileResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5550,25 +11605,26 @@ func (r DeleteClientProfileResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeleteClientProfileResponse) StatusCode() int {
+func (r DeleteClientProfileResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetClientProfileResponse struct {
+type GetClientProfileResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ClientProfileResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetClientProfileResponse) Status() string {
+func (r GetClientProfileResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5576,14 +11632,14 @@ func (r GetClientProfileResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetClientProfileResponse) StatusCode() int {
+func (r GetClientProfileResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type UpdateClientProfileResponse struct {
+type UpdateClientProfileResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON202      *OperationResponse
@@ -5591,11 +11647,12 @@ type UpdateClientProfileResponse struct {
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r UpdateClientProfileResponse) Status() string {
+func (r UpdateClientProfileResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5603,14 +11660,14 @@ func (r UpdateClientProfileResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r UpdateClientProfileResponse) StatusCode() int {
+func (r UpdateClientProfileResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type ReplaceClientProfileResponse struct {
+type ReplaceClientProfileResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON202      *OperationResponse
@@ -5618,11 +11675,12 @@ type ReplaceClientProfileResponse struct {
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r ReplaceClientProfileResponse) Status() string {
+func (r ReplaceClientProfileResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5630,14 +11688,42 @@ func (r ReplaceClientProfileResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ReplaceClientProfileResponse) StatusCode() int {
+func (r ReplaceClientProfileResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type UpdateMessageSpoolResponse struct {
+type GetConnectionEndpointsResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *ConnectionEndpointList
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetConnectionEndpointsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetConnectionEndpointsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CreateConnectionEndpointResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON202      *OperationResponse
@@ -5645,11 +11731,12 @@ type UpdateMessageSpoolResponse struct {
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r UpdateMessageSpoolResponse) Status() string {
+func (r CreateConnectionEndpointResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5657,25 +11744,277 @@ func (r UpdateMessageSpoolResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r UpdateMessageSpoolResponse) StatusCode() int {
+func (r CreateConnectionEndpointResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetServiceOperationResponse struct {
+type DeleteConnectionEndpointResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON202      *OperationResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteConnectionEndpointResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteConnectionEndpointResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetConnectionEndpointResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *GetConnectionEndpointResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetConnectionEndpointResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetConnectionEndpointResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type UpdateConnectionEndpointResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON202      *OperationResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateConnectionEndpointResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateConnectionEndpointResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetConnectionEndpointDnsNamesResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *GetAllConnectionEndpointDnsNamesResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetConnectionEndpointDnsNamesResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetConnectionEndpointDnsNamesResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CreateConnectionEndpointDnsNameResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON202      *OperationResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateConnectionEndpointDnsNameResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateConnectionEndpointDnsNameResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteConnectionEndpointDnsNameResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON202      *OperationResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteConnectionEndpointDnsNameResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteConnectionEndpointDnsNameResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type MoveConnectionEndpointDnsNameResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON202      *OperationResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r MoveConnectionEndpointDnsNameResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r MoveConnectionEndpointDnsNameResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type UpdateMessageSpoolResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON202      *OperationResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateMessageSpoolResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateMessageSpoolResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetServiceOperationsResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *OperationsResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetServiceOperationsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetServiceOperationsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetServiceOperationResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *OperationResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetServiceOperationResponse) Status() string {
+func (r GetServiceOperationResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5683,23 +12022,50 @@ func (r GetServiceOperationResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetServiceOperationResponse) StatusCode() int {
+func (r GetServiceOperationResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type DisableOrEnableResponse struct {
+type GetRecommendedEventBrokerServicesV2Resp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *RecommendedEventEventBrokerServiceVersionsResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetRecommendedEventBrokerServicesV2Resp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetRecommendedEventBrokerServicesV2Resp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DisableOrEnableResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *BasicAuthAvailabilityResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r DisableOrEnableResponse) Status() string {
+func (r DisableOrEnableResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5707,14 +12073,14 @@ func (r DisableOrEnableResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DisableOrEnableResponse) StatusCode() int {
+func (r DisableOrEnableResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetAllServerCertificatesResponse struct {
+type GetAllServerCertificatesResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ServerCertificateSummaryResponse
@@ -5722,10 +12088,11 @@ type GetAllServerCertificatesResponse struct {
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetAllServerCertificatesResponse) Status() string {
+func (r GetAllServerCertificatesResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5733,14 +12100,14 @@ func (r GetAllServerCertificatesResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetAllServerCertificatesResponse) StatusCode() int {
+func (r GetAllServerCertificatesResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type UploadServerCertificateResponse struct {
+type UploadServerCertificateResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON202      *OperationResponse
@@ -5748,10 +12115,11 @@ type UploadServerCertificateResponse struct {
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r UploadServerCertificateResponse) Status() string {
+func (r UploadServerCertificateResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5759,14 +12127,14 @@ func (r UploadServerCertificateResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r UploadServerCertificateResponse) StatusCode() int {
+func (r UploadServerCertificateResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type DeleteServerCertificateByIdResponse struct {
+type DeleteServerCertificateByIdResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON202      *OperationResponse
@@ -5774,10 +12142,11 @@ type DeleteServerCertificateByIdResponse struct {
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r DeleteServerCertificateByIdResponse) Status() string {
+func (r DeleteServerCertificateByIdResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5785,14 +12154,14 @@ func (r DeleteServerCertificateByIdResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeleteServerCertificateByIdResponse) StatusCode() int {
+func (r DeleteServerCertificateByIdResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetServerCertificateByIdResponse struct {
+type GetServerCertificateByIdResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ServerCertificateResponse
@@ -5800,10 +12169,11 @@ type GetServerCertificateByIdResponse struct {
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetServerCertificateByIdResponse) Status() string {
+func (r GetServerCertificateByIdResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5811,14 +12181,14 @@ func (r GetServerCertificateByIdResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetServerCertificateByIdResponse) StatusCode() int {
+func (r GetServerCertificateByIdResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type InstallServerCertificateResponse struct {
+type InstallServerCertificateResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON202      *OperationResponse
@@ -5826,10 +12196,11 @@ type InstallServerCertificateResponse struct {
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r InstallServerCertificateResponse) Status() string {
+func (r InstallServerCertificateResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5837,25 +12208,489 @@ func (r InstallServerCertificateResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r InstallServerCertificateResponse) StatusCode() int {
+func (r InstallServerCertificateResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetLimitsResponse struct {
+type SwitchoverBrokerResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON202      *OperationResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r SwitchoverBrokerResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SwitchoverBrokerResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetUpgradeReadinessResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *UpgradeReadinessResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON409      *UpgradeReadinessResponse
+	JSON422      *UpgradeReadinessResponse
+	JSON429      *UpgradeReadinessResponse
+	JSON503      *UpgradeReadinessResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetUpgradeReadinessResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetUpgradeReadinessResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetEventBrokerServiceUpgradesResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *MaintenanceActivityResponseList
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetEventBrokerServiceUpgradesResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetEventBrokerServiceUpgradesResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CreateEventBrokerServiceUpgradeResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON201      *MaintenanceActivityResponseDTO
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateEventBrokerServiceUpgradeResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateEventBrokerServiceUpgradeResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetEventBrokerServiceUpgradeResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *MaintenanceActivityResponseList
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetEventBrokerServiceUpgradeResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetEventBrokerServiceUpgradeResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetMaintenanceActivitiesResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *MaintenanceActivityResponseList
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetMaintenanceActivitiesResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetMaintenanceActivitiesResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetMaintenanceActivityResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *MaintenanceActivityResponseDTO
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetMaintenanceActivityResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetMaintenanceActivityResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CancelMaintenanceActivityResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r CancelMaintenanceActivityResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CancelMaintenanceActivityResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type InitiatePostMaintenanceCheckResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON202      *MaintenanceActivityResponseDTO
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r InitiatePostMaintenanceCheckResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r InitiatePostMaintenanceCheckResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type InitiatePreMaintenanceCheckResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON202      *MaintenanceActivityResponseDTO
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r InitiatePreMaintenanceCheckResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r InitiatePreMaintenanceCheckResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetMaintenanceSchedulesResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *MaintenanceScheduleResponseList
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetMaintenanceSchedulesResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetMaintenanceSchedulesResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CreateMaintenanceScheduleResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON201      *MaintenanceScheduleResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateMaintenanceScheduleResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateMaintenanceScheduleResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteMaintenanceScheduleResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteMaintenanceScheduleResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteMaintenanceScheduleResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetMaintenanceScheduleResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *MaintenanceScheduleResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetMaintenanceScheduleResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetMaintenanceScheduleResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetMaintenanceWindowsResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *MaintenanceWindowResponseList
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetMaintenanceWindowsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetMaintenanceWindowsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CreateMaintenanceWindowResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON201      *MaintenanceWindowResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateMaintenanceWindowResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateMaintenanceWindowResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteMaintenanceWindowResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteMaintenanceWindowResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteMaintenanceWindowResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetMaintenanceWindowResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *MaintenanceWindowResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetMaintenanceWindowResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetMaintenanceWindowResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type UpdateMaintenanceWindowResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *MaintenanceWindowResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateMaintenanceWindowResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateMaintenanceWindowResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetLimitsResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *MessageSpoolLimitClassesResponse
 	JSON400      *ErrorResponse
 	JSON401      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetLimitsResponse) Status() string {
+func (r GetLimitsResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5863,24 +12698,186 @@ func (r GetLimitsResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetLimitsResponse) StatusCode() int {
+func (r GetLimitsResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetServiceClassesResponse struct {
+type CreateCustomerControlledClusterResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON201      *PrivateRegionResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateCustomerControlledClusterResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateCustomerControlledClusterResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeletePrivateRegionResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON204      *string
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r DeletePrivateRegionResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeletePrivateRegionResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetPrivateRegionResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *PrivateRegionResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetPrivateRegionResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetPrivateRegionResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type PatchPrivateRegionResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON201      *PrivateRegionResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r PatchPrivateRegionResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PatchPrivateRegionResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetPrivateRegionHealthResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *MCAHealthResponse
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetPrivateRegionHealthResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetPrivateRegionHealthResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetPrivateRegionHelmValuesResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON400      *ErrorResponse
+	JSON401      *ErrorResponse
+	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetPrivateRegionHelmValuesResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetPrivateRegionHelmValuesResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetServiceClassesResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ServiceClassesResponse
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetServiceClassesResponse) Status() string {
+func (r GetServiceClassesResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5888,14 +12885,14 @@ func (r GetServiceClassesResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetServiceClassesResponse) StatusCode() int {
+func (r GetServiceClassesResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetServiceClassResponse struct {
+type GetServiceClassResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ServiceClassResponse
@@ -5903,11 +12900,12 @@ type GetServiceClassResponse struct {
 	JSON401      *ErrorResponse
 	JSON403      *ErrorResponse
 	JSON404      *ErrorResponse
+	JSON409      *ErrorResponse
 	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetServiceClassResponse) Status() string {
+func (r GetServiceClassResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5915,457 +12913,905 @@ func (r GetServiceClassResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetServiceClassResponse) StatusCode() int {
+func (r GetServiceClassResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-// GetDatacentersWithResponse request returning *GetDatacentersResponse
-func (c *ClientWithResponses) GetDatacentersWithResponse(ctx context.Context, params *GetDatacentersParams, reqEditors ...RequestEditorFn) (*GetDatacentersResponse, error) {
+// GetDatacentersWithResponse request returning *GetDatacentersResp
+func (c *ClientWithResponses) GetDatacentersWithResponse(ctx context.Context, params *GetDatacentersParams, reqEditors ...RequestEditorFn) (*GetDatacentersResp, error) {
 	rsp, err := c.GetDatacenters(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetDatacentersResponse(rsp)
+	return ParseGetDatacentersResp(rsp)
 }
 
-// GetDatacenterWithResponse request returning *GetDatacenterResponse
-func (c *ClientWithResponses) GetDatacenterWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetDatacenterResponse, error) {
-	rsp, err := c.GetDatacenter(ctx, id, reqEditors...)
+// GetDatacenterWithResponse request returning *GetDatacenterResp
+func (c *ClientWithResponses) GetDatacenterWithResponse(ctx context.Context, id string, params *GetDatacenterParams, reqEditors ...RequestEditorFn) (*GetDatacenterResp, error) {
+	rsp, err := c.GetDatacenter(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetDatacenterResponse(rsp)
+	return ParseGetDatacenterResp(rsp)
 }
 
-// UpdateDatacenterWithBodyWithResponse request with arbitrary body returning *UpdateDatacenterResponse
-func (c *ClientWithResponses) UpdateDatacenterWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateDatacenterResponse, error) {
+// UpdateDatacenterWithBodyWithResponse request with arbitrary body returning *UpdateDatacenterResp
+func (c *ClientWithResponses) UpdateDatacenterWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateDatacenterResp, error) {
 	rsp, err := c.UpdateDatacenterWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateDatacenterResponse(rsp)
+	return ParseUpdateDatacenterResp(rsp)
 }
 
-func (c *ClientWithResponses) UpdateDatacenterWithResponse(ctx context.Context, id string, body UpdateDatacenterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateDatacenterResponse, error) {
+func (c *ClientWithResponses) UpdateDatacenterWithResponse(ctx context.Context, id string, body UpdateDatacenterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateDatacenterResp, error) {
 	rsp, err := c.UpdateDatacenter(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateDatacenterResponse(rsp)
+	return ParseUpdateDatacenterResp(rsp)
 }
 
-// GetEventBrokerServiceVersionsWithResponse request returning *GetEventBrokerServiceVersionsResponse
-func (c *ClientWithResponses) GetEventBrokerServiceVersionsWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetEventBrokerServiceVersionsResponse, error) {
-	rsp, err := c.GetEventBrokerServiceVersions(ctx, id, reqEditors...)
+// GetEventBrokerServiceVersionsByDatacenterWithResponse request returning *GetEventBrokerServiceVersionsByDatacenterResp
+func (c *ClientWithResponses) GetEventBrokerServiceVersionsByDatacenterWithResponse(ctx context.Context, id string, params *GetEventBrokerServiceVersionsByDatacenterParams, reqEditors ...RequestEditorFn) (*GetEventBrokerServiceVersionsByDatacenterResp, error) {
+	rsp, err := c.GetEventBrokerServiceVersionsByDatacenter(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetEventBrokerServiceVersionsResponse(rsp)
+	return ParseGetEventBrokerServiceVersionsByDatacenterResp(rsp)
 }
 
-// GetVersionsWithResponse request returning *GetVersionsResponse
-func (c *ClientWithResponses) GetVersionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetVersionsResponse, error) {
+// GetVersionsWithResponse request returning *GetVersionsResp
+func (c *ClientWithResponses) GetVersionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetVersionsResp, error) {
 	rsp, err := c.GetVersions(ctx, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetVersionsResponse(rsp)
+	return ParseGetVersionsResp(rsp)
 }
 
-// GetEnvironmentWithResponse request returning *GetEnvironmentResponse
-func (c *ClientWithResponses) GetEnvironmentWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetEnvironmentResponse, error) {
-	rsp, err := c.GetEnvironment(ctx, id, reqEditors...)
+// GetEnvironmentWithResponse request returning *GetEnvironmentResp
+func (c *ClientWithResponses) GetEnvironmentWithResponse(ctx context.Context, id string, params *GetEnvironmentParams, reqEditors ...RequestEditorFn) (*GetEnvironmentResp, error) {
+	rsp, err := c.GetEnvironment(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetEnvironmentResponse(rsp)
+	return ParseGetEnvironmentResp(rsp)
 }
 
-// PatchEnvironmentWithBodyWithResponse request with arbitrary body returning *PatchEnvironmentResponse
-func (c *ClientWithResponses) PatchEnvironmentWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchEnvironmentResponse, error) {
+// PatchEnvironmentWithBodyWithResponse request with arbitrary body returning *PatchEnvironmentResp
+func (c *ClientWithResponses) PatchEnvironmentWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchEnvironmentResp, error) {
 	rsp, err := c.PatchEnvironmentWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParsePatchEnvironmentResponse(rsp)
+	return ParsePatchEnvironmentResp(rsp)
 }
 
-func (c *ClientWithResponses) PatchEnvironmentWithResponse(ctx context.Context, id string, body PatchEnvironmentJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchEnvironmentResponse, error) {
+func (c *ClientWithResponses) PatchEnvironmentWithResponse(ctx context.Context, id string, body PatchEnvironmentJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchEnvironmentResp, error) {
 	rsp, err := c.PatchEnvironment(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParsePatchEnvironmentResponse(rsp)
+	return ParsePatchEnvironmentResp(rsp)
 }
 
-// GetServicesWithResponse request returning *GetServicesResponse
-func (c *ClientWithResponses) GetServicesWithResponse(ctx context.Context, params *GetServicesParams, reqEditors ...RequestEditorFn) (*GetServicesResponse, error) {
+// GetEventBrokerServiceVersionsWithResponse request returning *GetEventBrokerServiceVersionsResp
+func (c *ClientWithResponses) GetEventBrokerServiceVersionsWithResponse(ctx context.Context, params *GetEventBrokerServiceVersionsParams, reqEditors ...RequestEditorFn) (*GetEventBrokerServiceVersionsResp, error) {
+	rsp, err := c.GetEventBrokerServiceVersions(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetEventBrokerServiceVersionsResp(rsp)
+}
+
+// GetServicesWithResponse request returning *GetServicesResp
+func (c *ClientWithResponses) GetServicesWithResponse(ctx context.Context, params *GetServicesParams, reqEditors ...RequestEditorFn) (*GetServicesResp, error) {
 	rsp, err := c.GetServices(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetServicesResponse(rsp)
+	return ParseGetServicesResp(rsp)
 }
 
-// CreateServiceWithBodyWithResponse request with arbitrary body returning *CreateServiceResponse
-func (c *ClientWithResponses) CreateServiceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServiceResponse, error) {
+// CreateServiceWithBodyWithResponse request with arbitrary body returning *CreateServiceResp
+func (c *ClientWithResponses) CreateServiceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServiceResp, error) {
 	rsp, err := c.CreateServiceWithBody(ctx, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateServiceResponse(rsp)
+	return ParseCreateServiceResp(rsp)
 }
 
-func (c *ClientWithResponses) CreateServiceWithResponse(ctx context.Context, body CreateServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServiceResponse, error) {
+func (c *ClientWithResponses) CreateServiceWithResponse(ctx context.Context, body CreateServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServiceResp, error) {
 	rsp, err := c.CreateService(ctx, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateServiceResponse(rsp)
+	return ParseCreateServiceResp(rsp)
 }
 
-// DeleteServiceWithResponse request returning *DeleteServiceResponse
-func (c *ClientWithResponses) DeleteServiceWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*DeleteServiceResponse, error) {
+// GetMultiResourceOperationWithResponse request returning *GetMultiResourceOperationResp
+func (c *ClientWithResponses) GetMultiResourceOperationWithResponse(ctx context.Context, operationId string, params *GetMultiResourceOperationParams, reqEditors ...RequestEditorFn) (*GetMultiResourceOperationResp, error) {
+	rsp, err := c.GetMultiResourceOperation(ctx, operationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMultiResourceOperationResp(rsp)
+}
+
+// InitiateReplicationPSKWithBodyWithResponse request with arbitrary body returning *InitiateReplicationPSKResp
+func (c *ClientWithResponses) InitiateReplicationPSKWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*InitiateReplicationPSKResp, error) {
+	rsp, err := c.InitiateReplicationPSKWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseInitiateReplicationPSKResp(rsp)
+}
+
+func (c *ClientWithResponses) InitiateReplicationPSKWithResponse(ctx context.Context, body InitiateReplicationPSKJSONRequestBody, reqEditors ...RequestEditorFn) (*InitiateReplicationPSKResp, error) {
+	rsp, err := c.InitiateReplicationPSK(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseInitiateReplicationPSKResp(rsp)
+}
+
+// DeleteServiceWithResponse request returning *DeleteServiceResp
+func (c *ClientWithResponses) DeleteServiceWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*DeleteServiceResp, error) {
 	rsp, err := c.DeleteService(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDeleteServiceResponse(rsp)
+	return ParseDeleteServiceResp(rsp)
 }
 
-// GetServiceWithResponse request returning *GetServiceResponse
-func (c *ClientWithResponses) GetServiceWithResponse(ctx context.Context, id string, params *GetServiceParams, reqEditors ...RequestEditorFn) (*GetServiceResponse, error) {
+// GetServiceWithResponse request returning *GetServiceResp
+func (c *ClientWithResponses) GetServiceWithResponse(ctx context.Context, id string, params *GetServiceParams, reqEditors ...RequestEditorFn) (*GetServiceResp, error) {
 	rsp, err := c.GetService(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetServiceResponse(rsp)
+	return ParseGetServiceResp(rsp)
 }
 
-// UpdateServiceWithBodyWithResponse request with arbitrary body returning *UpdateServiceResponse
-func (c *ClientWithResponses) UpdateServiceWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateServiceResponse, error) {
+// UpdateServiceWithBodyWithResponse request with arbitrary body returning *UpdateServiceResp
+func (c *ClientWithResponses) UpdateServiceWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateServiceResp, error) {
 	rsp, err := c.UpdateServiceWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateServiceResponse(rsp)
+	return ParseUpdateServiceResp(rsp)
 }
 
-func (c *ClientWithResponses) UpdateServiceWithResponse(ctx context.Context, id string, body UpdateServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateServiceResponse, error) {
+func (c *ClientWithResponses) UpdateServiceWithResponse(ctx context.Context, id string, body UpdateServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateServiceResp, error) {
 	rsp, err := c.UpdateService(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateServiceResponse(rsp)
+	return ParseUpdateServiceResp(rsp)
 }
 
-// CloneServiceWithBodyWithResponse request with arbitrary body returning *CloneServiceResponse
-func (c *ClientWithResponses) CloneServiceWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CloneServiceResponse, error) {
+// CloneServiceWithBodyWithResponse request with arbitrary body returning *CloneServiceResp
+func (c *ClientWithResponses) CloneServiceWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CloneServiceResp, error) {
 	rsp, err := c.CloneServiceWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCloneServiceResponse(rsp)
+	return ParseCloneServiceResp(rsp)
 }
 
-func (c *ClientWithResponses) CloneServiceWithResponse(ctx context.Context, id string, body CloneServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CloneServiceResponse, error) {
+func (c *ClientWithResponses) CloneServiceWithResponse(ctx context.Context, id string, body CloneServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CloneServiceResp, error) {
 	rsp, err := c.CloneService(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCloneServiceResponse(rsp)
+	return ParseCloneServiceResp(rsp)
 }
 
-// DeleteResourceWithResponse request returning *DeleteResourceResponse
-func (c *ClientWithResponses) DeleteResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, reqEditors ...RequestEditorFn) (*DeleteResourceResponse, error) {
+// DeleteResourceWithResponse request returning *DeleteResourceResp
+func (c *ClientWithResponses) DeleteResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, reqEditors ...RequestEditorFn) (*DeleteResourceResp, error) {
 	rsp, err := c.DeleteResource(ctx, serviceId, resourcePath, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDeleteResourceResponse(rsp)
+	return ParseDeleteResourceResp(rsp)
 }
 
-// GetResourceWithResponse request returning *GetResourceResponse
-func (c *ClientWithResponses) GetResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, params *GetResourceParams, reqEditors ...RequestEditorFn) (*GetResourceResponse, error) {
+// GetResourceWithResponse request returning *GetResourceResp
+func (c *ClientWithResponses) GetResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, params *GetResourceParams, reqEditors ...RequestEditorFn) (*GetResourceResp, error) {
 	rsp, err := c.GetResource(ctx, serviceId, resourcePath, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetResourceResponse(rsp)
+	return ParseGetResourceResp(rsp)
 }
 
-// PatchResourceWithBodyWithResponse request with arbitrary body returning *PatchResourceResponse
-func (c *ClientWithResponses) PatchResourceWithBodyWithResponse(ctx context.Context, serviceId string, resourcePath string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchResourceResponse, error) {
+// PatchResourceWithBodyWithResponse request with arbitrary body returning *PatchResourceResp
+func (c *ClientWithResponses) PatchResourceWithBodyWithResponse(ctx context.Context, serviceId string, resourcePath string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchResourceResp, error) {
 	rsp, err := c.PatchResourceWithBody(ctx, serviceId, resourcePath, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParsePatchResourceResponse(rsp)
+	return ParsePatchResourceResp(rsp)
 }
 
-func (c *ClientWithResponses) PatchResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, body PatchResourceJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchResourceResponse, error) {
+func (c *ClientWithResponses) PatchResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, body PatchResourceJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchResourceResp, error) {
 	rsp, err := c.PatchResource(ctx, serviceId, resourcePath, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParsePatchResourceResponse(rsp)
+	return ParsePatchResourceResp(rsp)
 }
 
-// CreateResourceWithBodyWithResponse request with arbitrary body returning *CreateResourceResponse
-func (c *ClientWithResponses) CreateResourceWithBodyWithResponse(ctx context.Context, serviceId string, resourcePath string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateResourceResponse, error) {
+// CreateResourceWithBodyWithResponse request with arbitrary body returning *CreateResourceResp
+func (c *ClientWithResponses) CreateResourceWithBodyWithResponse(ctx context.Context, serviceId string, resourcePath string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateResourceResp, error) {
 	rsp, err := c.CreateResourceWithBody(ctx, serviceId, resourcePath, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateResourceResponse(rsp)
+	return ParseCreateResourceResp(rsp)
 }
 
-func (c *ClientWithResponses) CreateResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, body CreateResourceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateResourceResponse, error) {
+func (c *ClientWithResponses) CreateResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, body CreateResourceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateResourceResp, error) {
 	rsp, err := c.CreateResource(ctx, serviceId, resourcePath, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateResourceResponse(rsp)
+	return ParseCreateResourceResp(rsp)
 }
 
-// ReplaceResourceWithBodyWithResponse request with arbitrary body returning *ReplaceResourceResponse
-func (c *ClientWithResponses) ReplaceResourceWithBodyWithResponse(ctx context.Context, serviceId string, resourcePath string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceResourceResponse, error) {
+// ReplaceResourceWithBodyWithResponse request with arbitrary body returning *ReplaceResourceResp
+func (c *ClientWithResponses) ReplaceResourceWithBodyWithResponse(ctx context.Context, serviceId string, resourcePath string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceResourceResp, error) {
 	rsp, err := c.ReplaceResourceWithBody(ctx, serviceId, resourcePath, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseReplaceResourceResponse(rsp)
+	return ParseReplaceResourceResp(rsp)
 }
 
-func (c *ClientWithResponses) ReplaceResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, body ReplaceResourceJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceResourceResponse, error) {
+func (c *ClientWithResponses) ReplaceResourceWithResponse(ctx context.Context, serviceId string, resourcePath string, body ReplaceResourceJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceResourceResp, error) {
 	rsp, err := c.ReplaceResource(ctx, serviceId, resourcePath, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseReplaceResourceResponse(rsp)
+	return ParseReplaceResourceResp(rsp)
 }
 
-// GetClientProfilesWithResponse request returning *GetClientProfilesResponse
-func (c *ClientWithResponses) GetClientProfilesWithResponse(ctx context.Context, serviceId string, params *GetClientProfilesParams, reqEditors ...RequestEditorFn) (*GetClientProfilesResponse, error) {
+// GetBrokerStateByServiceIdWithResponse request returning *GetBrokerStateByServiceIdResp
+func (c *ClientWithResponses) GetBrokerStateByServiceIdWithResponse(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*GetBrokerStateByServiceIdResp, error) {
+	rsp, err := c.GetBrokerStateByServiceId(ctx, serviceId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetBrokerStateByServiceIdResp(rsp)
+}
+
+// GetClientProfilesWithResponse request returning *GetClientProfilesResp
+func (c *ClientWithResponses) GetClientProfilesWithResponse(ctx context.Context, serviceId string, params *GetClientProfilesParams, reqEditors ...RequestEditorFn) (*GetClientProfilesResp, error) {
 	rsp, err := c.GetClientProfiles(ctx, serviceId, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetClientProfilesResponse(rsp)
+	return ParseGetClientProfilesResp(rsp)
 }
 
-// CreateClientProfileWithBodyWithResponse request with arbitrary body returning *CreateClientProfileResponse
-func (c *ClientWithResponses) CreateClientProfileWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientProfileResponse, error) {
+// CreateClientProfileWithBodyWithResponse request with arbitrary body returning *CreateClientProfileResp
+func (c *ClientWithResponses) CreateClientProfileWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientProfileResp, error) {
 	rsp, err := c.CreateClientProfileWithBody(ctx, serviceId, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateClientProfileResponse(rsp)
+	return ParseCreateClientProfileResp(rsp)
 }
 
-func (c *ClientWithResponses) CreateClientProfileWithResponse(ctx context.Context, serviceId string, body CreateClientProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientProfileResponse, error) {
+func (c *ClientWithResponses) CreateClientProfileWithResponse(ctx context.Context, serviceId string, body CreateClientProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientProfileResp, error) {
 	rsp, err := c.CreateClientProfile(ctx, serviceId, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateClientProfileResponse(rsp)
+	return ParseCreateClientProfileResp(rsp)
 }
 
-// DeleteClientProfileWithResponse request returning *DeleteClientProfileResponse
-func (c *ClientWithResponses) DeleteClientProfileWithResponse(ctx context.Context, serviceId string, name string, reqEditors ...RequestEditorFn) (*DeleteClientProfileResponse, error) {
+// DeleteClientProfileWithResponse request returning *DeleteClientProfileResp
+func (c *ClientWithResponses) DeleteClientProfileWithResponse(ctx context.Context, serviceId string, name string, reqEditors ...RequestEditorFn) (*DeleteClientProfileResp, error) {
 	rsp, err := c.DeleteClientProfile(ctx, serviceId, name, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDeleteClientProfileResponse(rsp)
+	return ParseDeleteClientProfileResp(rsp)
 }
 
-// GetClientProfileWithResponse request returning *GetClientProfileResponse
-func (c *ClientWithResponses) GetClientProfileWithResponse(ctx context.Context, serviceId string, name string, reqEditors ...RequestEditorFn) (*GetClientProfileResponse, error) {
+// GetClientProfileWithResponse request returning *GetClientProfileResp
+func (c *ClientWithResponses) GetClientProfileWithResponse(ctx context.Context, serviceId string, name string, reqEditors ...RequestEditorFn) (*GetClientProfileResp, error) {
 	rsp, err := c.GetClientProfile(ctx, serviceId, name, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetClientProfileResponse(rsp)
+	return ParseGetClientProfileResp(rsp)
 }
 
-// UpdateClientProfileWithBodyWithResponse request with arbitrary body returning *UpdateClientProfileResponse
-func (c *ClientWithResponses) UpdateClientProfileWithBodyWithResponse(ctx context.Context, serviceId string, name string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientProfileResponse, error) {
+// UpdateClientProfileWithBodyWithResponse request with arbitrary body returning *UpdateClientProfileResp
+func (c *ClientWithResponses) UpdateClientProfileWithBodyWithResponse(ctx context.Context, serviceId string, name string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientProfileResp, error) {
 	rsp, err := c.UpdateClientProfileWithBody(ctx, serviceId, name, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateClientProfileResponse(rsp)
+	return ParseUpdateClientProfileResp(rsp)
 }
 
-func (c *ClientWithResponses) UpdateClientProfileWithResponse(ctx context.Context, serviceId string, name string, body UpdateClientProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClientProfileResponse, error) {
+func (c *ClientWithResponses) UpdateClientProfileWithResponse(ctx context.Context, serviceId string, name string, body UpdateClientProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClientProfileResp, error) {
 	rsp, err := c.UpdateClientProfile(ctx, serviceId, name, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateClientProfileResponse(rsp)
+	return ParseUpdateClientProfileResp(rsp)
 }
 
-// ReplaceClientProfileWithBodyWithResponse request with arbitrary body returning *ReplaceClientProfileResponse
-func (c *ClientWithResponses) ReplaceClientProfileWithBodyWithResponse(ctx context.Context, serviceId string, name string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceClientProfileResponse, error) {
+// ReplaceClientProfileWithBodyWithResponse request with arbitrary body returning *ReplaceClientProfileResp
+func (c *ClientWithResponses) ReplaceClientProfileWithBodyWithResponse(ctx context.Context, serviceId string, name string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceClientProfileResp, error) {
 	rsp, err := c.ReplaceClientProfileWithBody(ctx, serviceId, name, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseReplaceClientProfileResponse(rsp)
+	return ParseReplaceClientProfileResp(rsp)
 }
 
-func (c *ClientWithResponses) ReplaceClientProfileWithResponse(ctx context.Context, serviceId string, name string, body ReplaceClientProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceClientProfileResponse, error) {
+func (c *ClientWithResponses) ReplaceClientProfileWithResponse(ctx context.Context, serviceId string, name string, body ReplaceClientProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceClientProfileResp, error) {
 	rsp, err := c.ReplaceClientProfile(ctx, serviceId, name, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseReplaceClientProfileResponse(rsp)
+	return ParseReplaceClientProfileResp(rsp)
 }
 
-// UpdateMessageSpoolWithBodyWithResponse request with arbitrary body returning *UpdateMessageSpoolResponse
-func (c *ClientWithResponses) UpdateMessageSpoolWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateMessageSpoolResponse, error) {
+// GetConnectionEndpointsWithResponse request returning *GetConnectionEndpointsResp
+func (c *ClientWithResponses) GetConnectionEndpointsWithResponse(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*GetConnectionEndpointsResp, error) {
+	rsp, err := c.GetConnectionEndpoints(ctx, serviceId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetConnectionEndpointsResp(rsp)
+}
+
+// CreateConnectionEndpointWithBodyWithResponse request with arbitrary body returning *CreateConnectionEndpointResp
+func (c *ClientWithResponses) CreateConnectionEndpointWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateConnectionEndpointResp, error) {
+	rsp, err := c.CreateConnectionEndpointWithBody(ctx, serviceId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateConnectionEndpointResp(rsp)
+}
+
+func (c *ClientWithResponses) CreateConnectionEndpointWithResponse(ctx context.Context, serviceId string, body CreateConnectionEndpointJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateConnectionEndpointResp, error) {
+	rsp, err := c.CreateConnectionEndpoint(ctx, serviceId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateConnectionEndpointResp(rsp)
+}
+
+// DeleteConnectionEndpointWithResponse request returning *DeleteConnectionEndpointResp
+func (c *ClientWithResponses) DeleteConnectionEndpointWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, reqEditors ...RequestEditorFn) (*DeleteConnectionEndpointResp, error) {
+	rsp, err := c.DeleteConnectionEndpoint(ctx, serviceId, connectionEndpointId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteConnectionEndpointResp(rsp)
+}
+
+// GetConnectionEndpointWithResponse request returning *GetConnectionEndpointResp
+func (c *ClientWithResponses) GetConnectionEndpointWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, reqEditors ...RequestEditorFn) (*GetConnectionEndpointResp, error) {
+	rsp, err := c.GetConnectionEndpoint(ctx, serviceId, connectionEndpointId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetConnectionEndpointResp(rsp)
+}
+
+// UpdateConnectionEndpointWithBodyWithResponse request with arbitrary body returning *UpdateConnectionEndpointResp
+func (c *ClientWithResponses) UpdateConnectionEndpointWithBodyWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateConnectionEndpointResp, error) {
+	rsp, err := c.UpdateConnectionEndpointWithBody(ctx, serviceId, connectionEndpointId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateConnectionEndpointResp(rsp)
+}
+
+func (c *ClientWithResponses) UpdateConnectionEndpointWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, body UpdateConnectionEndpointJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateConnectionEndpointResp, error) {
+	rsp, err := c.UpdateConnectionEndpoint(ctx, serviceId, connectionEndpointId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateConnectionEndpointResp(rsp)
+}
+
+// GetConnectionEndpointDnsNamesWithResponse request returning *GetConnectionEndpointDnsNamesResp
+func (c *ClientWithResponses) GetConnectionEndpointDnsNamesWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, reqEditors ...RequestEditorFn) (*GetConnectionEndpointDnsNamesResp, error) {
+	rsp, err := c.GetConnectionEndpointDnsNames(ctx, serviceId, connectionEndpointId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetConnectionEndpointDnsNamesResp(rsp)
+}
+
+// CreateConnectionEndpointDnsNameWithBodyWithResponse request with arbitrary body returning *CreateConnectionEndpointDnsNameResp
+func (c *ClientWithResponses) CreateConnectionEndpointDnsNameWithBodyWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateConnectionEndpointDnsNameResp, error) {
+	rsp, err := c.CreateConnectionEndpointDnsNameWithBody(ctx, serviceId, connectionEndpointId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateConnectionEndpointDnsNameResp(rsp)
+}
+
+func (c *ClientWithResponses) CreateConnectionEndpointDnsNameWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, body CreateConnectionEndpointDnsNameJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateConnectionEndpointDnsNameResp, error) {
+	rsp, err := c.CreateConnectionEndpointDnsName(ctx, serviceId, connectionEndpointId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateConnectionEndpointDnsNameResp(rsp)
+}
+
+// DeleteConnectionEndpointDnsNameWithResponse request returning *DeleteConnectionEndpointDnsNameResp
+func (c *ClientWithResponses) DeleteConnectionEndpointDnsNameWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, dnsName string, reqEditors ...RequestEditorFn) (*DeleteConnectionEndpointDnsNameResp, error) {
+	rsp, err := c.DeleteConnectionEndpointDnsName(ctx, serviceId, connectionEndpointId, dnsName, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteConnectionEndpointDnsNameResp(rsp)
+}
+
+// MoveConnectionEndpointDnsNameWithBodyWithResponse request with arbitrary body returning *MoveConnectionEndpointDnsNameResp
+func (c *ClientWithResponses) MoveConnectionEndpointDnsNameWithBodyWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, dnsName string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*MoveConnectionEndpointDnsNameResp, error) {
+	rsp, err := c.MoveConnectionEndpointDnsNameWithBody(ctx, serviceId, connectionEndpointId, dnsName, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseMoveConnectionEndpointDnsNameResp(rsp)
+}
+
+func (c *ClientWithResponses) MoveConnectionEndpointDnsNameWithResponse(ctx context.Context, serviceId string, connectionEndpointId string, dnsName string, body MoveConnectionEndpointDnsNameJSONRequestBody, reqEditors ...RequestEditorFn) (*MoveConnectionEndpointDnsNameResp, error) {
+	rsp, err := c.MoveConnectionEndpointDnsName(ctx, serviceId, connectionEndpointId, dnsName, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseMoveConnectionEndpointDnsNameResp(rsp)
+}
+
+// UpdateMessageSpoolWithBodyWithResponse request with arbitrary body returning *UpdateMessageSpoolResp
+func (c *ClientWithResponses) UpdateMessageSpoolWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateMessageSpoolResp, error) {
 	rsp, err := c.UpdateMessageSpoolWithBody(ctx, serviceId, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateMessageSpoolResponse(rsp)
+	return ParseUpdateMessageSpoolResp(rsp)
 }
 
-func (c *ClientWithResponses) UpdateMessageSpoolWithResponse(ctx context.Context, serviceId string, body UpdateMessageSpoolJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateMessageSpoolResponse, error) {
+func (c *ClientWithResponses) UpdateMessageSpoolWithResponse(ctx context.Context, serviceId string, body UpdateMessageSpoolJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateMessageSpoolResp, error) {
 	rsp, err := c.UpdateMessageSpool(ctx, serviceId, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateMessageSpoolResponse(rsp)
+	return ParseUpdateMessageSpoolResp(rsp)
 }
 
-// GetServiceOperationWithResponse request returning *GetServiceOperationResponse
-func (c *ClientWithResponses) GetServiceOperationWithResponse(ctx context.Context, serviceId string, operationId string, reqEditors ...RequestEditorFn) (*GetServiceOperationResponse, error) {
-	rsp, err := c.GetServiceOperation(ctx, serviceId, operationId, reqEditors...)
+// GetServiceOperationsWithResponse request returning *GetServiceOperationsResp
+func (c *ClientWithResponses) GetServiceOperationsWithResponse(ctx context.Context, serviceId string, params *GetServiceOperationsParams, reqEditors ...RequestEditorFn) (*GetServiceOperationsResp, error) {
+	rsp, err := c.GetServiceOperations(ctx, serviceId, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetServiceOperationResponse(rsp)
+	return ParseGetServiceOperationsResp(rsp)
 }
 
-// DisableOrEnableWithBodyWithResponse request with arbitrary body returning *DisableOrEnableResponse
-func (c *ClientWithResponses) DisableOrEnableWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DisableOrEnableResponse, error) {
+// GetServiceOperationWithResponse request returning *GetServiceOperationResp
+func (c *ClientWithResponses) GetServiceOperationWithResponse(ctx context.Context, serviceId string, operationId string, params *GetServiceOperationParams, reqEditors ...RequestEditorFn) (*GetServiceOperationResp, error) {
+	rsp, err := c.GetServiceOperation(ctx, serviceId, operationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetServiceOperationResp(rsp)
+}
+
+// GetRecommendedEventBrokerServicesV2WithResponse request returning *GetRecommendedEventBrokerServicesV2Resp
+func (c *ClientWithResponses) GetRecommendedEventBrokerServicesV2WithResponse(ctx context.Context, serviceId string, params *GetRecommendedEventBrokerServicesV2Params, reqEditors ...RequestEditorFn) (*GetRecommendedEventBrokerServicesV2Resp, error) {
+	rsp, err := c.GetRecommendedEventBrokerServicesV2(ctx, serviceId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetRecommendedEventBrokerServicesV2Resp(rsp)
+}
+
+// DisableOrEnableWithBodyWithResponse request with arbitrary body returning *DisableOrEnableResp
+func (c *ClientWithResponses) DisableOrEnableWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DisableOrEnableResp, error) {
 	rsp, err := c.DisableOrEnableWithBody(ctx, serviceId, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDisableOrEnableResponse(rsp)
+	return ParseDisableOrEnableResp(rsp)
 }
 
-func (c *ClientWithResponses) DisableOrEnableWithResponse(ctx context.Context, serviceId string, body DisableOrEnableJSONRequestBody, reqEditors ...RequestEditorFn) (*DisableOrEnableResponse, error) {
+func (c *ClientWithResponses) DisableOrEnableWithResponse(ctx context.Context, serviceId string, body DisableOrEnableJSONRequestBody, reqEditors ...RequestEditorFn) (*DisableOrEnableResp, error) {
 	rsp, err := c.DisableOrEnable(ctx, serviceId, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDisableOrEnableResponse(rsp)
+	return ParseDisableOrEnableResp(rsp)
 }
 
-// GetAllServerCertificatesWithResponse request returning *GetAllServerCertificatesResponse
-func (c *ClientWithResponses) GetAllServerCertificatesWithResponse(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*GetAllServerCertificatesResponse, error) {
+// GetAllServerCertificatesWithResponse request returning *GetAllServerCertificatesResp
+func (c *ClientWithResponses) GetAllServerCertificatesWithResponse(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*GetAllServerCertificatesResp, error) {
 	rsp, err := c.GetAllServerCertificates(ctx, serviceId, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetAllServerCertificatesResponse(rsp)
+	return ParseGetAllServerCertificatesResp(rsp)
 }
 
-// UploadServerCertificateWithBodyWithResponse request with arbitrary body returning *UploadServerCertificateResponse
-func (c *ClientWithResponses) UploadServerCertificateWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadServerCertificateResponse, error) {
+// UploadServerCertificateWithBodyWithResponse request with arbitrary body returning *UploadServerCertificateResp
+func (c *ClientWithResponses) UploadServerCertificateWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadServerCertificateResp, error) {
 	rsp, err := c.UploadServerCertificateWithBody(ctx, serviceId, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUploadServerCertificateResponse(rsp)
+	return ParseUploadServerCertificateResp(rsp)
 }
 
-func (c *ClientWithResponses) UploadServerCertificateWithResponse(ctx context.Context, serviceId string, body UploadServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*UploadServerCertificateResponse, error) {
+func (c *ClientWithResponses) UploadServerCertificateWithResponse(ctx context.Context, serviceId string, body UploadServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*UploadServerCertificateResp, error) {
 	rsp, err := c.UploadServerCertificate(ctx, serviceId, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUploadServerCertificateResponse(rsp)
+	return ParseUploadServerCertificateResp(rsp)
 }
 
-// DeleteServerCertificateByIdWithResponse request returning *DeleteServerCertificateByIdResponse
-func (c *ClientWithResponses) DeleteServerCertificateByIdWithResponse(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*DeleteServerCertificateByIdResponse, error) {
+// DeleteServerCertificateByIdWithResponse request returning *DeleteServerCertificateByIdResp
+func (c *ClientWithResponses) DeleteServerCertificateByIdWithResponse(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*DeleteServerCertificateByIdResp, error) {
 	rsp, err := c.DeleteServerCertificateById(ctx, serviceId, certificateId, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDeleteServerCertificateByIdResponse(rsp)
+	return ParseDeleteServerCertificateByIdResp(rsp)
 }
 
-// GetServerCertificateByIdWithResponse request returning *GetServerCertificateByIdResponse
-func (c *ClientWithResponses) GetServerCertificateByIdWithResponse(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*GetServerCertificateByIdResponse, error) {
+// GetServerCertificateByIdWithResponse request returning *GetServerCertificateByIdResp
+func (c *ClientWithResponses) GetServerCertificateByIdWithResponse(ctx context.Context, serviceId string, certificateId string, reqEditors ...RequestEditorFn) (*GetServerCertificateByIdResp, error) {
 	rsp, err := c.GetServerCertificateById(ctx, serviceId, certificateId, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetServerCertificateByIdResponse(rsp)
+	return ParseGetServerCertificateByIdResp(rsp)
 }
 
-// InstallServerCertificateWithBodyWithResponse request with arbitrary body returning *InstallServerCertificateResponse
-func (c *ClientWithResponses) InstallServerCertificateWithBodyWithResponse(ctx context.Context, serviceId string, certificateId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*InstallServerCertificateResponse, error) {
+// InstallServerCertificateWithBodyWithResponse request with arbitrary body returning *InstallServerCertificateResp
+func (c *ClientWithResponses) InstallServerCertificateWithBodyWithResponse(ctx context.Context, serviceId string, certificateId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*InstallServerCertificateResp, error) {
 	rsp, err := c.InstallServerCertificateWithBody(ctx, serviceId, certificateId, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseInstallServerCertificateResponse(rsp)
+	return ParseInstallServerCertificateResp(rsp)
 }
 
-func (c *ClientWithResponses) InstallServerCertificateWithResponse(ctx context.Context, serviceId string, certificateId string, body InstallServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*InstallServerCertificateResponse, error) {
+func (c *ClientWithResponses) InstallServerCertificateWithResponse(ctx context.Context, serviceId string, certificateId string, body InstallServerCertificateJSONRequestBody, reqEditors ...RequestEditorFn) (*InstallServerCertificateResp, error) {
 	rsp, err := c.InstallServerCertificate(ctx, serviceId, certificateId, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseInstallServerCertificateResponse(rsp)
+	return ParseInstallServerCertificateResp(rsp)
 }
 
-// GetLimitsWithResponse request returning *GetLimitsResponse
-func (c *ClientWithResponses) GetLimitsWithResponse(ctx context.Context, orgId string, reqEditors ...RequestEditorFn) (*GetLimitsResponse, error) {
+// SwitchoverBrokerWithResponse request returning *SwitchoverBrokerResp
+func (c *ClientWithResponses) SwitchoverBrokerWithResponse(ctx context.Context, serviceId string, reqEditors ...RequestEditorFn) (*SwitchoverBrokerResp, error) {
+	rsp, err := c.SwitchoverBroker(ctx, serviceId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSwitchoverBrokerResp(rsp)
+}
+
+// GetUpgradeReadinessWithResponse request returning *GetUpgradeReadinessResp
+func (c *ClientWithResponses) GetUpgradeReadinessWithResponse(ctx context.Context, serviceId string, params *GetUpgradeReadinessParams, reqEditors ...RequestEditorFn) (*GetUpgradeReadinessResp, error) {
+	rsp, err := c.GetUpgradeReadiness(ctx, serviceId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetUpgradeReadinessResp(rsp)
+}
+
+// GetEventBrokerServiceUpgradesWithResponse request returning *GetEventBrokerServiceUpgradesResp
+func (c *ClientWithResponses) GetEventBrokerServiceUpgradesWithResponse(ctx context.Context, serviceId string, params *GetEventBrokerServiceUpgradesParams, reqEditors ...RequestEditorFn) (*GetEventBrokerServiceUpgradesResp, error) {
+	rsp, err := c.GetEventBrokerServiceUpgrades(ctx, serviceId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetEventBrokerServiceUpgradesResp(rsp)
+}
+
+// CreateEventBrokerServiceUpgradeWithBodyWithResponse request with arbitrary body returning *CreateEventBrokerServiceUpgradeResp
+func (c *ClientWithResponses) CreateEventBrokerServiceUpgradeWithBodyWithResponse(ctx context.Context, serviceId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateEventBrokerServiceUpgradeResp, error) {
+	rsp, err := c.CreateEventBrokerServiceUpgradeWithBody(ctx, serviceId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateEventBrokerServiceUpgradeResp(rsp)
+}
+
+func (c *ClientWithResponses) CreateEventBrokerServiceUpgradeWithResponse(ctx context.Context, serviceId string, body CreateEventBrokerServiceUpgradeJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateEventBrokerServiceUpgradeResp, error) {
+	rsp, err := c.CreateEventBrokerServiceUpgrade(ctx, serviceId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateEventBrokerServiceUpgradeResp(rsp)
+}
+
+// GetEventBrokerServiceUpgradeWithResponse request returning *GetEventBrokerServiceUpgradeResp
+func (c *ClientWithResponses) GetEventBrokerServiceUpgradeWithResponse(ctx context.Context, serviceId string, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*GetEventBrokerServiceUpgradeResp, error) {
+	rsp, err := c.GetEventBrokerServiceUpgrade(ctx, serviceId, maintenanceActivityId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetEventBrokerServiceUpgradeResp(rsp)
+}
+
+// GetMaintenanceActivitiesWithResponse request returning *GetMaintenanceActivitiesResp
+func (c *ClientWithResponses) GetMaintenanceActivitiesWithResponse(ctx context.Context, params *GetMaintenanceActivitiesParams, reqEditors ...RequestEditorFn) (*GetMaintenanceActivitiesResp, error) {
+	rsp, err := c.GetMaintenanceActivities(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMaintenanceActivitiesResp(rsp)
+}
+
+// GetMaintenanceActivityWithResponse request returning *GetMaintenanceActivityResp
+func (c *ClientWithResponses) GetMaintenanceActivityWithResponse(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*GetMaintenanceActivityResp, error) {
+	rsp, err := c.GetMaintenanceActivity(ctx, maintenanceActivityId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMaintenanceActivityResp(rsp)
+}
+
+// CancelMaintenanceActivityWithResponse request returning *CancelMaintenanceActivityResp
+func (c *ClientWithResponses) CancelMaintenanceActivityWithResponse(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*CancelMaintenanceActivityResp, error) {
+	rsp, err := c.CancelMaintenanceActivity(ctx, maintenanceActivityId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCancelMaintenanceActivityResp(rsp)
+}
+
+// InitiatePostMaintenanceCheckWithResponse request returning *InitiatePostMaintenanceCheckResp
+func (c *ClientWithResponses) InitiatePostMaintenanceCheckWithResponse(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*InitiatePostMaintenanceCheckResp, error) {
+	rsp, err := c.InitiatePostMaintenanceCheck(ctx, maintenanceActivityId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseInitiatePostMaintenanceCheckResp(rsp)
+}
+
+// InitiatePreMaintenanceCheckWithResponse request returning *InitiatePreMaintenanceCheckResp
+func (c *ClientWithResponses) InitiatePreMaintenanceCheckWithResponse(ctx context.Context, maintenanceActivityId string, reqEditors ...RequestEditorFn) (*InitiatePreMaintenanceCheckResp, error) {
+	rsp, err := c.InitiatePreMaintenanceCheck(ctx, maintenanceActivityId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseInitiatePreMaintenanceCheckResp(rsp)
+}
+
+// GetMaintenanceSchedulesWithResponse request returning *GetMaintenanceSchedulesResp
+func (c *ClientWithResponses) GetMaintenanceSchedulesWithResponse(ctx context.Context, params *GetMaintenanceSchedulesParams, reqEditors ...RequestEditorFn) (*GetMaintenanceSchedulesResp, error) {
+	rsp, err := c.GetMaintenanceSchedules(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMaintenanceSchedulesResp(rsp)
+}
+
+// CreateMaintenanceScheduleWithBodyWithResponse request with arbitrary body returning *CreateMaintenanceScheduleResp
+func (c *ClientWithResponses) CreateMaintenanceScheduleWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMaintenanceScheduleResp, error) {
+	rsp, err := c.CreateMaintenanceScheduleWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMaintenanceScheduleResp(rsp)
+}
+
+func (c *ClientWithResponses) CreateMaintenanceScheduleWithResponse(ctx context.Context, body CreateMaintenanceScheduleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMaintenanceScheduleResp, error) {
+	rsp, err := c.CreateMaintenanceSchedule(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMaintenanceScheduleResp(rsp)
+}
+
+// DeleteMaintenanceScheduleWithResponse request returning *DeleteMaintenanceScheduleResp
+func (c *ClientWithResponses) DeleteMaintenanceScheduleWithResponse(ctx context.Context, maintenanceScheduleId string, reqEditors ...RequestEditorFn) (*DeleteMaintenanceScheduleResp, error) {
+	rsp, err := c.DeleteMaintenanceSchedule(ctx, maintenanceScheduleId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteMaintenanceScheduleResp(rsp)
+}
+
+// GetMaintenanceScheduleWithResponse request returning *GetMaintenanceScheduleResp
+func (c *ClientWithResponses) GetMaintenanceScheduleWithResponse(ctx context.Context, maintenanceScheduleId string, reqEditors ...RequestEditorFn) (*GetMaintenanceScheduleResp, error) {
+	rsp, err := c.GetMaintenanceSchedule(ctx, maintenanceScheduleId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMaintenanceScheduleResp(rsp)
+}
+
+// GetMaintenanceWindowsWithResponse request returning *GetMaintenanceWindowsResp
+func (c *ClientWithResponses) GetMaintenanceWindowsWithResponse(ctx context.Context, params *GetMaintenanceWindowsParams, reqEditors ...RequestEditorFn) (*GetMaintenanceWindowsResp, error) {
+	rsp, err := c.GetMaintenanceWindows(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMaintenanceWindowsResp(rsp)
+}
+
+// CreateMaintenanceWindowWithBodyWithResponse request with arbitrary body returning *CreateMaintenanceWindowResp
+func (c *ClientWithResponses) CreateMaintenanceWindowWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMaintenanceWindowResp, error) {
+	rsp, err := c.CreateMaintenanceWindowWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMaintenanceWindowResp(rsp)
+}
+
+func (c *ClientWithResponses) CreateMaintenanceWindowWithResponse(ctx context.Context, body CreateMaintenanceWindowJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMaintenanceWindowResp, error) {
+	rsp, err := c.CreateMaintenanceWindow(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMaintenanceWindowResp(rsp)
+}
+
+// DeleteMaintenanceWindowWithResponse request returning *DeleteMaintenanceWindowResp
+func (c *ClientWithResponses) DeleteMaintenanceWindowWithResponse(ctx context.Context, maintenanceWindowId string, reqEditors ...RequestEditorFn) (*DeleteMaintenanceWindowResp, error) {
+	rsp, err := c.DeleteMaintenanceWindow(ctx, maintenanceWindowId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteMaintenanceWindowResp(rsp)
+}
+
+// GetMaintenanceWindowWithResponse request returning *GetMaintenanceWindowResp
+func (c *ClientWithResponses) GetMaintenanceWindowWithResponse(ctx context.Context, maintenanceWindowId string, params *GetMaintenanceWindowParams, reqEditors ...RequestEditorFn) (*GetMaintenanceWindowResp, error) {
+	rsp, err := c.GetMaintenanceWindow(ctx, maintenanceWindowId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMaintenanceWindowResp(rsp)
+}
+
+// UpdateMaintenanceWindowWithBodyWithResponse request with arbitrary body returning *UpdateMaintenanceWindowResp
+func (c *ClientWithResponses) UpdateMaintenanceWindowWithBodyWithResponse(ctx context.Context, maintenanceWindowId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateMaintenanceWindowResp, error) {
+	rsp, err := c.UpdateMaintenanceWindowWithBody(ctx, maintenanceWindowId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateMaintenanceWindowResp(rsp)
+}
+
+func (c *ClientWithResponses) UpdateMaintenanceWindowWithResponse(ctx context.Context, maintenanceWindowId string, body UpdateMaintenanceWindowJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateMaintenanceWindowResp, error) {
+	rsp, err := c.UpdateMaintenanceWindow(ctx, maintenanceWindowId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateMaintenanceWindowResp(rsp)
+}
+
+// GetLimitsWithResponse request returning *GetLimitsResp
+func (c *ClientWithResponses) GetLimitsWithResponse(ctx context.Context, orgId string, reqEditors ...RequestEditorFn) (*GetLimitsResp, error) {
 	rsp, err := c.GetLimits(ctx, orgId, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetLimitsResponse(rsp)
+	return ParseGetLimitsResp(rsp)
 }
 
-// GetServiceClassesWithResponse request returning *GetServiceClassesResponse
-func (c *ClientWithResponses) GetServiceClassesWithResponse(ctx context.Context, params *GetServiceClassesParams, reqEditors ...RequestEditorFn) (*GetServiceClassesResponse, error) {
+// CreateCustomerControlledClusterWithBodyWithResponse request with arbitrary body returning *CreateCustomerControlledClusterResp
+func (c *ClientWithResponses) CreateCustomerControlledClusterWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCustomerControlledClusterResp, error) {
+	rsp, err := c.CreateCustomerControlledClusterWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateCustomerControlledClusterResp(rsp)
+}
+
+func (c *ClientWithResponses) CreateCustomerControlledClusterWithResponse(ctx context.Context, body CreateCustomerControlledClusterJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCustomerControlledClusterResp, error) {
+	rsp, err := c.CreateCustomerControlledCluster(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateCustomerControlledClusterResp(rsp)
+}
+
+// DeletePrivateRegionWithResponse request returning *DeletePrivateRegionResp
+func (c *ClientWithResponses) DeletePrivateRegionWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*DeletePrivateRegionResp, error) {
+	rsp, err := c.DeletePrivateRegion(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeletePrivateRegionResp(rsp)
+}
+
+// GetPrivateRegionWithResponse request returning *GetPrivateRegionResp
+func (c *ClientWithResponses) GetPrivateRegionWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetPrivateRegionResp, error) {
+	rsp, err := c.GetPrivateRegion(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetPrivateRegionResp(rsp)
+}
+
+// PatchPrivateRegionWithBodyWithResponse request with arbitrary body returning *PatchPrivateRegionResp
+func (c *ClientWithResponses) PatchPrivateRegionWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchPrivateRegionResp, error) {
+	rsp, err := c.PatchPrivateRegionWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePatchPrivateRegionResp(rsp)
+}
+
+func (c *ClientWithResponses) PatchPrivateRegionWithResponse(ctx context.Context, id string, body PatchPrivateRegionJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchPrivateRegionResp, error) {
+	rsp, err := c.PatchPrivateRegion(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePatchPrivateRegionResp(rsp)
+}
+
+// GetPrivateRegionHealthWithResponse request returning *GetPrivateRegionHealthResp
+func (c *ClientWithResponses) GetPrivateRegionHealthWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetPrivateRegionHealthResp, error) {
+	rsp, err := c.GetPrivateRegionHealth(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetPrivateRegionHealthResp(rsp)
+}
+
+// GetPrivateRegionHelmValuesWithResponse request returning *GetPrivateRegionHelmValuesResp
+func (c *ClientWithResponses) GetPrivateRegionHelmValuesWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetPrivateRegionHelmValuesResp, error) {
+	rsp, err := c.GetPrivateRegionHelmValues(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetPrivateRegionHelmValuesResp(rsp)
+}
+
+// GetServiceClassesWithResponse request returning *GetServiceClassesResp
+func (c *ClientWithResponses) GetServiceClassesWithResponse(ctx context.Context, params *GetServiceClassesParams, reqEditors ...RequestEditorFn) (*GetServiceClassesResp, error) {
 	rsp, err := c.GetServiceClasses(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetServiceClassesResponse(rsp)
+	return ParseGetServiceClassesResp(rsp)
 }
 
-// GetServiceClassWithResponse request returning *GetServiceClassResponse
-func (c *ClientWithResponses) GetServiceClassWithResponse(ctx context.Context, id GetServiceClassParamsId, params *GetServiceClassParams, reqEditors ...RequestEditorFn) (*GetServiceClassResponse, error) {
+// GetServiceClassWithResponse request returning *GetServiceClassResp
+func (c *ClientWithResponses) GetServiceClassWithResponse(ctx context.Context, id GetServiceClassParamsId, params *GetServiceClassParams, reqEditors ...RequestEditorFn) (*GetServiceClassResp, error) {
 	rsp, err := c.GetServiceClass(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetServiceClassResponse(rsp)
+	return ParseGetServiceClassResp(rsp)
 }
 
-// ParseGetDatacentersResponse parses an HTTP response from a GetDatacentersWithResponse call
-func ParseGetDatacentersResponse(rsp *http.Response) (*GetDatacentersResponse, error) {
+// ParseGetDatacentersResp parses an HTTP response from a GetDatacentersWithResponse call
+func ParseGetDatacentersResp(rsp *http.Response) (*GetDatacentersResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetDatacentersResponse{
+	response := &GetDatacentersResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -6392,6 +13838,13 @@ func ParseGetDatacentersResponse(rsp *http.Response) (*GetDatacentersResponse, e
 		}
 		response.JSON403 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -6404,15 +13857,15 @@ func ParseGetDatacentersResponse(rsp *http.Response) (*GetDatacentersResponse, e
 	return response, nil
 }
 
-// ParseGetDatacenterResponse parses an HTTP response from a GetDatacenterWithResponse call
-func ParseGetDatacenterResponse(rsp *http.Response) (*GetDatacenterResponse, error) {
+// ParseGetDatacenterResp parses an HTTP response from a GetDatacenterWithResponse call
+func ParseGetDatacenterResp(rsp *http.Response) (*GetDatacenterResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetDatacenterResponse{
+	response := &GetDatacenterResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -6446,6 +13899,13 @@ func ParseGetDatacenterResponse(rsp *http.Response) (*GetDatacenterResponse, err
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -6458,15 +13918,15 @@ func ParseGetDatacenterResponse(rsp *http.Response) (*GetDatacenterResponse, err
 	return response, nil
 }
 
-// ParseUpdateDatacenterResponse parses an HTTP response from a UpdateDatacenterWithResponse call
-func ParseUpdateDatacenterResponse(rsp *http.Response) (*UpdateDatacenterResponse, error) {
+// ParseUpdateDatacenterResp parses an HTTP response from a UpdateDatacenterWithResponse call
+func ParseUpdateDatacenterResp(rsp *http.Response) (*UpdateDatacenterResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &UpdateDatacenterResponse{
+	response := &UpdateDatacenterResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -6500,6 +13960,13 @@ func ParseUpdateDatacenterResponse(rsp *http.Response) (*UpdateDatacenterRespons
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -6512,15 +13979,15 @@ func ParseUpdateDatacenterResponse(rsp *http.Response) (*UpdateDatacenterRespons
 	return response, nil
 }
 
-// ParseGetEventBrokerServiceVersionsResponse parses an HTTP response from a GetEventBrokerServiceVersionsWithResponse call
-func ParseGetEventBrokerServiceVersionsResponse(rsp *http.Response) (*GetEventBrokerServiceVersionsResponse, error) {
+// ParseGetEventBrokerServiceVersionsByDatacenterResp parses an HTTP response from a GetEventBrokerServiceVersionsByDatacenterWithResponse call
+func ParseGetEventBrokerServiceVersionsByDatacenterResp(rsp *http.Response) (*GetEventBrokerServiceVersionsByDatacenterResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetEventBrokerServiceVersionsResponse{
+	response := &GetEventBrokerServiceVersionsByDatacenterResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -6547,6 +14014,13 @@ func ParseGetEventBrokerServiceVersionsResponse(rsp *http.Response) (*GetEventBr
 		}
 		response.JSON403 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -6559,15 +14033,15 @@ func ParseGetEventBrokerServiceVersionsResponse(rsp *http.Response) (*GetEventBr
 	return response, nil
 }
 
-// ParseGetVersionsResponse parses an HTTP response from a GetVersionsWithResponse call
-func ParseGetVersionsResponse(rsp *http.Response) (*GetVersionsResponse, error) {
+// ParseGetVersionsResp parses an HTTP response from a GetVersionsWithResponse call
+func ParseGetVersionsResp(rsp *http.Response) (*GetVersionsResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetVersionsResponse{
+	response := &GetVersionsResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -6601,6 +14075,13 @@ func ParseGetVersionsResponse(rsp *http.Response) (*GetVersionsResponse, error) 
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -6608,23 +14089,20 @@ func ParseGetVersionsResponse(rsp *http.Response) (*GetVersionsResponse, error) 
 		}
 		response.JSON503 = &dest
 
-	case rsp.StatusCode == 400:
-		// Content-type (*/*) unsupported
-
 	}
 
 	return response, nil
 }
 
-// ParseGetEnvironmentResponse parses an HTTP response from a GetEnvironmentWithResponse call
-func ParseGetEnvironmentResponse(rsp *http.Response) (*GetEnvironmentResponse, error) {
+// ParseGetEnvironmentResp parses an HTTP response from a GetEnvironmentWithResponse call
+func ParseGetEnvironmentResp(rsp *http.Response) (*GetEnvironmentResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetEnvironmentResponse{
+	response := &GetEnvironmentResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -6651,6 +14129,13 @@ func ParseGetEnvironmentResponse(rsp *http.Response) (*GetEnvironmentResponse, e
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -6663,15 +14148,15 @@ func ParseGetEnvironmentResponse(rsp *http.Response) (*GetEnvironmentResponse, e
 	return response, nil
 }
 
-// ParsePatchEnvironmentResponse parses an HTTP response from a PatchEnvironmentWithResponse call
-func ParsePatchEnvironmentResponse(rsp *http.Response) (*PatchEnvironmentResponse, error) {
+// ParsePatchEnvironmentResp parses an HTTP response from a PatchEnvironmentWithResponse call
+func ParsePatchEnvironmentResp(rsp *http.Response) (*PatchEnvironmentResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &PatchEnvironmentResponse{
+	response := &PatchEnvironmentResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -6698,6 +14183,13 @@ func ParsePatchEnvironmentResponse(rsp *http.Response) (*PatchEnvironmentRespons
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -6710,15 +14202,69 @@ func ParsePatchEnvironmentResponse(rsp *http.Response) (*PatchEnvironmentRespons
 	return response, nil
 }
 
-// ParseGetServicesResponse parses an HTTP response from a GetServicesWithResponse call
-func ParseGetServicesResponse(rsp *http.Response) (*GetServicesResponse, error) {
+// ParseGetEventBrokerServiceVersionsResp parses an HTTP response from a GetEventBrokerServiceVersionsWithResponse call
+func ParseGetEventBrokerServiceVersionsResp(rsp *http.Response) (*GetEventBrokerServiceVersionsResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetServicesResponse{
+	response := &GetEventBrokerServiceVersionsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest EventBrokerServiceVersionsResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetServicesResp parses an HTTP response from a GetServicesWithResponse call
+func ParseGetServicesResp(rsp *http.Response) (*GetServicesResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetServicesResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -6745,6 +14291,13 @@ func ParseGetServicesResponse(rsp *http.Response) (*GetServicesResponse, error) 
 		}
 		response.JSON403 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -6757,15 +14310,15 @@ func ParseGetServicesResponse(rsp *http.Response) (*GetServicesResponse, error) 
 	return response, nil
 }
 
-// ParseCreateServiceResponse parses an HTTP response from a CreateServiceWithResponse call
-func ParseCreateServiceResponse(rsp *http.Response) (*CreateServiceResponse, error) {
+// ParseCreateServiceResp parses an HTTP response from a CreateServiceWithResponse call
+func ParseCreateServiceResp(rsp *http.Response) (*CreateServiceResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateServiceResponse{
+	response := &CreateServiceResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -6799,6 +14352,13 @@ func ParseCreateServiceResponse(rsp *http.Response) (*CreateServiceResponse, err
 		}
 		response.JSON403 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -6811,26 +14371,26 @@ func ParseCreateServiceResponse(rsp *http.Response) (*CreateServiceResponse, err
 	return response, nil
 }
 
-// ParseDeleteServiceResponse parses an HTTP response from a DeleteServiceWithResponse call
-func ParseDeleteServiceResponse(rsp *http.Response) (*DeleteServiceResponse, error) {
+// ParseGetMultiResourceOperationResp parses an HTTP response from a GetMultiResourceOperationWithResponse call
+func ParseGetMultiResourceOperationResp(rsp *http.Response) (*GetMultiResourceOperationResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeleteServiceResponse{
+	response := &GetMultiResourceOperationResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
-		var dest OperationResponse
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSON202 = &dest
+		response.JSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
 		var dest ErrorResponse
@@ -6853,6 +14413,13 @@ func ParseDeleteServiceResponse(rsp *http.Response) (*DeleteServiceResponse, err
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -6865,15 +14432,137 @@ func ParseDeleteServiceResponse(rsp *http.Response) (*DeleteServiceResponse, err
 	return response, nil
 }
 
-// ParseGetServiceResponse parses an HTTP response from a GetServiceWithResponse call
-func ParseGetServiceResponse(rsp *http.Response) (*GetServiceResponse, error) {
+// ParseInitiateReplicationPSKResp parses an HTTP response from a InitiateReplicationPSKWithResponse call
+func ParseInitiateReplicationPSKResp(rsp *http.Response) (*InitiateReplicationPSKResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetServiceResponse{
+	response := &InitiateReplicationPSKResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteServiceResp parses an HTTP response from a DeleteServiceWithResponse call
+func ParseDeleteServiceResp(rsp *http.Response) (*DeleteServiceResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteServiceResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest OperationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetServiceResp parses an HTTP response from a GetServiceWithResponse call
+func ParseGetServiceResp(rsp *http.Response) (*GetServiceResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetServiceResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -6907,6 +14596,13 @@ func ParseGetServiceResponse(rsp *http.Response) (*GetServiceResponse, error) {
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -6919,15 +14615,15 @@ func ParseGetServiceResponse(rsp *http.Response) (*GetServiceResponse, error) {
 	return response, nil
 }
 
-// ParseUpdateServiceResponse parses an HTTP response from a UpdateServiceWithResponse call
-func ParseUpdateServiceResponse(rsp *http.Response) (*UpdateServiceResponse, error) {
+// ParseUpdateServiceResp parses an HTTP response from a UpdateServiceWithResponse call
+func ParseUpdateServiceResp(rsp *http.Response) (*UpdateServiceResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &UpdateServiceResponse{
+	response := &UpdateServiceResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -6968,6 +14664,13 @@ func ParseUpdateServiceResponse(rsp *http.Response) (*UpdateServiceResponse, err
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -6980,15 +14683,15 @@ func ParseUpdateServiceResponse(rsp *http.Response) (*UpdateServiceResponse, err
 	return response, nil
 }
 
-// ParseCloneServiceResponse parses an HTTP response from a CloneServiceWithResponse call
-func ParseCloneServiceResponse(rsp *http.Response) (*CloneServiceResponse, error) {
+// ParseCloneServiceResp parses an HTTP response from a CloneServiceWithResponse call
+func ParseCloneServiceResp(rsp *http.Response) (*CloneServiceResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CloneServiceResponse{
+	response := &CloneServiceResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7022,6 +14725,13 @@ func ParseCloneServiceResponse(rsp *http.Response) (*CloneServiceResponse, error
 		}
 		response.JSON403 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -7034,15 +14744,15 @@ func ParseCloneServiceResponse(rsp *http.Response) (*CloneServiceResponse, error
 	return response, nil
 }
 
-// ParseDeleteResourceResponse parses an HTTP response from a DeleteResourceWithResponse call
-func ParseDeleteResourceResponse(rsp *http.Response) (*DeleteResourceResponse, error) {
+// ParseDeleteResourceResp parses an HTTP response from a DeleteResourceWithResponse call
+func ParseDeleteResourceResp(rsp *http.Response) (*DeleteResourceResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeleteResourceResponse{
+	response := &DeleteResourceResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7069,20 +14779,27 @@ func ParseDeleteResourceResponse(rsp *http.Response) (*DeleteResourceResponse, e
 		}
 		response.JSON403 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	}
 
 	return response, nil
 }
 
-// ParseGetResourceResponse parses an HTTP response from a GetResourceWithResponse call
-func ParseGetResourceResponse(rsp *http.Response) (*GetResourceResponse, error) {
+// ParseGetResourceResp parses an HTTP response from a GetResourceWithResponse call
+func ParseGetResourceResp(rsp *http.Response) (*GetResourceResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetResourceResponse{
+	response := &GetResourceResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7109,67 +14826,27 @@ func ParseGetResourceResponse(rsp *http.Response) (*GetResourceResponse, error) 
 		}
 		response.JSON403 = &dest
 
-	}
-
-	return response, nil
-}
-
-// ParsePatchResourceResponse parses an HTTP response from a PatchResourceWithResponse call
-func ParsePatchResourceResponse(rsp *http.Response) (*PatchResourceResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &PatchResourceResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest string
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest BrokerSempProxyError
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest ErrorResponse
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
+		response.JSON409 = &dest
 
 	}
 
 	return response, nil
 }
 
-// ParseCreateResourceResponse parses an HTTP response from a CreateResourceWithResponse call
-func ParseCreateResourceResponse(rsp *http.Response) (*CreateResourceResponse, error) {
+// ParsePatchResourceResp parses an HTTP response from a PatchResourceWithResponse call
+func ParsePatchResourceResp(rsp *http.Response) (*PatchResourceResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateResourceResponse{
+	response := &PatchResourceResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7203,20 +14880,27 @@ func ParseCreateResourceResponse(rsp *http.Response) (*CreateResourceResponse, e
 		}
 		response.JSON403 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	}
 
 	return response, nil
 }
 
-// ParseReplaceResourceResponse parses an HTTP response from a ReplaceResourceWithResponse call
-func ParseReplaceResourceResponse(rsp *http.Response) (*ReplaceResourceResponse, error) {
+// ParseCreateResourceResp parses an HTTP response from a CreateResourceWithResponse call
+func ParseCreateResourceResp(rsp *http.Response) (*CreateResourceResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ReplaceResourceResponse{
+	response := &CreateResourceResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7250,20 +14934,149 @@ func ParseReplaceResourceResponse(rsp *http.Response) (*ReplaceResourceResponse,
 		}
 		response.JSON403 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	}
 
 	return response, nil
 }
 
-// ParseGetClientProfilesResponse parses an HTTP response from a GetClientProfilesWithResponse call
-func ParseGetClientProfilesResponse(rsp *http.Response) (*GetClientProfilesResponse, error) {
+// ParseReplaceResourceResp parses an HTTP response from a ReplaceResourceWithResponse call
+func ParseReplaceResourceResp(rsp *http.Response) (*ReplaceResourceResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetClientProfilesResponse{
+	response := &ReplaceResourceResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest string
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest BrokerSempProxyError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetBrokerStateByServiceIdResp parses an HTTP response from a GetBrokerStateByServiceIdWithResponse call
+func ParseGetBrokerStateByServiceIdResp(rsp *http.Response) (*GetBrokerStateByServiceIdResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetBrokerStateByServiceIdResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest BrokerStateResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetClientProfilesResp parses an HTTP response from a GetClientProfilesWithResponse call
+func ParseGetClientProfilesResp(rsp *http.Response) (*GetClientProfilesResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetClientProfilesResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7290,6 +15103,13 @@ func ParseGetClientProfilesResponse(rsp *http.Response) (*GetClientProfilesRespo
 		}
 		response.JSON403 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -7302,15 +15122,15 @@ func ParseGetClientProfilesResponse(rsp *http.Response) (*GetClientProfilesRespo
 	return response, nil
 }
 
-// ParseCreateClientProfileResponse parses an HTTP response from a CreateClientProfileWithResponse call
-func ParseCreateClientProfileResponse(rsp *http.Response) (*CreateClientProfileResponse, error) {
+// ParseCreateClientProfileResp parses an HTTP response from a CreateClientProfileWithResponse call
+func ParseCreateClientProfileResp(rsp *http.Response) (*CreateClientProfileResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateClientProfileResponse{
+	response := &CreateClientProfileResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7344,6 +15164,13 @@ func ParseCreateClientProfileResponse(rsp *http.Response) (*CreateClientProfileR
 		}
 		response.JSON403 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -7356,15 +15183,15 @@ func ParseCreateClientProfileResponse(rsp *http.Response) (*CreateClientProfileR
 	return response, nil
 }
 
-// ParseDeleteClientProfileResponse parses an HTTP response from a DeleteClientProfileWithResponse call
-func ParseDeleteClientProfileResponse(rsp *http.Response) (*DeleteClientProfileResponse, error) {
+// ParseDeleteClientProfileResp parses an HTTP response from a DeleteClientProfileWithResponse call
+func ParseDeleteClientProfileResp(rsp *http.Response) (*DeleteClientProfileResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeleteClientProfileResponse{
+	response := &DeleteClientProfileResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7398,6 +15225,13 @@ func ParseDeleteClientProfileResponse(rsp *http.Response) (*DeleteClientProfileR
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -7410,15 +15244,15 @@ func ParseDeleteClientProfileResponse(rsp *http.Response) (*DeleteClientProfileR
 	return response, nil
 }
 
-// ParseGetClientProfileResponse parses an HTTP response from a GetClientProfileWithResponse call
-func ParseGetClientProfileResponse(rsp *http.Response) (*GetClientProfileResponse, error) {
+// ParseGetClientProfileResp parses an HTTP response from a GetClientProfileWithResponse call
+func ParseGetClientProfileResp(rsp *http.Response) (*GetClientProfileResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetClientProfileResponse{
+	response := &GetClientProfileResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7452,6 +15286,13 @@ func ParseGetClientProfileResponse(rsp *http.Response) (*GetClientProfileRespons
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -7464,15 +15305,15 @@ func ParseGetClientProfileResponse(rsp *http.Response) (*GetClientProfileRespons
 	return response, nil
 }
 
-// ParseUpdateClientProfileResponse parses an HTTP response from a UpdateClientProfileWithResponse call
-func ParseUpdateClientProfileResponse(rsp *http.Response) (*UpdateClientProfileResponse, error) {
+// ParseUpdateClientProfileResp parses an HTTP response from a UpdateClientProfileWithResponse call
+func ParseUpdateClientProfileResp(rsp *http.Response) (*UpdateClientProfileResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &UpdateClientProfileResponse{
+	response := &UpdateClientProfileResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7513,6 +15354,13 @@ func ParseUpdateClientProfileResponse(rsp *http.Response) (*UpdateClientProfileR
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -7525,15 +15373,15 @@ func ParseUpdateClientProfileResponse(rsp *http.Response) (*UpdateClientProfileR
 	return response, nil
 }
 
-// ParseReplaceClientProfileResponse parses an HTTP response from a ReplaceClientProfileWithResponse call
-func ParseReplaceClientProfileResponse(rsp *http.Response) (*ReplaceClientProfileResponse, error) {
+// ParseReplaceClientProfileResp parses an HTTP response from a ReplaceClientProfileWithResponse call
+func ParseReplaceClientProfileResp(rsp *http.Response) (*ReplaceClientProfileResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ReplaceClientProfileResponse{
+	response := &ReplaceClientProfileResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7574,6 +15422,13 @@ func ParseReplaceClientProfileResponse(rsp *http.Response) (*ReplaceClientProfil
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -7586,15 +15441,83 @@ func ParseReplaceClientProfileResponse(rsp *http.Response) (*ReplaceClientProfil
 	return response, nil
 }
 
-// ParseUpdateMessageSpoolResponse parses an HTTP response from a UpdateMessageSpoolWithResponse call
-func ParseUpdateMessageSpoolResponse(rsp *http.Response) (*UpdateMessageSpoolResponse, error) {
+// ParseGetConnectionEndpointsResp parses an HTTP response from a GetConnectionEndpointsWithResponse call
+func ParseGetConnectionEndpointsResp(rsp *http.Response) (*GetConnectionEndpointsResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &UpdateMessageSpoolResponse{
+	response := &GetConnectionEndpointsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ConnectionEndpointList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateConnectionEndpointResp parses an HTTP response from a CreateConnectionEndpointWithResponse call
+func ParseCreateConnectionEndpointResp(rsp *http.Response) (*CreateConnectionEndpointResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateConnectionEndpointResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7635,6 +15558,13 @@ func ParseUpdateMessageSpoolResponse(rsp *http.Response) (*UpdateMessageSpoolRes
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -7647,15 +15577,620 @@ func ParseUpdateMessageSpoolResponse(rsp *http.Response) (*UpdateMessageSpoolRes
 	return response, nil
 }
 
-// ParseGetServiceOperationResponse parses an HTTP response from a GetServiceOperationWithResponse call
-func ParseGetServiceOperationResponse(rsp *http.Response) (*GetServiceOperationResponse, error) {
+// ParseDeleteConnectionEndpointResp parses an HTTP response from a DeleteConnectionEndpointWithResponse call
+func ParseDeleteConnectionEndpointResp(rsp *http.Response) (*DeleteConnectionEndpointResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetServiceOperationResponse{
+	response := &DeleteConnectionEndpointResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest OperationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetConnectionEndpointResp parses an HTTP response from a GetConnectionEndpointWithResponse call
+func ParseGetConnectionEndpointResp(rsp *http.Response) (*GetConnectionEndpointResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetConnectionEndpointResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetConnectionEndpointResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateConnectionEndpointResp parses an HTTP response from a UpdateConnectionEndpointWithResponse call
+func ParseUpdateConnectionEndpointResp(rsp *http.Response) (*UpdateConnectionEndpointResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateConnectionEndpointResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest OperationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetConnectionEndpointDnsNamesResp parses an HTTP response from a GetConnectionEndpointDnsNamesWithResponse call
+func ParseGetConnectionEndpointDnsNamesResp(rsp *http.Response) (*GetConnectionEndpointDnsNamesResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetConnectionEndpointDnsNamesResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetAllConnectionEndpointDnsNamesResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateConnectionEndpointDnsNameResp parses an HTTP response from a CreateConnectionEndpointDnsNameWithResponse call
+func ParseCreateConnectionEndpointDnsNameResp(rsp *http.Response) (*CreateConnectionEndpointDnsNameResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateConnectionEndpointDnsNameResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest OperationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteConnectionEndpointDnsNameResp parses an HTTP response from a DeleteConnectionEndpointDnsNameWithResponse call
+func ParseDeleteConnectionEndpointDnsNameResp(rsp *http.Response) (*DeleteConnectionEndpointDnsNameResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteConnectionEndpointDnsNameResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest OperationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseMoveConnectionEndpointDnsNameResp parses an HTTP response from a MoveConnectionEndpointDnsNameWithResponse call
+func ParseMoveConnectionEndpointDnsNameResp(rsp *http.Response) (*MoveConnectionEndpointDnsNameResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &MoveConnectionEndpointDnsNameResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest OperationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateMessageSpoolResp parses an HTTP response from a UpdateMessageSpoolWithResponse call
+func ParseUpdateMessageSpoolResp(rsp *http.Response) (*UpdateMessageSpoolResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateMessageSpoolResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest OperationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetServiceOperationsResp parses an HTTP response from a GetServiceOperationsWithResponse call
+func ParseGetServiceOperationsResp(rsp *http.Response) (*GetServiceOperationsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetServiceOperationsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest OperationsResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetServiceOperationResp parses an HTTP response from a GetServiceOperationWithResponse call
+func ParseGetServiceOperationResp(rsp *http.Response) (*GetServiceOperationResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetServiceOperationResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7689,6 +16224,13 @@ func ParseGetServiceOperationResponse(rsp *http.Response) (*GetServiceOperationR
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -7701,15 +16243,69 @@ func ParseGetServiceOperationResponse(rsp *http.Response) (*GetServiceOperationR
 	return response, nil
 }
 
-// ParseDisableOrEnableResponse parses an HTTP response from a DisableOrEnableWithResponse call
-func ParseDisableOrEnableResponse(rsp *http.Response) (*DisableOrEnableResponse, error) {
+// ParseGetRecommendedEventBrokerServicesV2Resp parses an HTTP response from a GetRecommendedEventBrokerServicesV2WithResponse call
+func ParseGetRecommendedEventBrokerServicesV2Resp(rsp *http.Response) (*GetRecommendedEventBrokerServicesV2Resp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DisableOrEnableResponse{
+	response := &GetRecommendedEventBrokerServicesV2Resp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest RecommendedEventEventBrokerServiceVersionsResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDisableOrEnableResp parses an HTTP response from a DisableOrEnableWithResponse call
+func ParseDisableOrEnableResp(rsp *http.Response) (*DisableOrEnableResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DisableOrEnableResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7736,20 +16332,27 @@ func ParseDisableOrEnableResponse(rsp *http.Response) (*DisableOrEnableResponse,
 		}
 		response.JSON403 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	}
 
 	return response, nil
 }
 
-// ParseGetAllServerCertificatesResponse parses an HTTP response from a GetAllServerCertificatesWithResponse call
-func ParseGetAllServerCertificatesResponse(rsp *http.Response) (*GetAllServerCertificatesResponse, error) {
+// ParseGetAllServerCertificatesResp parses an HTTP response from a GetAllServerCertificatesWithResponse call
+func ParseGetAllServerCertificatesResp(rsp *http.Response) (*GetAllServerCertificatesResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetAllServerCertificatesResponse{
+	response := &GetAllServerCertificatesResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7790,20 +16393,27 @@ func ParseGetAllServerCertificatesResponse(rsp *http.Response) (*GetAllServerCer
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	}
 
 	return response, nil
 }
 
-// ParseUploadServerCertificateResponse parses an HTTP response from a UploadServerCertificateWithResponse call
-func ParseUploadServerCertificateResponse(rsp *http.Response) (*UploadServerCertificateResponse, error) {
+// ParseUploadServerCertificateResp parses an HTTP response from a UploadServerCertificateWithResponse call
+func ParseUploadServerCertificateResp(rsp *http.Response) (*UploadServerCertificateResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &UploadServerCertificateResponse{
+	response := &UploadServerCertificateResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7844,20 +16454,27 @@ func ParseUploadServerCertificateResponse(rsp *http.Response) (*UploadServerCert
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	}
 
 	return response, nil
 }
 
-// ParseDeleteServerCertificateByIdResponse parses an HTTP response from a DeleteServerCertificateByIdWithResponse call
-func ParseDeleteServerCertificateByIdResponse(rsp *http.Response) (*DeleteServerCertificateByIdResponse, error) {
+// ParseDeleteServerCertificateByIdResp parses an HTTP response from a DeleteServerCertificateByIdWithResponse call
+func ParseDeleteServerCertificateByIdResp(rsp *http.Response) (*DeleteServerCertificateByIdResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeleteServerCertificateByIdResponse{
+	response := &DeleteServerCertificateByIdResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7898,20 +16515,27 @@ func ParseDeleteServerCertificateByIdResponse(rsp *http.Response) (*DeleteServer
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	}
 
 	return response, nil
 }
 
-// ParseGetServerCertificateByIdResponse parses an HTTP response from a GetServerCertificateByIdWithResponse call
-func ParseGetServerCertificateByIdResponse(rsp *http.Response) (*GetServerCertificateByIdResponse, error) {
+// ParseGetServerCertificateByIdResp parses an HTTP response from a GetServerCertificateByIdWithResponse call
+func ParseGetServerCertificateByIdResp(rsp *http.Response) (*GetServerCertificateByIdResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetServerCertificateByIdResponse{
+	response := &GetServerCertificateByIdResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -7952,20 +16576,27 @@ func ParseGetServerCertificateByIdResponse(rsp *http.Response) (*GetServerCertif
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	}
 
 	return response, nil
 }
 
-// ParseInstallServerCertificateResponse parses an HTTP response from a InstallServerCertificateWithResponse call
-func ParseInstallServerCertificateResponse(rsp *http.Response) (*InstallServerCertificateResponse, error) {
+// ParseInstallServerCertificateResp parses an HTTP response from a InstallServerCertificateWithResponse call
+func ParseInstallServerCertificateResp(rsp *http.Response) (*InstallServerCertificateResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &InstallServerCertificateResponse{
+	response := &InstallServerCertificateResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -8006,20 +16637,836 @@ func ParseInstallServerCertificateResponse(rsp *http.Response) (*InstallServerCe
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	}
 
 	return response, nil
 }
 
-// ParseGetLimitsResponse parses an HTTP response from a GetLimitsWithResponse call
-func ParseGetLimitsResponse(rsp *http.Response) (*GetLimitsResponse, error) {
+// ParseSwitchoverBrokerResp parses an HTTP response from a SwitchoverBrokerWithResponse call
+func ParseSwitchoverBrokerResp(rsp *http.Response) (*SwitchoverBrokerResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetLimitsResponse{
+	response := &SwitchoverBrokerResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest OperationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetUpgradeReadinessResp parses an HTTP response from a GetUpgradeReadinessWithResponse call
+func ParseGetUpgradeReadinessResp(rsp *http.Response) (*GetUpgradeReadinessResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetUpgradeReadinessResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest UpgradeReadinessResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest UpgradeReadinessResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest UpgradeReadinessResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest UpgradeReadinessResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON429 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest UpgradeReadinessResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetEventBrokerServiceUpgradesResp parses an HTTP response from a GetEventBrokerServiceUpgradesWithResponse call
+func ParseGetEventBrokerServiceUpgradesResp(rsp *http.Response) (*GetEventBrokerServiceUpgradesResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetEventBrokerServiceUpgradesResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MaintenanceActivityResponseList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateEventBrokerServiceUpgradeResp parses an HTTP response from a CreateEventBrokerServiceUpgradeWithResponse call
+func ParseCreateEventBrokerServiceUpgradeResp(rsp *http.Response) (*CreateEventBrokerServiceUpgradeResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateEventBrokerServiceUpgradeResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest MaintenanceActivityResponseDTO
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetEventBrokerServiceUpgradeResp parses an HTTP response from a GetEventBrokerServiceUpgradeWithResponse call
+func ParseGetEventBrokerServiceUpgradeResp(rsp *http.Response) (*GetEventBrokerServiceUpgradeResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetEventBrokerServiceUpgradeResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MaintenanceActivityResponseList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetMaintenanceActivitiesResp parses an HTTP response from a GetMaintenanceActivitiesWithResponse call
+func ParseGetMaintenanceActivitiesResp(rsp *http.Response) (*GetMaintenanceActivitiesResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetMaintenanceActivitiesResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MaintenanceActivityResponseList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetMaintenanceActivityResp parses an HTTP response from a GetMaintenanceActivityWithResponse call
+func ParseGetMaintenanceActivityResp(rsp *http.Response) (*GetMaintenanceActivityResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetMaintenanceActivityResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MaintenanceActivityResponseDTO
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCancelMaintenanceActivityResp parses an HTTP response from a CancelMaintenanceActivityWithResponse call
+func ParseCancelMaintenanceActivityResp(rsp *http.Response) (*CancelMaintenanceActivityResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CancelMaintenanceActivityResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseInitiatePostMaintenanceCheckResp parses an HTTP response from a InitiatePostMaintenanceCheckWithResponse call
+func ParseInitiatePostMaintenanceCheckResp(rsp *http.Response) (*InitiatePostMaintenanceCheckResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &InitiatePostMaintenanceCheckResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest MaintenanceActivityResponseDTO
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseInitiatePreMaintenanceCheckResp parses an HTTP response from a InitiatePreMaintenanceCheckWithResponse call
+func ParseInitiatePreMaintenanceCheckResp(rsp *http.Response) (*InitiatePreMaintenanceCheckResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &InitiatePreMaintenanceCheckResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest MaintenanceActivityResponseDTO
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetMaintenanceSchedulesResp parses an HTTP response from a GetMaintenanceSchedulesWithResponse call
+func ParseGetMaintenanceSchedulesResp(rsp *http.Response) (*GetMaintenanceSchedulesResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetMaintenanceSchedulesResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MaintenanceScheduleResponseList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateMaintenanceScheduleResp parses an HTTP response from a CreateMaintenanceScheduleWithResponse call
+func ParseCreateMaintenanceScheduleResp(rsp *http.Response) (*CreateMaintenanceScheduleResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateMaintenanceScheduleResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest MaintenanceScheduleResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteMaintenanceScheduleResp parses an HTTP response from a DeleteMaintenanceScheduleWithResponse call
+func ParseDeleteMaintenanceScheduleResp(rsp *http.Response) (*DeleteMaintenanceScheduleResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteMaintenanceScheduleResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetMaintenanceScheduleResp parses an HTTP response from a GetMaintenanceScheduleWithResponse call
+func ParseGetMaintenanceScheduleResp(rsp *http.Response) (*GetMaintenanceScheduleResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetMaintenanceScheduleResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MaintenanceScheduleResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetMaintenanceWindowsResp parses an HTTP response from a GetMaintenanceWindowsWithResponse call
+func ParseGetMaintenanceWindowsResp(rsp *http.Response) (*GetMaintenanceWindowsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetMaintenanceWindowsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MaintenanceWindowResponseList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateMaintenanceWindowResp parses an HTTP response from a CreateMaintenanceWindowWithResponse call
+func ParseCreateMaintenanceWindowResp(rsp *http.Response) (*CreateMaintenanceWindowResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateMaintenanceWindowResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest MaintenanceWindowResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteMaintenanceWindowResp parses an HTTP response from a DeleteMaintenanceWindowWithResponse call
+func ParseDeleteMaintenanceWindowResp(rsp *http.Response) (*DeleteMaintenanceWindowResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteMaintenanceWindowResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetMaintenanceWindowResp parses an HTTP response from a GetMaintenanceWindowWithResponse call
+func ParseGetMaintenanceWindowResp(rsp *http.Response) (*GetMaintenanceWindowResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetMaintenanceWindowResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MaintenanceWindowResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateMaintenanceWindowResp parses an HTTP response from a UpdateMaintenanceWindowWithResponse call
+func ParseUpdateMaintenanceWindowResp(rsp *http.Response) (*UpdateMaintenanceWindowResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateMaintenanceWindowResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MaintenanceWindowResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetLimitsResp parses an HTTP response from a GetLimitsWithResponse call
+func ParseGetLimitsResp(rsp *http.Response) (*GetLimitsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetLimitsResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -8053,6 +17500,13 @@ func ParseGetLimitsResponse(rsp *http.Response) (*GetLimitsResponse, error) {
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -8060,23 +17514,379 @@ func ParseGetLimitsResponse(rsp *http.Response) (*GetLimitsResponse, error) {
 		}
 		response.JSON503 = &dest
 
-	case rsp.StatusCode == 400:
-		// Content-type (*/*) unsupported
-
 	}
 
 	return response, nil
 }
 
-// ParseGetServiceClassesResponse parses an HTTP response from a GetServiceClassesWithResponse call
-func ParseGetServiceClassesResponse(rsp *http.Response) (*GetServiceClassesResponse, error) {
+// ParseCreateCustomerControlledClusterResp parses an HTTP response from a CreateCustomerControlledClusterWithResponse call
+func ParseCreateCustomerControlledClusterResp(rsp *http.Response) (*CreateCustomerControlledClusterResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetServiceClassesResponse{
+	response := &CreateCustomerControlledClusterResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest PrivateRegionResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeletePrivateRegionResp parses an HTTP response from a DeletePrivateRegionWithResponse call
+func ParseDeletePrivateRegionResp(rsp *http.Response) (*DeletePrivateRegionResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeletePrivateRegionResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 204:
+		var dest string
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON204 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetPrivateRegionResp parses an HTTP response from a GetPrivateRegionWithResponse call
+func ParseGetPrivateRegionResp(rsp *http.Response) (*GetPrivateRegionResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetPrivateRegionResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest PrivateRegionResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePatchPrivateRegionResp parses an HTTP response from a PatchPrivateRegionWithResponse call
+func ParsePatchPrivateRegionResp(rsp *http.Response) (*PatchPrivateRegionResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PatchPrivateRegionResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest PrivateRegionResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetPrivateRegionHealthResp parses an HTTP response from a GetPrivateRegionHealthWithResponse call
+func ParseGetPrivateRegionHealthResp(rsp *http.Response) (*GetPrivateRegionHealthResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetPrivateRegionHealthResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MCAHealthResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetPrivateRegionHelmValuesResp parses an HTTP response from a GetPrivateRegionHelmValuesWithResponse call
+func ParseGetPrivateRegionHelmValuesResp(rsp *http.Response) (*GetPrivateRegionHelmValuesResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetPrivateRegionHelmValuesResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetServiceClassesResp parses an HTTP response from a GetServiceClassesWithResponse call
+func ParseGetServiceClassesResp(rsp *http.Response) (*GetServiceClassesResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetServiceClassesResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -8103,6 +17913,13 @@ func ParseGetServiceClassesResponse(rsp *http.Response) (*GetServiceClassesRespo
 		}
 		response.JSON403 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -8115,15 +17932,15 @@ func ParseGetServiceClassesResponse(rsp *http.Response) (*GetServiceClassesRespo
 	return response, nil
 }
 
-// ParseGetServiceClassResponse parses an HTTP response from a GetServiceClassWithResponse call
-func ParseGetServiceClassResponse(rsp *http.Response) (*GetServiceClassResponse, error) {
+// ParseGetServiceClassResp parses an HTTP response from a GetServiceClassWithResponse call
+func ParseGetServiceClassResp(rsp *http.Response) (*GetServiceClassResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetServiceClassResponse{
+	response := &GetServiceClassResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -8163,6 +17980,13 @@ func ParseGetServiceClassResponse(rsp *http.Response) (*GetServiceClassResponse,
 			return nil, err
 		}
 		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
