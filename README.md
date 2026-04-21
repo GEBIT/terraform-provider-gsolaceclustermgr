@@ -73,7 +73,8 @@ In order to run the full suite of Acceptance tests, run `make testacc`.
 make testacc
 ```
 
-For local manual tests with terraform put this into your `%APPDATA%\terraform.rc` file:
+### manual testing with against solace cloud api
+For manual tests of the locally built provider put this into your `%APPDATA%\terraform.rc` file:
 ~~~
 provider_installation {
 
@@ -83,6 +84,17 @@ provider_installation {
   direct {}
 }
 ~~~
+
+Run a pwsh on WINdows and activate Go via mise (`mise activate pwsh | Out-String | Invoke-Expression`)
+Or run a bash with asdf.
+Then
+- chdir manual_test
+- $env:TF_VAR_bearer_token = "your-token-here"
+- terraform plan
+- terraform apply
+- terraform delete
+
+
 
 Tips: 
 - if you set FAKE_SERVER_DEBUG=1 the fakeserver will be started with the debug option during acc tests
