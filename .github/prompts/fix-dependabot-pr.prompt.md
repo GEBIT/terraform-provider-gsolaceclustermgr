@@ -52,7 +52,7 @@ Show the user which branch is now checked out and what dependency is being bumpe
 
 ### 2.5. Offer to rebase onto main
 
-If the PR is older than a few days, the branch may be behind `main` and have stale dependencies or merge conflicts. **Ask the user whether they want to rebase the branch onto `main` before proceeding.**
+The branch may be behind `main` and have stale dependencies or merge conflicts. **Ask the user whether they want to rebase the branch onto `main` before proceeding.**
 
 If the user agrees:
 ```
